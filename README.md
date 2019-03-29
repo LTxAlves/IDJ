@@ -78,9 +78,14 @@ SDL2_ttf
 
 ## Running the code
 
-Just open the installation directory with MinGW and run
+Just open the installation directory (with MinGW on Windows OS or terminal on Linux OS) and compile with
 ```
 make
+```
+
+After compiling, run the .exe on Windows OS or the executable on Linux OS with:
+```
+./play
 ```
 
 ## Built with
