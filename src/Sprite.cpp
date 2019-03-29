@@ -14,19 +14,20 @@ Sprite::Sprite(string file){
 
 Sprite::~Sprite(){
 
-    if(texture != nullptr)
+    if(texture != nullptr){  //Check existence of texture
         SDL_DestroyTexture(texture);
+    }
 }
 
 void Sprite::Open(string file){
 
-    if(texture != nullptr)
+    if(texture != nullptr)  //Destroys currently assigned texture to create a new one
         SDL_DestroyTexture(texture);
 
-    auto rend = Game::GetInstance().GetRenderer(); //getting rederer for single instance of game
+    auto rend = Game::GetInstance().GetRenderer();  //Getting rederer for single instance of game
     texture = IMG_LoadTexture(rend, file.c_str());
 
-    if(texture == nullptr){
+    if(texture == nullptr){ //Check existence of texture
         SDL_Log("Unable to load texture: %s", IMG_GetError());
         exit(1);
     }
@@ -45,7 +46,7 @@ void Sprite::SetClip(int x, int y, int w, int h){
 
 void Sprite::Render(int x, int y){
 
-    SDL_Rect dst_rect;
+    SDL_Rect dst_rect;  //Needed for SDL_RenderCopy()
 
     dst_rect.x = x;
     dst_rect.y = y;
@@ -73,5 +74,5 @@ int Sprite::GetHeight(){
 
 bool Sprite::IsOpen(){
 
-    return (texture != nullptr) ? true : false;
+    return (texture != nullptr) ? true : false; //Ternary operator (returns true if texture exists, false otherwise)
 }

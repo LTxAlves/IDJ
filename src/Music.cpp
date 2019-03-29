@@ -13,9 +13,9 @@ Music::Music(string file){
     Open(file);
 }
 
-void Music::Play(int times = -1){
+void Music::Play(int times = -1){   //Default value of -1 (playing indefinetly)
 
-    if(music != nullptr){
+    if(music != nullptr){   //Check if musig is assigned to pointer
         Mix_PlayMusic(music, times);
     }
     else{
@@ -23,7 +23,7 @@ void Music::Play(int times = -1){
     }
 }
 
-void Music::Stop(int msToStop = 1500){
+void Music::Stop(int msToStop = 1500){ //Default value of 1500ms of music time
 
     Mix_FadeOutMusic(msToStop);
 }
@@ -32,7 +32,7 @@ void Music::Open(string file){
 
     music = Mix_LoadMUS(file.c_str());
 
-    if(music == nullptr){
+    if(music == nullptr){   //Check error in assigning music pointer
         SDL_Log("Unable to load music: %s", SDL_GetError());
         exit(1);
     }
@@ -40,7 +40,7 @@ void Music::Open(string file){
 
 bool Music::IsOpen(){
 
-    return (music != nullptr ? true : false);
+    return (music != nullptr ? true : false);   //ternary operator (returns true if music pointer exists, false otherwise)
 }
 
 Music::~Music(){

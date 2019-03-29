@@ -9,9 +9,9 @@
 #include "Sprite.h"
 #include "State.h"
 
-int main(int argc, char* argv[]){    
+int main(int argc, char* argv[]){   //argc and argv required by SDL  
 
-    Game::GetInstance().Run();
+    Game::GetInstance().Run();  //Run game
 
     return 0;
 }

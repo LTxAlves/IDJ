@@ -14,19 +14,18 @@ using namespace std;
 class Game{
     
     private:
-        Game(string, int, int);
-        /* data */
-        static Game* instance;
-        SDL_Window* window;
-        SDL_Renderer* renderer;
-        State* state;
+        Game(string, int, int); //Game constructor private (singleton)
+        static Game* instance;  //Game's only instance (singleton)
+        SDL_Window* window;     //Game window
+        SDL_Renderer* renderer; //Game renderer
+        State* state;           //Game state
 
     public:
-        ~Game();
-        void Run();
-        SDL_Renderer* GetRenderer();
-        State& GetState();
-        static Game& GetInstance();
+        ~Game();                        //Game destructor
+        void Run();                     //Function to run game
+        SDL_Renderer* GetRenderer();    //Funtion to get game's renderer
+        State& GetState();              //Function to get a pointer to game's state
+        static Game& GetInstance();     //Function to get a pointer to game's (only) instance
 
 };
 

@@ -1,10 +1,10 @@
 #include "State.h"
 #include "Game.h"
 
-State::State() :    bg("assets/img/ocean.jpg"),
-                    music("assets/audio/stageState.ogg"){
+State::State() :    bg("assets/img/ocean.jpg"),             //Loads bg file
+                    music("assets/audio/stageState.ogg"){   //Loads music file
 
-    quitRequested = false;
+    quitRequested = false;  //Initializes variable as false
     LoadAssets();
     music.Play(-1);
 }

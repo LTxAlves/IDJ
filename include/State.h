@@ -9,18 +9,18 @@ using namespace std;
 class State{
 
     public:
-        State();
+        State();    //State constructor
 
-        bool QuitRequested();
+        bool QuitRequested();   //Function to check if user closed game window
 
-        void LoadAssets();
-        void Update(float);
-        void Render();
+        void LoadAssets();  //Function to load music and image into ew state
+        void Update(float); //Function to update current state
+        void Render();      //Function to render new state
 
     private:
-        Sprite bg;
-        Music music;
-        bool quitRequested;
+        Sprite bg;          //Background image
+        Music music;        //State's music
+        bool quitRequested; //Flag set to true when game window is closed
 };
 
 #endif // STATE_H
