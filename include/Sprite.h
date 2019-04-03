@@ -7,9 +7,11 @@
 #define INCLUDE_SDL_MIXER
 #include "SDL_include.h"
 
+#include "Component.h"
+
 using std::string;
 
-class Sprite{
+class Sprite : public Component{
     
     public:
         Sprite();

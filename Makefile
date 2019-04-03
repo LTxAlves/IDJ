@@ -35,11 +35,11 @@ BIN_PATH = bin
 DEP_PATH = dep
 
 # Uma lista de arquivos por extensão:
-CPP_FILES = $(wildcard $(SRC_PATH)/*.cpp)
-INC_FILES = $(wildcard $(INC_PATH)/*.hpp)
-FILE_NAMES = $(sort $(notdir $(CPP_FILES:.cpp=)) $(notdir $(INC_FILES:.hpp=)))
-DEP_FILES	=	$(addprefix	$(DEP_PATH)/,$(addsufix	.d,$(FILE_NAMES)))
-OBJ_FILES	=	$(addprefix	$(BIN_PATH)/,$(notdir	$(CPP_FILES:.cpp=.o)))
+CPP_FILES	= $(wildcard $(SRC_PATH)/*.cpp)
+INC_FILES	= $(wildcard $(INC_PATH)/*.hpp)
+FILE_NAMES	= $(sort $(notdir $(CPP_FILES:.cpp=)) $(notdir $(INC_FILES:.hpp=)))
+DEP_FILES	= $(addprefix	$(DEP_PATH)/,$(addsufix	.d,$(FILE_NAMES)))
+OBJ_FILES	= $(addprefix	$(BIN_PATH)/,$(notdir	$(CPP_FILES:.cpp=.o)))
 
 # Nome do executável
 EXEC = play
@@ -77,6 +77,7 @@ UNAME_S := $(shell uname -s)
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ifeq ($(UNAME_S), Darwin)
+
 LIBS = -lm -framework SDL2 -framework SDL2_image -framework SDL2_mixer -framework SDL2_ttf
 
 endif
@@ -87,14 +88,14 @@ endif
 .PHONY: release debug clean folders help
 
 #Regra geral
-all:	$(EXEC)
+all: $(EXEC)
 
 #Gera o executável
-$(EXEC):	$(OBJ_FILES)
+$(EXEC): $(OBJ_FILES)
 	$(COMPILER) -o $@ $^ $(LINK_PATH) $(LIBS) $(FLAGS)
 
 #Gera os arquivos objetos
-$(BIN_PATH)/%.o:	$(DEP_PATH)/%.d	|	folders
+$(BIN_PATH)/%.o: $(DEP_PATH)/%.d | folders
 	$(COMPILER) $(INC_PATHS) $(addprefix $(SRC_PATH)/,$(notdir $(<:.d=.cpp))) -c $(FLAGS) -o $@
 
 #Gera os arquivos de dependência
@@ -114,10 +115,10 @@ debug: $(EXEC)
 
 folders:
 ifeq ($(OS), Windows_NT)
-	@if NOT exists $(DEP_PATH) (	mkdir $(DEP_PATH)	)
-	@if NOT exists $(BIN_PATH) (	mkdir $(BIN_PATH)	)
-	@if NOT exists $(INC_PATH) (	mkdir $(INC_PATH)	)
-	@if NOT exists $(SRC_PATH) (	mkdir $(SRC_PATH)	)
+	@if NOT exists $(DEP_PATH) ( mkdir $(DEP_PATH) )
+	@if NOT exists $(BIN_PATH) ( mkdir $(BIN_PATH) )
+	@if NOT exists $(INC_PATH) ( mkdir $(INC_PATH) )
+	@if NOT exists $(SRC_PATH) ( mkdir $(SRC_PATH) )
 else
 	@mkdir -p $(DEP_PATH) $(BIN_PATH) $(INC_PATH) $(SRC_PATH)
 endif
@@ -134,7 +135,7 @@ endif
 	@echo - debug:		Builds the debug version
 	@echo - clean: 		Cleans the generated files
 	@echo - folders:	Generates project directories
-	@echo - help:			Shows this help
+	@echo - help:		Shows this help
 ifeq ($(OS), Windows_NT)
 	@echo.
 endif
