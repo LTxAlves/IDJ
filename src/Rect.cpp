@@ -30,5 +30,13 @@ float Rect::distance(Rect rect1, Rect rect2){
     del_x = center1[0] - center2[0];
     del_y = center1[1] - center2[1];
 
-    return (sqrt((del_x*del_x) + (del_y*del_y));
+    return (sqrt((del_x*del_x) + (del_y*del_y)));
+}
+
+bool Rect::Contains(float x_coord, float y_coord){
+
+    if(x_coord >= x && x_coord <= x+w && y_coord >= y && y_coord <= y+h)
+        return true;
+
+    return false;
 }

@@ -3,12 +3,15 @@
 
 #include <iostream>
 #include <vector>
+#include <memory>
 
 #include "Component.h"
 #include "Rect.h"
 
 using std::string;
 using std::vector;
+
+class Component;
 
 class GameObject{
 

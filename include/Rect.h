@@ -10,6 +10,7 @@ class Rect{
 
         float distance(Rect, Rect);
 
+        bool Contains(float, float);
 };
 
 #endif //RECT_H

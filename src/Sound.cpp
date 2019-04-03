@@ -11,9 +11,8 @@ Sound::Sound(GameObject& associated) : Component(associated){
     associated_obj = associated;
 }
 
-Sound::Sound(GameObject& associated, string file) : Component(associated){
+Sound::Sound(GameObject& associated, string file) : Sound(associated){
 
-    Sound(associated);
     Open(file);
 }
 
@@ -66,5 +65,6 @@ void Sound::Render(){
 
 bool Sound::Is(string type){
 
-    return true;
+
+    return (type.compare("Sound") == 0 ? true : false);
 }

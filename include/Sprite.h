@@ -27,6 +27,12 @@ class Sprite : public Component{
 
         bool IsOpen();
 
+        void Render();
+
+        void Update(float);
+
+        bool Is(string);
+
     private:
         SDL_Texture* texture;
         int width;

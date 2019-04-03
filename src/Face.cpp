@@ -13,6 +13,13 @@ void Face::Damage(int damage){
     if(hitpoints <= 0){
         hitpoints = 0;
         associated_obj.RequestDelete();
-        associated_obj.Play();
+        if(associated_obj.GetComponent("Sound") != nullptr){
+            associated_obj.Play();
+        }
     }
+}
+
+bool Face::Is(string type){
+
+    return (type.compare("Face") == 0 ? true : false);
 }

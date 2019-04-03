@@ -2,6 +2,8 @@
 #include "Game.h"
 #include "Face.h"
 
+#define PI 3.14159265359
+
 State::State() :    bg("assets/img/ocean.jpg"),
                     music("assets/audio/stageState.ogg"){
 
@@ -26,8 +28,8 @@ void State::Update(float dt){
     Input();
 
     for(i = 0; i < size; i++){
-        objectArray[i]->Update();
-        if(objectArray[i]->isDead()){
+        objectArray[i]->Update(1);
+        if(objectArray[i]->IsDead()){
             objectArray.erase(objectArray.begin() + i);
         }
     }

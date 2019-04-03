@@ -1,13 +1,13 @@
 #ifndef STATE_H
 #define STATE_H
 
-using std::vector;
-using std::unique_ptr;
-
 #include "Music.h"
 #include "Sprite.h"
 #include "Vec2.h"
 #include "Rect.h"
+
+using std::vector;
+using std::unique_ptr;
 
 class State{
 

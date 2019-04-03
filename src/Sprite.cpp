@@ -75,3 +75,18 @@ bool Sprite::IsOpen(){
 
     return (texture != nullptr) ? true : false;
 }
+
+void Sprite::Render(){
+
+
+}
+
+void Sprite::Update(float dt){
+
+    SDL_Delay(dt);
+}
+
+bool Sprite::Is(string type){
+
+    return (type.compare("Sprite") == 0 ? true : false);
+}
