@@ -13,27 +13,29 @@ Vec2::Vec2(float x_in, float y_in){
     y = y_in;
 }
 
+void Vec2::Rotate(double theta){
+
+    float x_new, y_new;
+
+    x_new = x*cos(theta) - y*sin(theta);
+    y_new = y*cos(theta) - x*sin(theta);
+
+    x = x_new;
+    y = y_new;
+}
+
 Vec2 Vec2::GetRotated(double theta){
 
-    Vec2 newVec;
-
-    newVec.x = x*cos(theta) - y*sin(theta);
-    newVec.y = y*cos(theta) - x*sin(theta);
-
-    x = newVec.x;
-    y = newVec.y;
-
-    return newVec;
+    this->Rotate(theta);
+    return *this;
 }
 
 Vec2 Vec2::operator+(const Vec2& vec){
 
-    Vec2 newVec2;
+    x += vec.x;
+    y += vec.y;
 
-    newVec2.x = this->x + vec.x;
-    newVec2.y = this->y + vec.y;
-
-    return newVec2;
+    return *this;
 }
 
 Vec2 Vec2::VectorTimesScalar(Vec2 vector, float scalar){

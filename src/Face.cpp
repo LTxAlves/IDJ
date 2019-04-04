@@ -8,16 +8,16 @@ Face::Face(GameObject& associated) : Component(associated){
 
 void Face::Damage(int damage){
 
-    unique_ptr<Component> soundPtr;
+    Sound* SoundPtr;
 
     hitpoints -= damage;
 
     if(hitpoints <= 0){
         hitpoints = 0;
         associated_obj.RequestDelete();
-        soundPtr = associated_obj.GetComponent("Sound");
-        if(soundPtr != nullptr){
-            //((Sound*)soundPtr)->Play(1);
+        SoundPtr = (Sound*) associated_obj.GetComponent("Sound");
+        if(SoundPtr != nullptr){
+            //PLAY SOUND
         }
     }
 }

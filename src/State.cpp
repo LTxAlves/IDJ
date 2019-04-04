@@ -109,20 +109,20 @@ void State::Input() {
 
 void State::AddObject(int mouseX, int mouseY){
 
-	auto GO = new GameObject();
-	auto enemy = new Sprite("img/penguinface.png");
+	GameObject* GO = (new GameObject());
+	Sprite* enemy = (new Sprite("img/penguinface.png"));
+	Sound* deathSound = (new Sound(*GO, "audio/boom.wav"));
+	Face* face = (new Face(*GO));
 
 	GO->AddComponent(enemy);
 
 	GO->box.x = mouseX;
 	GO->box.y = mouseY;
-	GO->box.w = enemy->GetWidth;
-	GO->box.h = enemy->GetHeight;
+	GO->box.w = enemy->GetWidth();
+	GO->box.h = enemy->GetHeight();
 
-	auto deathSound = new Sound(*GO, "audio/boom.wav");
 	GO->AddComponent(deathSound);
 
-	auto face = new Face(*GO);
 	GO->AddComponent(face);
 
 	objectArray.emplace_back(GO);

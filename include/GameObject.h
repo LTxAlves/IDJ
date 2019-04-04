@@ -27,14 +27,14 @@ class GameObject{
 
         void RequestDelete();
 
-        void AddComponent(unique_ptr<Component>);
-        void RemoveComponent(unique_ptr<Component>);
-        unique_ptr<Component> GetComponent(string);
+        void AddComponent(Component*);
+        void RemoveComponent(Component*);
+        Component* GetComponent(string);
 
         Rect box;
 
     private:
-        vector<unique_ptr<Component>> components;
+        vector<Component*> components;
         bool isDead;
 };
 

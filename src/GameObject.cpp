@@ -5,9 +5,10 @@
 #include "SDL_include.h"
 
 using std::vector;
-using std::unique_ptr;
+//using std::unique_ptr;
+using std::move;
 
-GameObject::GameObject(){
+GameObject::GameObject(){       
 
     isDead = false;
 }
@@ -25,7 +26,7 @@ GameObject::~GameObject(){
 
 void GameObject::Update(float dt){
 
-    vector<unique_ptr<Component>>::iterator it;
+    vector<Component*>::iterator it;
 
     for(it = components.begin(); it != components.end(); it++){
         (*it)->Update(dt);
@@ -35,7 +36,7 @@ void GameObject::Update(float dt){
 
 void GameObject::Render(){
 
-    vector<unique_ptr<Component>>::iterator it;
+    vector<Component*>::iterator it;
 
     for(it = components.begin(); it != components.end(); it++){
         (*it)->Render();
@@ -52,13 +53,13 @@ void GameObject::RequestDelete(){
     isDead = true;
 }
 
-void GameObject::AddComponent(unique_ptr<Component> cpt){
+void GameObject::AddComponent(Component* cpt){
 
     if(cpt != nullptr)
         components.emplace_back(cpt);
 }
 
-void GameObject::RemoveComponent(unique_ptr<Component> cpt){
+void GameObject::RemoveComponent(Component* cpt){
 
     int size = components.size(), i;
     bool found = false;
@@ -76,13 +77,13 @@ void GameObject::RemoveComponent(unique_ptr<Component> cpt){
     
 }
 
-unique_ptr<Component> GameObject::GetComponent(string type){
+Component* GameObject::GetComponent(string type){
 
     int size = components.size(), i;
 
         for(i = 0; i < size; i++){
             if(components[i]->Is(type))
-                return components[i];
+                return move(components[i]);
         }
 
     SDL_Log("GetComponent could not find %s in vector of components", type.c_str());
