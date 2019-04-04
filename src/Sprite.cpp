@@ -1,12 +1,12 @@
 #include "Sprite.h"
 #include "Game.h"
 
-Sprite::Sprite(){
+Sprite::Sprite() : Component(associated_obj){
 
     texture = nullptr;
 }
 
-Sprite::Sprite(string file){
+Sprite::Sprite(string file) : Component(associated_obj){
 
     texture = nullptr;
     Open(file);
@@ -83,7 +83,7 @@ void Sprite::Render(){
 
 void Sprite::Update(float dt){
 
-    SDL_Delay(dt);
+
 }
 
 bool Sprite::Is(string type){

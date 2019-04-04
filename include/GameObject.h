@@ -10,6 +10,7 @@
 
 using std::string;
 using std::vector;
+using std::unique_ptr;
 
 class Component;
 
@@ -26,14 +27,14 @@ class GameObject{
 
         void RequestDelete();
 
-        void AddComponent(Component*);
-        void RemoveComponent(Component*);
-        Component* GetComponent(string);
+        void AddComponent(unique_ptr<Component>);
+        void RemoveComponent(unique_ptr<Component>);
+        unique_ptr<Component> GetComponent(string);
 
         Rect box;
 
     private:
-        vector<Component*> components;
+        vector<unique_ptr<Component>> components;
         bool isDead;
 };
 

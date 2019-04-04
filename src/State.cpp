@@ -1,6 +1,7 @@
 #include "State.h"
 #include "Game.h"
 #include "Face.h"
+#include "Sound.h"
 
 #define PI 3.14159265359
 
@@ -81,7 +82,7 @@ void State::Input() {
 				// Esse código, assim como a classe Face, é provisório. Futuramente, para
 				// chamar funções de GameObjects, use objectArray[i]->função() direto.
 
-				if(go->box.Contains( {(float)mouseX, (float)mouseY} ) ) {
+				if(go->box.Contains( (float)mouseX, (float)mouseY ) ) {
 					Face* face = (Face*)go->GetComponent( "Face" );
 					if ( nullptr != face ) {
 						// Aplica dano
@@ -108,5 +109,21 @@ void State::Input() {
 
 void State::AddObject(int mouseX, int mouseY){
 
+	auto GO = new GameObject();
+	auto enemy = new Sprite("img/penguinface.png");
 
+	GO->AddComponent(enemy);
+
+	GO->box.x = mouseX;
+	GO->box.y = mouseY;
+	GO->box.w = enemy->GetWidth;
+	GO->box.h = enemy->GetHeight;
+
+	auto deathSound = new Sound(*GO, "audio/boom.wav");
+	GO->AddComponent(deathSound);
+
+	auto face = new Face(*GO);
+	GO->AddComponent(face);
+
+	objectArray.emplace_back(GO);
 }

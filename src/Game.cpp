@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "State.h"
+#include <cstdlib>
 
 Game* Game::instance;
 
@@ -15,6 +16,8 @@ Game::Game(string title, int width, int height){
     auto SDL_flags = (SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER); //flags para inicializar a SDL
     auto Img_flags = (IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF); //flags para escolher os formatos de imagem
     auto Mix_flags = (MIX_INIT_OGG | MIX_INIT_MP3 | MIX_INIT_FLAC); //flags para escolher os formatos de áudio
+
+    srand(time(NULL));
 
     if(instance != nullptr){ //checa existêcia de instância (padrão Singleton)
         SDL_Log("Error! Instance already exists!\n");

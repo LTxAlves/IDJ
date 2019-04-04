@@ -14,7 +14,6 @@ using std::string;
 class Sound : public Component{
     
     public:
-        Sound();
         Sound(GameObject&);
         Sound(GameObject&, string);
 
