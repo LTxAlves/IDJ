@@ -8,6 +8,17 @@
 State::State() :    bg("assets/img/ocean.jpg"),
                     music("assets/audio/stageState.ogg"){
 
+	unique_ptr<GameObject> GO = unique_ptr<GameObject> (new GameObject());
+
+	GO->AddComponent(&bg);
+
+	GO->box.x = 0;
+	GO->box.y = 0;
+	GO->box.w = bg.GetWidth();
+	GO->box.h = bg.GetHeight();
+
+	objectArray.emplace_back(std::move(GO));
+
     quitRequested = false;
     LoadAssets();
     music.Play(-1);
@@ -101,6 +112,7 @@ void State::Input() {
 			// Se não, crie um objeto
 			else {
 				Vec2 objPos = Vec2( 200, 0 ).GetRotated( -PI + PI*(rand() % 1001)/500.0 ) + Vec2( mouseX, mouseY );
+				std::cout << "mouseX = " << mouseX << " mouseY = " << mouseY << " objPos.x = " << objPos.x << " objPos.y = " << objPos.y << std::endl << std::endl;
 				AddObject((int)objPos.x, (int)objPos.y);
 			}
 		}
@@ -109,9 +121,9 @@ void State::Input() {
 
 void State::AddObject(int mouseX, int mouseY){
 
-	GameObject* GO = (new GameObject());
-	Sprite* enemy = (new Sprite("img/penguinface.png"));
-	Sound* deathSound = (new Sound(*GO, "audio/boom.wav"));
+	unique_ptr<GameObject> GO = unique_ptr<GameObject> (new GameObject());
+	Sprite* enemy = (new Sprite("assets/img/penguinface.png"));
+	Sound* deathSound = (new Sound(*GO, "assets/audio/boom.wav"));
 	Face* face = (new Face(*GO));
 
 	GO->AddComponent(enemy);
@@ -121,9 +133,14 @@ void State::AddObject(int mouseX, int mouseY){
 	GO->box.w = enemy->GetWidth();
 	GO->box.h = enemy->GetHeight();
 
+	enemy->SetClip(GO->box.x, GO->box.y, GO->box.w, GO->box.h);
+	enemy->Render(mouseX, mouseY);
+
+	std::cout << "X = " << GO->box.x << " Y = " << GO->box.y << " width = " << GO->box.w << " height = " << GO->box.h << std::endl << std::endl;
+
 	GO->AddComponent(deathSound);
 
 	GO->AddComponent(face);
 
-	objectArray.emplace_back(GO);
+	objectArray.emplace_back(std::move(GO));
 }
