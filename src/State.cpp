@@ -3,13 +3,14 @@
 #include "Face.h"
 #include "Sound.h"
 
-#define PI 3.14159265359
+#define PI 3.14159265359 //value of constant pi
 
 using std::move;
+using std::unique_ptr;
 
 State::State() :    music("assets/audio/stageState.ogg"){
 
-	unique_ptr<GameObject> GO = unique_ptr<GameObject> (new GameObject());
+	unique_ptr<GameObject> GO = unique_ptr<GameObject> (new GameObject()); //GameObject required for Sprite
 
 	Sprite* bg = new Sprite(*GO, "assets/img/ocean.jpg");
 
@@ -35,12 +36,13 @@ void State::LoadAssets(){
 
 void State::Update(float dt){
 
-    int i, size = objectArray.size();
-
     Input();
 
-    for(i = 0; i < size; i++){
+    for(unsigned int i = 0; i < objectArray.size(); i++){ //updates each object
         objectArray[i]->Update(dt);
+    }
+
+	for(unsigned int i = 0; i < objectArray.size(); i++){ //deletes dead object and play their sound
         if(objectArray[i]->IsDead()){
 			Sound* soundPtr = static_cast<Sound*> (objectArray[i]->GetComponent("Sound"));
 			if(soundPtr != nullptr){
@@ -66,7 +68,7 @@ bool State::QuitRequested(){
     return quitRequested;
 }
 
-void State::Input() {
+void State::Input(){
 	SDL_Event event;
 	int mouseX, mouseY, i;
 
@@ -88,11 +90,11 @@ void State::Input() {
 			for(i = objectArray.size() - 1; i >= 0; --i) {
 				// Obtem o ponteiro e casta pra Face.
 				GameObject* go = (GameObject*) objectArray[i].get();
-				// Nota: Desencapsular o ponteiro é algo que devemos evitar ao máximo.
-				// O propósito do unique_ptr é manter apenas uma cópia daquele ponteiro,
-				// ao usar get(), violamos esse princípio e estamos menos seguros.
-				// Esse código, assim como a classe Face, é provisório. Futuramente, para
-				// chamar funções de GameObjects, use objectArray[i]->função() direto.
+				/*Nota: Desencapsular o ponteiro é algo que devemos evitar ao máximo.
+				O propósito do unique_ptr é manter apenas uma cópia daquele ponteiro,
+				ao usar get(), violamos esse princípio e estamos menos seguros.
+				Esse código, assim como a classe Face, é provisório. Futuramente, para
+				chamar funções de GameObjects, use objectArray[i]->função() direto.*/
 
 				if(go->box.Contains( (float)mouseX, (float)mouseY ) ) {
 					Face* face = (Face*)go->GetComponent("Face");
@@ -120,7 +122,7 @@ void State::Input() {
 	}
 }
 
-void State::AddObject(int mouseX, int mouseY){
+void State::AddObject(int mouseX, int mouseY){ //adds object to givn coordinates
 
 	unique_ptr<GameObject> GO = unique_ptr<GameObject> (new GameObject());
 	Sprite* enemy = (new Sprite(*GO, "assets/img/penguinface.png"));

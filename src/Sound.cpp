@@ -6,7 +6,7 @@ Sound::Sound(GameObject& associated) : Component(associated){
 
     chunk = nullptr;
 
-    channel = -2;
+    channel = -2; //arbitrary value (not recognized by SDL_PlayChannel) to check if channel exists
 }
 
 Sound::Sound(GameObject& associated, string file) : Sound(associated){
@@ -58,12 +58,12 @@ bool Sound::IsOpen(){
 
 void Sound::Update(float dt){
 
-
+ //does nothing
 }
 
 void Sound::Render(){
 
-
+ //does nothing
 }
 
 bool Sound::Is(string type){

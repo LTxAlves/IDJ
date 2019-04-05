@@ -3,33 +3,32 @@
 
 Face::Face(GameObject& associated) : Component(associated){
 
-    hitpoints = 30;
+    hitpoints = 30; //sets initial HP
 }
 
 void Face::Damage(int damage){
 
-    Sound* SoundPtr;
+    hitpoints -= damage; //takes damage
 
-    hitpoints -= damage;
+    if(hitpoints <= 0){ //checks for death
+        hitpoints = 0; //prevents negative values in case of showing HP
+        associated.RequestDelete(); //kills Face
 
-    if(hitpoints <= 0){
-        hitpoints = 0;
-        SoundPtr = static_cast<Sound*> (associated.GetComponent("Sound"));
-        if(SoundPtr != nullptr){
+        Sound* SoundPtr = static_cast<Sound*> (associated.GetComponent("Sound"));
+        if(SoundPtr != nullptr){ //checks if sound exists
             SoundPtr->Play(1);
         }
-        associated.RequestDelete();
     }
 }
 
 void Face::Update(float dt){
 
-
+    //does nothing
 }
 
 void Face::Render(){
 
-    
+    //does nothing
 }
 
 bool Face::Is(string type){

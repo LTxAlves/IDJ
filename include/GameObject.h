@@ -10,7 +10,7 @@
 
 using std::string;
 using std::vector;
-using std::unique_ptr;
+using std::shared_ptr;
 
 class Component;
 
@@ -34,7 +34,7 @@ class GameObject{
         Rect box;
 
     private:
-        vector<unique_ptr<Component>> components;
+        vector<shared_ptr<Component>> components;
         bool isDead;
 };
 

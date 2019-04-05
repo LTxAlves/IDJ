@@ -1,7 +1,7 @@
 #include "Rect.h"
 #include <math.h>
 
-Rect::Rect(){
+Rect::Rect(){ //initializes with 0 value
 
     x = 0;
     y = 0;
@@ -9,7 +9,7 @@ Rect::Rect(){
     h = 0;
 }
 
-Rect::Rect(float x_in, float y_in, float w_in, float h_in){
+Rect::Rect(float x_in, float y_in, float w_in, float h_in){ //initializes with given values
 
     x = x_in;
     y = y_in;
@@ -17,7 +17,7 @@ Rect::Rect(float x_in, float y_in, float w_in, float h_in){
     h = h_in;
 }
 
-float Rect::distance(Rect rect1, Rect rect2){
+float Rect::distance(Rect rect1, Rect rect2){ //calculates distance between 2 rects
 
     float center1[2], center2[2], del_x, del_y;
 
@@ -33,7 +33,7 @@ float Rect::distance(Rect rect1, Rect rect2){
     return (sqrt((del_x*del_x) + (del_y*del_y)));
 }
 
-bool Rect::Contains(float x_coord, float y_coord){
+bool Rect::Contains(float x_coord, float y_coord){ //checks if rect contains coordinates given
 
     if(x_coord >= x && x_coord <= x+w && y_coord >= y && y_coord <= y+h)
         return true;

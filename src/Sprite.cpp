@@ -38,7 +38,7 @@ void Sprite::Open(string file){
     associated.box.h = height;
 }
 
-void Sprite::SetClip(int x, int y, int w, int h){
+void Sprite::SetClip(int x, int y, int w, int h){ //sets clip with given values
 
     clipRect.x = x;
     clipRect.y = y;
@@ -46,7 +46,7 @@ void Sprite::SetClip(int x, int y, int w, int h){
     clipRect.h = h;
 }
 
-void Sprite::Render(int x, int y){
+void Sprite::Render(int x, int y){ //renders with given values
 
     SDL_Rect dst_rect;
 
@@ -79,7 +79,7 @@ bool Sprite::IsOpen(){
     return (texture != nullptr) ? true : false;
 }
 
-void Sprite::Render(){
+void Sprite::Render(){ //general render function, no parameters
 
     SDL_Rect dst_rect;
 
@@ -99,7 +99,7 @@ void Sprite::Render(){
 
 void Sprite::Update(float dt){
 
-
+ //does nothing
 }
 
 bool Sprite::Is(string type){
