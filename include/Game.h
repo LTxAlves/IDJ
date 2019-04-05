@@ -9,9 +9,18 @@
 #include "Sprite.h"
 #include "State.h"
 
-using namespace std;
+using std::string;
 
 class Game{
+
+    public:
+        ~Game();
+
+        void Run();
+        
+        SDL_Renderer* GetRenderer();
+        State& GetState();
+        static Game& GetInstance();
     
     private:
         Game(string, int, int);
@@ -20,13 +29,6 @@ class Game{
         SDL_Window* window;
         SDL_Renderer* renderer;
         State* state;
-
-    public:
-        ~Game();
-        void Run();
-        SDL_Renderer* GetRenderer();
-        State& GetState();
-        static Game& GetInstance();
 
 };
 

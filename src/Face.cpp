@@ -14,11 +14,11 @@ void Face::Damage(int damage){
 
     if(hitpoints <= 0){
         hitpoints = 0;
-        associated_obj.RequestDelete();
-        SoundPtr = (Sound*) associated_obj.GetComponent("Sound");
+        SoundPtr = static_cast<Sound*> (associated.GetComponent("Sound"));
         if(SoundPtr != nullptr){
-            //PLAY SOUND
+            SoundPtr->Play(1);
         }
+        associated.RequestDelete();
     }
 }
 

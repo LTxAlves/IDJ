@@ -5,7 +5,7 @@
 #include "SDL_include.h"
 
 using std::vector;
-//using std::unique_ptr;
+using std::unique_ptr;
 using std::move;
 
 GameObject::GameObject(){       
@@ -26,7 +26,7 @@ GameObject::~GameObject(){
 
 void GameObject::Update(float dt){
 
-    vector<Component*>::iterator it;
+    vector<unique_ptr<Component>>::iterator it;
 
     for(it = components.begin(); it != components.end(); it++){
         (*it)->Update(dt);
@@ -36,7 +36,7 @@ void GameObject::Update(float dt){
 
 void GameObject::Render(){
 
-    vector<Component*>::iterator it;
+    vector<unique_ptr<Component>>::iterator it;
 
     for(it = components.begin(); it != components.end(); it++){
         (*it)->Render();
@@ -62,18 +62,13 @@ void GameObject::AddComponent(Component* cpt){
 void GameObject::RemoveComponent(Component* cpt){
 
     int size = components.size(), i;
-    bool found = false;
 
     for(i = 0; i < size; i++){
-        if(components[i] == cpt){
+        if(components[i].get() == cpt){
             components.erase(components.begin()+i);
-            found = true;
             break;
         }
     }
-
-    if (!found)
-        SDL_Log("RemoveComponent could not find pointer in vector of components");
     
 }
 
@@ -83,9 +78,8 @@ Component* GameObject::GetComponent(string type){
 
         for(i = 0; i < size; i++){
             if(components[i]->Is(type))
-                return move(components[i]);
+                return components[i].get();
         }
-
-    SDL_Log("GetComponent could not find %s in vector of components", type.c_str());
+        
     return nullptr;
 }

@@ -26,7 +26,10 @@ Sound::~Sound(){
 
 void Sound::Play(int times = 1){
 
-    channel = Mix_PlayChannel(-1, chunk, times-1);
+    if(chunk != nullptr && times > 0)
+        channel = Mix_PlayChannel(-1, chunk, times-1);
+    else
+        SDL_Log("Error playing Sound\n");
 }
 
 void Sound::Stop(){
@@ -37,7 +40,9 @@ void Sound::Stop(){
 
 void Sound::Open(string file){
 
-    if(Mix_LoadWAV(file.c_str()) == nullptr){
+    chunk = Mix_LoadWAV(file.c_str());
+
+    if(chunk == nullptr){
         SDL_Log("Error opening file: %s", SDL_GetError());
         exit(1);
     }

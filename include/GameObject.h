@@ -34,7 +34,7 @@ class GameObject{
         Rect box;
 
     private:
-        vector<Component*> components;
+        vector<unique_ptr<Component>> components;
         bool isDead;
 };
 

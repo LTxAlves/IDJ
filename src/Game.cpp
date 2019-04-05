@@ -4,13 +4,6 @@
 
 Game* Game::instance;
 
-Game& Game::GetInstance(){
-
-    if(instance == nullptr)
-        instance = new Game("Leonardo_T_Alves-160012007", 1024, 600);
-    return *(instance);
-}
-
 Game::Game(string title, int width, int height){
 
     auto SDL_flags = (SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER); //flags para inicializar a SDL
@@ -21,6 +14,7 @@ Game::Game(string title, int width, int height){
 
     if(instance != nullptr){ //checa existêcia de instância (padrão Singleton)
         SDL_Log("Error! Instance already exists!\n");
+        exit(1);
     }
     else{
         instance = this;
@@ -62,19 +56,26 @@ Game::Game(string title, int width, int height){
     state = new State();
 }
 
+Game& Game::GetInstance(){
+
+    if(instance == nullptr)
+        instance = new Game("Leonardo_T_Alves-160012007", 1024, 600);
+    return *(instance);
+}
+
 Game::~Game(){
+
+    delete state;
 
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
 
-    Mix_Quit();
     Mix_CloseAudio();
+    Mix_Quit();
 
     IMG_Quit();
 
     SDL_Quit();
-
-    delete state;
 }
 
 State& Game::GetState(){

@@ -26,7 +26,6 @@ class State{
 
         void AddObject(int, int);
 
-        Sprite bg;
         Music music;
         bool quitRequested;
 

@@ -1,12 +1,12 @@
 #include "Sprite.h"
 #include "Game.h"
 
-Sprite::Sprite() : Component(associated_obj){
+Sprite::Sprite(GameObject& associated) : Component(associated){
 
     texture = nullptr;
 }
 
-Sprite::Sprite(string file) : Component(associated_obj){
+Sprite::Sprite(GameObject& associated, string file) : Component(associated){
 
     texture = nullptr;
     Open(file);
@@ -33,6 +33,9 @@ void Sprite::Open(string file){
 
     SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
     SetClip(0,0, width, height);
+
+    associated.box.w = width;
+    associated.box.h = height;
 }
 
 void Sprite::SetClip(int x, int y, int w, int h){
@@ -78,6 +81,19 @@ bool Sprite::IsOpen(){
 
 void Sprite::Render(){
 
+    SDL_Rect dst_rect;
+
+    dst_rect.x = associated.box.x;
+    dst_rect.y = associated.box.y;
+    dst_rect.w = GetWidth();
+    dst_rect.h = GetHeight();
+
+    auto rend = Game::GetInstance().GetRenderer(); //getting rederer for only instance of game
+
+    if(SDL_RenderCopy(rend, texture, &clipRect, &dst_rect) != 0){
+        SDL_Log("Unable to render texture: %s", SDL_GetError());
+        exit(1);
+    }
 
 }
 

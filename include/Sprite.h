@@ -14,8 +14,8 @@ using std::string;
 class Sprite : public Component{
     
     public:
-        Sprite();
-        Sprite(string);
+        Sprite(GameObject&);
+        Sprite(GameObject&, string);
         ~Sprite();
 
         void Open(string);

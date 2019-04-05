@@ -2,7 +2,7 @@
 
 using std::string;
 
-Component::Component(GameObject& associated) : associated_obj(associated){
+Component::Component(GameObject& associated) : associated(associated){
 
 
 }
