@@ -7,8 +7,6 @@ Sound::Sound(GameObject& associated) : Component(associated){
     chunk = nullptr;
 
     channel = -2;
- 
-    associated_obj = associated;
 }
 
 Sound::Sound(GameObject& associated, string file) : Sound(associated){
