@@ -29,7 +29,8 @@ void GameObject::Update(float dt){
     vector<unique_ptr<Component>>::iterator it;
 
     for(it = components.begin(); it != components.end(); it++){
-        (*it)->Update(dt);
+        if(*(it) != nullptr)
+            (*it)->Update(dt);
     }
 
 }
@@ -39,7 +40,8 @@ void GameObject::Render(){
     vector<unique_ptr<Component>>::iterator it;
 
     for(it = components.begin(); it != components.end(); it++){
-        (*it)->Render();
+        if(*it != nullptr)
+            (*it)->Render();
     }
 }
 

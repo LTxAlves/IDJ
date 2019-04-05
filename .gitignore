@@ -30,3 +30,8 @@ play
 
 # VS Code files
 *.vscode
+
+# Compressed folder
+*.zip
+*.tar.xz
+*.7z

@@ -42,6 +42,11 @@ void State::Update(float dt){
     for(i = 0; i < size; i++){
         objectArray[i]->Update(dt);
         if(objectArray[i]->IsDead()){
+			Sound* soundPtr = static_cast<Sound*> (objectArray[i]->GetComponent("Sound"));
+			if(soundPtr != nullptr){
+				soundPtr->Play(1);
+				SDL_Delay(1500);
+			}
             objectArray.erase(objectArray.begin() + i);
         }
     }
