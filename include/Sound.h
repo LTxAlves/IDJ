@@ -24,6 +24,8 @@ class Sound : public Component{
         void Open(string);
         bool IsOpen();
 
+        int GetChannel();
+
         void Update(float);
         void Render();
         bool Is(string);

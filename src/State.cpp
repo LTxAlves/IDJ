@@ -47,7 +47,7 @@ void State::Update(float dt){
 			Sound* soundPtr = static_cast<Sound*> (objectArray[i]->GetComponent("Sound"));
 			if(soundPtr != nullptr){
 				soundPtr->Play(1);
-				SDL_Delay(1500);
+				while(Mix_Playing(soundPtr->GetChannel()));
 			}
             objectArray.erase(objectArray.begin() + i);
         }

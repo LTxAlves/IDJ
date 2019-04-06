@@ -56,6 +56,11 @@ bool Sound::IsOpen(){
     return false;
 }
 
+int Sound::GetChannel(){
+
+    return channel;
+}
+
 void Sound::Update(float dt){
 
  //does nothing

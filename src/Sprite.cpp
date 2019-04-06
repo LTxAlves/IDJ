@@ -81,20 +81,7 @@ bool Sprite::IsOpen(){
 
 void Sprite::Render(){ //general render function, no parameters
 
-    SDL_Rect dst_rect;
-
-    dst_rect.x = associated.box.x;
-    dst_rect.y = associated.box.y;
-    dst_rect.w = GetWidth();
-    dst_rect.h = GetHeight();
-
-    auto rend = Game::GetInstance().GetRenderer(); //getting rederer for only instance of game
-
-    if(SDL_RenderCopy(rend, texture, &clipRect, &dst_rect) != 0){
-        SDL_Log("Unable to render texture: %s", SDL_GetError());
-        exit(1);
-    }
-
+    Render(associated.box.x, associated.box.y);
 }
 
 void Sprite::Update(float dt){
