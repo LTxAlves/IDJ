@@ -4,7 +4,10 @@
 #include <iostream>
 #include <vector>
 #include "TileSet.h"
+<<<<<<< HEAD
 #include "Component.h"
+=======
+>>>>>>> 2fb401d7f91f1daf6bf1c4979fde989180ceedf4
 
 using std::vector;
 using std::string;
