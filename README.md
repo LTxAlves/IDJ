@@ -1,4 +1,4 @@
-# Trabalho 1 - Introdução ao Desenvolvimeto de Jogos
+# Trabalhos - Introdução ao Desenvolvimeto de Jogos
 
 ## Getting Started
 
