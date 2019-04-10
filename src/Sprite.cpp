@@ -1,41 +1,30 @@
 #include "Sprite.h"
-#include "Game.h"
 
-Sprite::Sprite(){
+Sprite::Sprite(GameObject& associated) : Component(associated){
 
     texture = nullptr;
 }
 
-Sprite::Sprite(string file){
+Sprite::Sprite(GameObject& associated, string file) : Component(associated){
 
     texture = nullptr;
     Open(file);
 }
 
-Sprite::~Sprite(){
-
-    if(texture != nullptr)
-        SDL_DestroyTexture(texture);
-}
-
 void Sprite::Open(string file){
 
-    if(texture != nullptr)
-        SDL_DestroyTexture(texture);
+    SDL_DestroyTexture(texture);
 
-    auto rend = Game::GetInstance().GetRenderer(); //getting rederer for single instance of game
-    texture = IMG_LoadTexture(rend, file.c_str());
-
-    if(texture == nullptr){
-        SDL_Log("Unable to load texture: %s", IMG_GetError());
-        exit(1);
-    }
+    texture = Resources::GetImage(file);
 
     SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
     SetClip(0,0, width, height);
+
+    associated.box.w = width;
+    associated.box.h = height;
 }
 
-void Sprite::SetClip(int x, int y, int w, int h){
+void Sprite::SetClip(int x, int y, int w, int h){ //sets clip with given values
 
     clipRect.x = x;
     clipRect.y = y;
@@ -43,14 +32,14 @@ void Sprite::SetClip(int x, int y, int w, int h){
     clipRect.h = h;
 }
 
-void Sprite::Render(int x, int y){
+void Sprite::Render(int x, int y){ //renders with given values
 
     SDL_Rect dst_rect;
 
     dst_rect.x = x;
     dst_rect.y = y;
-    dst_rect.w = GetWidth();
-    dst_rect.h = GetHeight();
+    dst_rect.w = clipRect.w;
+    dst_rect.h = clipRect.h;
 
     auto rend = Game::GetInstance().GetRenderer(); //getting rederer for only instance of game
 
@@ -58,7 +47,11 @@ void Sprite::Render(int x, int y){
         SDL_Log("Unable to render texture: %s", SDL_GetError());
         exit(1);
     }
+}
 
+void Sprite::Render(){ //general render function, no parameters
+
+    Render(associated.box.x, associated.box.y);
 }
 
 int Sprite::GetWidth(){
@@ -74,4 +67,14 @@ int Sprite::GetHeight(){
 bool Sprite::IsOpen(){
 
     return (texture != nullptr) ? true : false;
+}
+
+void Sprite::Update(float dt){
+
+ //does nothing
+}
+
+bool Sprite::Is(string type){
+
+    return (type.compare("Sprite") == 0 ? true : false);
 }

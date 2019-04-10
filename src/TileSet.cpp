@@ -1,10 +1,12 @@
 #include "TileSet.h"
 
-using std::unique_ptr;
+#define TILESETFILE "assets/img/tileset.png"
 
-unique_ptr<GameObject> GO = unique_ptr<GameObject> (new GameObject());
+using std::shared_ptr;
 
-TileSet::TileSet(int tileWidth, int tileHeight, string file) :  tileSet(*GO, "assets/img/tileset.png"),
+shared_ptr<GameObject> go = shared_ptr<GameObject> (new GameObject());
+
+TileSet::TileSet(int tileWidth, int tileHeight, string file) :  tileSet(*go, TILESETFILE),
                                                                 tileWidth(tileWidth),
                                                                 tileHeight(tileHeight){
 
@@ -14,8 +16,9 @@ TileSet::TileSet(int tileWidth, int tileHeight, string file) :  tileSet(*GO, "as
 
 void TileSet::RenderTile(unsigned index, float x, float y){
 
-    if(index <= (unsigned)rows*columns){
-        tileSet.SetClip(0, 0, tileWidth, tileHeight);
+    if(index < (unsigned)rows * columns){
+        tileSet.SetClip(GetTileWidth() * (index%columns), GetTileHeight() * (index/columns), GetTileWidth(), GetTileHeight());
+        //std::cout << "x = " << GetTileWidth() * (index%columns) << " y = " << GetTileHeight() * (index/columns) << std::endl;
         tileSet.Render(x, y);
     }
 }

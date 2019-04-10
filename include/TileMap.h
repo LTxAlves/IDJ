@@ -3,14 +3,15 @@
 
 #include <iostream>
 #include <vector>
+#include <sstream>
+#include <algorithm>
 #include "TileSet.h"
-<<<<<<< HEAD
 #include "Component.h"
-=======
->>>>>>> 2fb401d7f91f1daf6bf1c4979fde989180ceedf4
 
 using std::vector;
 using std::string;
+
+class TileSet;
 
 class TileMap : public Component{
 
@@ -31,10 +32,13 @@ class TileMap : public Component{
         int GetHeight();
         int GetDepth();
 
+        bool Is(string);
+        void Update(float);
+
     private:
         vector<int> tileMatrix;
         TileSet* tileSet;
-        int mapWidht, mapHeight, mapDepth;
+        int mapWidth, mapHeight, mapDepth;
 };
 
 #endif //TILE_MAP_H

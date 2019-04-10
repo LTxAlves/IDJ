@@ -7,23 +7,29 @@
 #define INCLUDE_SDL_MIXER
 #include "SDL_include.h"
 
+#include "Component.h"
+
 using std::string;
 
-class Sprite{
+class Sprite : public Component{
     
     public:
-        Sprite();
-        Sprite(string);
-        ~Sprite();
+        Sprite(GameObject&);
+        Sprite(GameObject&, string);
 
         void Open(string);
         void SetClip(int, int, int, int);
         void Render(int, int);
+        void Render();
 
         int GetWidth();
         int GetHeight();
 
         bool IsOpen();
+
+        void Update(float);
+
+        bool Is(string);
 
     private:
         SDL_Texture* texture;
@@ -31,5 +37,7 @@ class Sprite{
         int height;
         SDL_Rect clipRect;
 };
+
+#include "Resources.h"
 
 #endif // SPRITE_H

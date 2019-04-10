@@ -1,13 +1,15 @@
 #ifndef MUSIC_H
 #define MUSIC_H
 
+#include <iostream>
+
 #define INCLUDE_SDL_IMAGE
 #define INCLUDE_SDL_MIXER
 #include "SDL_include.h"
 
-#include <iostream>
-
 using std::string;
+
+class Resources;
 
 class Music{
     
@@ -24,5 +26,7 @@ class Music{
     private:
         Mix_Music* music;
 };
+
+#include "Resources.h"
 
 #endif // MUSIC_H
