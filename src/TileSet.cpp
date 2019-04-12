@@ -18,7 +18,6 @@ void TileSet::RenderTile(unsigned index, float x, float y){
 
     if(index < (unsigned)rows * columns){
         tileSet.SetClip(GetTileWidth() * (index%columns), GetTileHeight() * (index/columns), GetTileWidth(), GetTileHeight());
-        //std::cout << "x = " << GetTileWidth() * (index%columns) << " y = " << GetTileHeight() * (index/columns) << std::endl;
         tileSet.Render(x, y);
     }
 }
