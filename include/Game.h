@@ -24,6 +24,8 @@ class Game{
         State& GetState();
         static Game& GetInstance();
 
+        float GetDeltaTime();
+
     private:
         Game(string, int, int);
 
@@ -32,6 +34,10 @@ class Game{
         SDL_Renderer* renderer;
         State* state;
 
+        float dt;
+        int frameStart;
+
+        void CalculateDeltaTime();
 };
 
 #include "Resources.h"

@@ -2,7 +2,8 @@
 
 Game* Game::instance;
 
-Game::Game(string title, int width, int height){
+Game::Game(string title, int width, int height) :   dt(0),
+                                                    frameStart(0){
 
     auto SDL_flags = (SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER); //flags for _Init()
     auto Img_flags = (IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF); //flags for IMG_Init()
@@ -90,7 +91,7 @@ void Game::Run(){
 
     while(!state->QuitRequested()){
         InputManager::GetInstance().Update();
-        state->Update(0);
+        state->Update(dt);
         state->Render();
         SDL_RenderPresent(renderer);
         SDL_Delay(33); //delays 33ms for approximately a 30fps framerate
@@ -99,4 +100,18 @@ void Game::Run(){
     Resources::ClearImages();
     Resources::ClearMusics();
     Resources::ClearSounds();
+}
+
+float Game::GetDeltaTime(){
+
+    return dt;
+}
+
+void Game::CalculateDeltaTime(){
+
+    int newFrame = SDL_GetTicks();
+
+    dt = 1000 * (newFrame - frameStart);
+
+    frameStart = newFrame;
 }
