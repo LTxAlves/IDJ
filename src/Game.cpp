@@ -91,6 +91,7 @@ void Game::Run(){
 
     while(!state->QuitRequested()){
         InputManager::GetInstance().Update();
+        CalculateDeltaTime();
         state->Update(dt);
         state->Render();
         SDL_RenderPresent(renderer);
@@ -111,7 +112,7 @@ void Game::CalculateDeltaTime(){
 
     int newFrame = SDL_GetTicks();
 
-    dt = 1000 * (newFrame - frameStart);
+    dt = (newFrame - frameStart)/1000.0;
 
     frameStart = newFrame;
 }

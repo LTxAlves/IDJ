@@ -10,6 +10,7 @@
 #include "Vec2.h"
 #include "TileMap.h"
 #include "InputManager.h"
+#include "Camera.h"
 
 using std::vector;
 using std::shared_ptr;

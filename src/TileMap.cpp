@@ -100,7 +100,7 @@ int& TileMap::At(int x, int y, int z = 0){
 void TileMap::Render(){
 
     for(int i = 0; i < mapDepth; i++)
-        RenderLayer(i, this->associated.box.x, this->associated.box.y);
+        RenderLayer(i, Camera::pos.x, Camera::pos.y);
 }
 
 void TileMap::RenderLayer(int layer, int cameraX = 0, int cameraY = 0){

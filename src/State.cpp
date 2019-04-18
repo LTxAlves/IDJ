@@ -55,6 +55,8 @@ void State::Update(float dt){
 
 	InputManager& inputManager = InputManager::GetInstance();
 
+	Camera::Update(dt);
+
 	if(inputManager.QuitRequested() || inputManager.KeyPress(ESCAPE_KEY))
 		quitRequested = true;
 
