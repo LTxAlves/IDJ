@@ -61,16 +61,15 @@ void State::Update(float dt){
 		AddObject((int)objPos.x, (int)objPos.y);
 	}
 
-    for(unsigned int i = 0; i < objectArray.size(); i++) //updates each object
+    for(unsigned int i = 0; i < objectArray.size(); i++){ //updates each object
         objectArray[i]->Update(dt);
+	}
 
 	for(unsigned int i = 0; i < objectArray.size(); i++){ //deletes dead object and play their sound
         if(objectArray[i]->IsDead()){
 			Sound* soundPtr = static_cast<Sound*> (objectArray[i]->GetComponent("Sound"));
-			if(soundPtr != nullptr){
+			if(soundPtr != nullptr)
 				soundPtr->Play(1);
-				while(Mix_Playing(soundPtr->GetChannel()));				
-			}
             objectArray.erase(objectArray.begin() + i);
         }
     }
