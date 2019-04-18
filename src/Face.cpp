@@ -22,7 +22,9 @@ void Face::Damage(int damage){
 
 void Face::Update(float dt){
 
-    //does nothing
+    if(InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON))
+        if(associated.box.Contains(InputManager::GetInstance().GetMouseX(), InputManager::GetInstance().GetMouseY()))
+            Damage(std::rand() % 10 + 10);
 }
 
 void Face::Render(){

@@ -1,4 +1,3 @@
-#include <fstream>
 #include "TileMap.h"
 
 using std::ifstream;

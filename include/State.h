@@ -9,6 +9,7 @@
 #include "GameObject.h"
 #include "Vec2.h"
 #include "TileMap.h"
+#include "InputManager.h"
 
 using std::vector;
 using std::shared_ptr;
@@ -28,8 +29,6 @@ class State{
         void Render();
 
     private:
-        void Input();
-
         void AddObject(int, int);
 
         Music music;

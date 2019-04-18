@@ -36,5 +36,6 @@ class Game{
 
 #include "Resources.h"
 #include "State.h"
+#include "InputManager.h"
 
 #endif // GAME_H

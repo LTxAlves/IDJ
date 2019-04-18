@@ -88,10 +88,12 @@ SDL_Renderer* Game::GetRenderer(){
 
 void Game::Run(){
 
-    while (!state->QuitRequested()){
-        state->Update(33); //delays 33ms for approximately a 30fps framerate
+    while(!state->QuitRequested()){
+        InputManager::GetInstance().Update();
+        state->Update(0);
         state->Render();
         SDL_RenderPresent(renderer);
+        SDL_Delay(33); //delays 33ms for approximately a 30fps framerate
     }
 
     Resources::ClearImages();
