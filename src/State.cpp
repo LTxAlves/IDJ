@@ -53,11 +53,13 @@ void State::LoadAssets(){
 
 void State::Update(float dt){
 
-	if(InputManager::GetInstance().QuitRequested() || InputManager::GetInstance().KeyPress(ESCAPE_KEY))
+	InputManager& inputManager = InputManager::GetInstance();
+
+	if(inputManager.QuitRequested() || inputManager.KeyPress(ESCAPE_KEY))
 		quitRequested = true;
 
-	if(InputManager::GetInstance().KeyPress(SPACE_KEY)){
-		Vec2 objPos = Vec2(200, 0).GetRotated(-PI + PI*(rand() % 1001)/500.0) + Vec2(InputManager::GetInstance().GetMouseX(), InputManager::GetInstance().GetMouseY());
+	if(inputManager.KeyPress(SPACE_KEY)){
+		Vec2 objPos = Vec2(200, 0).GetRotated(-PI + PI*(rand() % 1001)/500.0) + Vec2(inputManager.GetMouseX(), inputManager.GetMouseY());
 		AddObject((int)objPos.x, (int)objPos.y);
 	}
 

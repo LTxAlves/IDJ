@@ -73,7 +73,7 @@ Game::~Game(){  //destroys everething in reverse order of creation
 Game& Game::GetInstance(){
 
     if(instance == nullptr) //checks existence of instance
-        instance = new Game("Leonardo_T_Alves-160012007", 1024, 600); //creates instance if it doesn't exist
+        instance = new Game("Leonardo_T_Alves-160012007", SCREEN_WIDTH, SCREEN_HEIGHT); //creates instance if it doesn't exist
     return *(instance);
 }
 

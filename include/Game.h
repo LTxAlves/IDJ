@@ -8,6 +8,9 @@
 #define INCLUDE_SDL_MIXER
 #include "SDL_include.h"
 
+#define SCREEN_HEIGHT   600
+#define SCREEN_WIDTH    1024
+
 using std::string;
 
 class State;
