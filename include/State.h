@@ -11,6 +11,7 @@
 #include "TileMap.h"
 #include "InputManager.h"
 #include "Camera.h"
+#include "CameraFollower.h"
 
 using std::vector;
 using std::shared_ptr;

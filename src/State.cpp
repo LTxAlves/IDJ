@@ -24,6 +24,10 @@ State::State() : music(MUSICFILE){
 
 	go->AddComponent(bg);
 
+	CameraFollower* camFollow = new CameraFollower(*go);
+
+	go->AddComponent(camFollow);
+
 	objectArray.emplace_back(move(go));
 
 	shared_ptr<GameObject> go2 = shared_ptr<GameObject> (new GameObject());
@@ -98,8 +102,8 @@ void State::AddObject(int mouseX, int mouseY){ //adds object to givn coordinates
 	Sound* deathSound = (new Sound(*go, BOOMAUDIOFILE));
 	Face* face = (new Face(*go));
 
-	go->box.x = mouseX - enemy->GetWidth()/2;
-	go->box.y = mouseY - enemy->GetHeight()/2;
+	go->box.x = Camera::pos.x + mouseX - enemy->GetWidth()/2;
+	go->box.y = Camera::pos.y + mouseY - enemy->GetHeight()/2;
 
 	go->AddComponent(enemy);
 
