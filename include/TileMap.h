@@ -15,6 +15,8 @@ using std::ifstream;
 using std::getline;
 using std::stringstream;
 
+#define PARALLAX_FACTOR 1.5
+
 class TileSet;
 
 class TileMap : public Component{

@@ -96,7 +96,7 @@ int& TileMap::At(int x, int y, int z = 0){
 void TileMap::Render(){
 
     for(int i = 0; i < mapDepth; i++)
-        RenderLayer(i, Camera::pos.x, Camera::pos.y);
+        RenderLayer(i, Camera::pos.x * (1 + i * PARALLAX_FACTOR), Camera::pos.y * (1 + i * PARALLAX_FACTOR));
 }
 
 void TileMap::RenderLayer(int layer, int cameraX = 0, int cameraY = 0){
