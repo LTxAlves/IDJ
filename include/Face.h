@@ -7,6 +7,7 @@
 #include "InputManager.h"
 
 using std::string;
+using std::rand;
 
 class Face : public Component{
 

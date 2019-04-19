@@ -22,11 +22,11 @@ void Face::Damage(int damage){
 
 void Face::Update(float dt){
 
-    InputManager& inputManager = InputManager::GetInstance();
+    InputManager& inputManager = InputManager::GetInstance(); //gets only instance of input manager
 
     if(inputManager.MousePress(LEFT_MOUSE_BUTTON))
         if(associated.box.Contains(inputManager.GetMouseX() - Camera::pos.x, inputManager.GetMouseY() - Camera::pos.y))
-            Damage(std::rand() % 10 + 10);
+            Damage(rand() % 10 + 10); //random damage from 10 to 19
 }
 
 void Face::Render(){

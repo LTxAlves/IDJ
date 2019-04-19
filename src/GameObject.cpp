@@ -65,8 +65,8 @@ Component* GameObject::GetComponent(string type){
     int size = components.size(), i;
 
         for(i = 0; i < size; i++){
-            if(components[i]->Is(type))
-                return components[i].get();
+            if(components[i]->Is(type)) //finds component
+                return components[i].get(); //returns it
         }
         
     return nullptr;

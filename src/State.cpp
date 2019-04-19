@@ -1,32 +1,19 @@
 #include "State.h"
 
-#define BGIMAGEFILE "assets/img/ocean.jpg"
-#define MUSICFILE "assets/audio/stageState.ogg"
-#define TILESETFILE "assets/img/tileset.png"
-#define TILEMAPFILE "assets/map/tileMap.txt"
-#define PENGUINFACEFILE "assets/img/penguinface.png"
-#define BOOMAUDIOFILE "assets/audio/boom.wav"
-#define TILEWIDTH 64
-#define TILEHEIGHT 64
-#define PI 3.14159265359 //value of constant pi
-
-using std::move;
-using std::shared_ptr;
-
 State::State() : music(MUSICFILE){
 
     shared_ptr<GameObject> go = shared_ptr<GameObject> (new GameObject()); //GameObject required for Sprite
 
-	Sprite* bg = new Sprite(*go, BGIMAGEFILE);
+	Sprite* bg = new Sprite(*go, BGIMAGEFILE); //assigns image to background
 
-	go->box.x = 0;
-	go->box.y = 0;
+	go->box.x = 0; //sets x coordinate to 0
+	go->box.y = 0; //sets y coordinate to 0
 
-	go->AddComponent(bg);
+	go->AddComponent(bg); //adds background
 
 	CameraFollower* camFollow = new CameraFollower(*go);
 
-	go->AddComponent(camFollow);
+	go->AddComponent(camFollow); //make background follow camera (not move)
 
 	objectArray.emplace_back(move(go));
 
@@ -42,8 +29,8 @@ State::State() : music(MUSICFILE){
 
 	objectArray.emplace_back(move(go2));
 
-    quitRequested = false;
-    music.Play(-1);
+    quitRequested = false; //initializes quit request variable
+    music.Play(-1); //plays music
 }
 
 State::~State(){
@@ -53,18 +40,19 @@ State::~State(){
 
 void State::LoadAssets(){
 
+	//does nothing
 }
 
 void State::Update(float dt){
 
-	InputManager& inputManager = InputManager::GetInstance();
+	InputManager& inputManager = InputManager::GetInstance(); //gets only instance of input manager
 
-	Camera::Update(dt);
+	Camera::Update(dt); //updates camera to new frame
 
-	if(inputManager.QuitRequested() || inputManager.KeyPress(ESCAPE_KEY))
+	if(inputManager.QuitRequested() || inputManager.KeyPress(ESCAPE_KEY)) //checks if player quit game
 		quitRequested = true;
 
-	if(inputManager.KeyPress(SPACE_KEY)){
+	if(inputManager.KeyPress(SPACE_KEY)){ //checks if space key was pressed (add penguin)
 		Vec2 objPos = Vec2(200, 0).GetRotated(-PI + PI*(rand() % 1001)/500.0) + Vec2(inputManager.GetMouseX(), inputManager.GetMouseY());
 		AddObject((int)objPos.x, (int)objPos.y);
 	}
@@ -73,7 +61,7 @@ void State::Update(float dt){
         objectArray[i]->Update(dt);
 	}
 
-	for(unsigned int i = 0; i < objectArray.size(); i++){ //deletes dead object and play their sound
+	for(unsigned int i = 0; i < objectArray.size(); i++){ //deletes dead object and plays their sound
         if(objectArray[i]->IsDead()){
 			Sound* soundPtr = static_cast<Sound*> (objectArray[i]->GetComponent("Sound"));
 			if(soundPtr != nullptr)
@@ -85,7 +73,7 @@ void State::Update(float dt){
 
 void State::Render(){
 
-    for(unsigned int i = 0; i < objectArray.size(); i++){
+    for(unsigned int i = 0; i < objectArray.size(); i++){ //renders each object
         objectArray[i]->Render();
     }
 }
@@ -95,7 +83,7 @@ bool State::QuitRequested(){
     return quitRequested;
 }
 
-void State::AddObject(int mouseX, int mouseY){ //adds object to givn coordinates
+void State::AddObject(int mouseX, int mouseY){ //adds object to given coordinates
 
 	shared_ptr<GameObject> go = shared_ptr<GameObject> (new GameObject());
 	Sprite* enemy = (new Sprite(*go, PENGUINFACEFILE));

@@ -16,13 +16,13 @@ void Camera::Unfollow(){
 
 void Camera::Update(float dt){
 
-    InputManager& inputManager = InputManager::GetInstance();
+    InputManager& inputManager = InputManager::GetInstance(); //gets only instance of input manager
 
-    if(focus != nullptr){
+    if(focus != nullptr){ //checks existence of focus
         pos.x = focus->box.x + focus->box.w/2 - SCREEN_WIDTH/2;
         pos.y = focus->box.y + focus->box.h/2 - SCREEN_HEIGHT/2;
     }
-    else{
+    else{ //moves according to key press, no focus
         if(inputManager.IsKeyDown(LEFT_ARROW_KEY))
             speed.x = CAMERA_SPEED;
         else if(inputManager.IsKeyDown(RIGHT_ARROW_KEY))

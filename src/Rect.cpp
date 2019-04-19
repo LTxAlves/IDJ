@@ -1,19 +1,19 @@
 #include "Rect.h"
 
-Rect::Rect(){ //initializes with 0 value
+Rect::Rect():   x(0),
+                y(0),
+                w(0),
+                h(0){ //initializes with 0 value
 
-    x = 0;
-    y = 0;
-    w = 0;
-    h = 0;
+
 }
 
-Rect::Rect(float x_in, float y_in, float w_in, float h_in){ //initializes with given values
+Rect::Rect(float x_in, float y_in, float w_in, float h_in) :    x(x_in),
+                                                                y(y_in),
+                                                                w(w_in),
+                                                                h(h_in){ //initializes with given values
 
-    x = x_in;
-    y = y_in;
-    w = w_in;
-    h = h_in;
+
 }
 
 float Rect::distance(Rect rect1, Rect rect2){ //calculates distance between 2 rects

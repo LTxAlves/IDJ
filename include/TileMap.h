@@ -14,6 +14,7 @@ using std::string;
 using std::ifstream;
 using std::getline;
 using std::stringstream;
+using std::remove;
 
 #define PARALLAX_FACTOR 1.5
 

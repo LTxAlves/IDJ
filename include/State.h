@@ -13,6 +13,17 @@
 #include "Camera.h"
 #include "CameraFollower.h"
 
+#define BGIMAGEFILE "assets/img/ocean.jpg" //background image file
+#define MUSICFILE "assets/audio/stageState.ogg" //background music file
+#define TILESETFILE "assets/img/tileset.png" //tileset file
+#define TILEMAPFILE "assets/map/tileMap.txt" //tilemap file
+#define PENGUINFACEFILE "assets/img/penguinface.png" //penguin face file
+#define BOOMAUDIOFILE "assets/audio/boom.wav" //explosion audiio file
+#define TILEWIDTH 64 //tile width in pixels
+#define TILEHEIGHT 64 //tile height in pixels
+#define PI 3.14159265359 //value of constant pi
+
+using std::move;
 using std::vector;
 using std::shared_ptr;
 

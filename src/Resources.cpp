@@ -1,28 +1,28 @@
 #include "Resources.h"
 
-unordered_map<string, SDL_Texture*> Resources::imageTable;
-unordered_map<string, Mix_Music*> Resources::musicTable;
-unordered_map<string, Mix_Chunk*> Resources::soundTable;
+unordered_map<string, SDL_Texture*> Resources::imageTable;  //initializes static variable
+unordered_map<string, Mix_Music*> Resources::musicTable;    //initializes static variable
+unordered_map<string, Mix_Chunk*> Resources::soundTable;    //initializes static variable
 
 SDL_Texture* Resources::GetImage(string file){
 
     auto it = imageTable.find(file);
 
-    if(it == imageTable.end()){
+    if(it == imageTable.end()){ //checks if file is in image table
 
         auto rend = Game::GetInstance().GetRenderer(); //getting rederer for single instance of game
-        auto texture = IMG_LoadTexture(rend, file.c_str());
+        auto texture = IMG_LoadTexture(rend, file.c_str()); //loads image if it doesn't exist
 
-        if(texture == nullptr){
+        if(texture == nullptr){ //checks if it was loaded correctly
             SDL_Log("Unable to load texture: %s", IMG_GetError());
             exit(1);
         }
 
-        imageTable[file] = texture;
-        return texture;
+        imageTable[file] = texture; //asigns it
+        return texture; //returns it
     }
     
-    return it->second;
+    return it->second; //returns image
 }
 
 void Resources::ClearImages(){
@@ -41,19 +41,19 @@ Mix_Music* Resources::GetMusic(string file){
 
     auto it = musicTable.find(file);
 
-    if(it == musicTable.end()){
-        music = Mix_LoadMUS(file.c_str());
+    if(it == musicTable.end()){ //checks if file is in music table
+        music = Mix_LoadMUS(file.c_str()); //loads music if it doesn't exist
 
-        if(music == nullptr){
+        if(music == nullptr){ //checks if file exists and was opened correctly
             SDL_Log("Error loading music: %s", SDL_GetError());
             exit(1);    
         }
 
-        musicTable[file] = music;
-        return music;
+        musicTable[file] = music; //adds music to map
+        return music; //returns music
     }
 
-    return it->second;
+    return it->second; //returns music
 }
 
 void Resources::ClearMusics(){
@@ -72,19 +72,19 @@ Mix_Chunk* Resources::GetSound(string file){
 
     auto it = soundTable.find(file);
 
-    if(it == soundTable.end()){
-        chunk = Mix_LoadWAV(file.c_str());
+    if(it == soundTable.end()){ //checks if file is in sound table
+        chunk = Mix_LoadWAV(file.c_str()); //loads sound if it doesn't exist
 
-        if(chunk == nullptr){
+        if(chunk == nullptr){ //checks if file was opened correctly and exists
             SDL_Log("Error loading sound: %s", SDL_GetError());
             exit(1);
         }
 
-        soundTable[file] = chunk;
-        return chunk;
+        soundTable[file] = chunk; //adds sound to map
+        return chunk; //returns sound
     }
 
-    return it->second;
+    return it->second; //returns sound
 }
 
 void Resources::ClearSounds(){

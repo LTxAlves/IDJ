@@ -55,7 +55,7 @@ Game::Game(string title, int width, int height) :   dt(0),
     state = new State();
 }
 
-Game::~Game(){  //destroys everething in reverse order of creation
+Game::~Game(){  //destroys everything in reverse order of creation
 
     delete state;
 
@@ -90,11 +90,11 @@ SDL_Renderer* Game::GetRenderer(){
 void Game::Run(){
 
     while(!state->QuitRequested()){
-        InputManager::GetInstance().Update();
-        CalculateDeltaTime();
-        state->Update(dt);
-        state->Render();
-        SDL_RenderPresent(renderer);
+        InputManager::GetInstance().Update(); //gets inputs
+        CalculateDeltaTime(); //changes dt
+        state->Update(dt); //updates state
+        state->Render(); //renders images
+        SDL_RenderPresent(renderer); //changes renderization to present
         SDL_Delay(33); //delays 33ms for approximately a 30fps framerate
     }
 
@@ -110,9 +110,9 @@ float Game::GetDeltaTime(){
 
 void Game::CalculateDeltaTime(){
 
-    int newFrame = SDL_GetTicks();
+    int newFrame = SDL_GetTicks(); //new frame time
 
-    dt = (newFrame - frameStart)/1000.0;
+    dt = (newFrame - frameStart)/1000.0; //difference in time in seconds
 
-    frameStart = newFrame;
+    frameStart = newFrame; //changes frame time
 }

@@ -1,9 +1,8 @@
 #include "Sound.h"
 
-Sound::Sound(GameObject& associated) : Component(associated){
-
-    chunk = nullptr;
-
+Sound::Sound(GameObject& associated) :  Component(associated),
+                                        chunk(nullptr){
+    
     channel = -2; //arbitrary value (not recognized by SDL_PlayChannel) to check if channel exists
 }
 
