@@ -1,9 +1,5 @@
 #include "TileMap.h"
 
-using std::ifstream;
-using std::getline;
-using std::stringstream;
-
 int error = -2;
 
 TileMap::TileMap(GameObject& associated, string file, TileSet* tileSet) : Component(associated){

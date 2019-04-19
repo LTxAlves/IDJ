@@ -11,6 +11,9 @@
 
 using std::vector;
 using std::string;
+using std::ifstream;
+using std::getline;
+using std::stringstream;
 
 class TileSet;
 
