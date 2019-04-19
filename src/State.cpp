@@ -102,8 +102,8 @@ void State::AddObject(int mouseX, int mouseY){ //adds object to givn coordinates
 	Sound* deathSound = (new Sound(*go, BOOMAUDIOFILE));
 	Face* face = (new Face(*go));
 
-	go->box.x = Camera::pos.x + mouseX - enemy->GetWidth()/2;
-	go->box.y = Camera::pos.y + mouseY - enemy->GetHeight()/2;
+	go->box.x = -Camera::pos.x + mouseX - enemy->GetWidth()/2;
+	go->box.y = -Camera::pos.y + mouseY - enemy->GetHeight()/2;
 
 	go->AddComponent(enemy);
 
