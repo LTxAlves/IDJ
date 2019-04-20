@@ -16,20 +16,9 @@ Rect::Rect(float x_in, float y_in, float w_in, float h_in) :    x(x_in),
 
 }
 
-float Rect::distance(Rect rect1, Rect rect2){ //calculates distance between 2 rects
+float Rect::distance(Rect rect){ //calculates distance between 2 rects centerpoints
 
-    float center1[2], center2[2], del_x, del_y;
-
-    center1[0] = rect1.x + (rect1.w/2);
-    center1[1] = rect1.y + (rect1.h/2);
-
-    center2[0] = rect2.x + (rect2.w/2);
-    center2[1] = rect2.y + (rect2.h/2);
-
-    del_x = center1[0] - center2[0];
-    del_y = center1[1] - center2[1];
-
-    return (sqrt((del_x*del_x) + (del_y*del_y)));
+    return CenterPoint().Distance(rect.CenterPoint());
 }
 
 bool Rect::Contains(float x_coord, float y_coord){ //checks if rect contains coordinates given
@@ -38,4 +27,11 @@ bool Rect::Contains(float x_coord, float y_coord){ //checks if rect contains coo
         return true;
 
     return false;
+}
+
+Vec2 Rect::CenterPoint(){ //calculates coordinates of center point of rectangle
+
+    Vec2 vec(x + w/2.0, y + h/2.0);
+
+    return vec;
 }

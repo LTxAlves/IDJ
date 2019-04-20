@@ -2,17 +2,23 @@
 #define RECT_H
 
 #include <math.h>
+#include "Vec2.h"
+
+class Vec2;
 
 class Rect{
+
     public:
         Rect();
         Rect(float, float, float, float);
         
         float x, y, w, h;
 
-        float distance(Rect, Rect);
+        float distance(Rect);
 
         bool Contains(float, float);
+
+        Vec2 CenterPoint();
 };
 
 #endif //RECT_H

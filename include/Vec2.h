@@ -2,6 +2,11 @@
 #define VEC2_H
 
 #include <math.h>
+#include "Rect.h"
+
+#define PI 3.14159265359 //value of constant pi
+
+class Rect;
 
 class Vec2{
 
@@ -15,11 +20,15 @@ class Vec2{
         Vec2 GetRotated(double);
 
         Vec2 operator+(const Vec2&);
+        Vec2 operator-(const Vec2&);
+        Vec2 operator*(const float);
 
-        Vec2 VectorTimesScalar(Vec2, float);
         float Magnitude(Vec2);
 
         Vec2 Normalized(Vec2);
+
+        float Distance(Vec2);
+        float Inclination();
 };
 
 #endif //VEC2_H
