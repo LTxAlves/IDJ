@@ -30,6 +30,7 @@ State::State() : music(MUSICFILE){
 	objectArray.emplace_back(move(go2));
 
     quitRequested = false; //initializes quit request variable
+	started = false; //initializes started variable
     music.Play(-1); //plays music
 }
 
@@ -100,4 +101,43 @@ void State::AddObject(int mouseX, int mouseY){ //adds object to given coordinate
 	go->AddComponent(face);
 
 	objectArray.emplace_back(move(go));
+}
+
+weak_ptr<GameObject> State::AddObject(GameObject* go){
+
+	shared_ptr<GameObject> go2 = shared_ptr<GameObject> (new GameObject(*go));
+
+	objectArray.push_back(go2);
+
+	if(started)
+		go2->Start();
+
+	weak_ptr<GameObject> go3 = weak_ptr<GameObject> (go2);
+
+	return go3;
+}
+
+weak_ptr<GameObject> State::GetObjectPtr(GameObject* go){
+
+	weak_ptr<GameObject> go2;
+
+	for(auto it = objectArray.begin(); it != objectArray.end(); it++){
+		if((*it).get() == go)
+			go2 = weak_ptr<GameObject> (*it);
+	}
+	
+	return go2;
+}
+
+void State::Start(){
+
+	LoadAssets();
+
+	if(!started){
+		for(unsigned int i = 0; i < objectArray.size(); i++){
+			objectArray[i]->Start();
+		}
+
+		started = true;
+	}
 }

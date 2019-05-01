@@ -89,6 +89,8 @@ SDL_Renderer* Game::GetRenderer(){
 
 void Game::Run(){
 
+    state->Start();
+
     while(!state->QuitRequested()){
         InputManager::GetInstance().Update(); //gets inputs
         CalculateDeltaTime(); //changes dt

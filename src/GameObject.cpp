@@ -1,8 +1,9 @@
 #include "GameObject.h"
 
-GameObject::GameObject(){       
+GameObject::GameObject() :  isDead(false),
+                            started(false){
 
-    isDead = false;
+
 }
 
 GameObject::~GameObject(){
@@ -70,4 +71,15 @@ Component* GameObject::GetComponent(string type){
         }
         
     return nullptr;
+}
+
+void GameObject::Start(){
+
+    if(!started){
+        for(auto it = components.begin(); it != components.end(); it++){
+            (*it)->Start();
+        }
+
+        started = false;
+    }
 }

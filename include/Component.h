@@ -18,6 +18,8 @@ class Component{
         virtual void Render() = 0;
         virtual bool Is(string) = 0;
 
+        virtual void Start();
+
     protected:
         GameObject& associated;
 };

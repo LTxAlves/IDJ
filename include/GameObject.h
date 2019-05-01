@@ -36,11 +36,15 @@ class GameObject{
         void RemoveComponent(Component*);
         Component* GetComponent(string);
 
+        void Start();
+
         Rect box;
 
     private:
         vector<shared_ptr<Component>> components;
         bool isDead;
+
+        bool started;
 };
 
 #endif //GAMEOBJECT_H

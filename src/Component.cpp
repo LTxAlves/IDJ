@@ -26,3 +26,8 @@ bool Component::Is(string type){
 
     return false; //default value; changes in derived classes
 }
+
+void Component::Start(){
+
+    
+}

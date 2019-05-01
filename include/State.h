@@ -21,11 +21,11 @@
 #define BOOMAUDIOFILE "assets/audio/boom.wav" //explosion audiio file
 #define TILEWIDTH 64 //tile width in pixels
 #define TILEHEIGHT 64 //tile height in pixels
-#define PI 3.14159265359 //value of constant pi
 
 using std::move;
 using std::vector;
 using std::shared_ptr;
+using std::weak_ptr;
 
 class Game;
 
@@ -41,6 +41,11 @@ class State{
         void Update(float);
         void Render();
 
+        void Start();
+
+        weak_ptr<GameObject> AddObject(GameObject*);
+        weak_ptr<GameObject> GetObjectPtr(GameObject*);
+
     private:
         void AddObject(int, int);
 
@@ -48,6 +53,8 @@ class State{
         bool quitRequested;
 
         vector<shared_ptr<GameObject>> objectArray;
+
+        bool started;
 };
 
-#endif // STATE_H
+#endif //STATE_H
