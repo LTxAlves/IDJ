@@ -21,6 +21,8 @@ class Vec2{
 
         Vec2 operator+(const Vec2&);
         Vec2 operator-(const Vec2&);
+        Vec2& operator+=(const Vec2&);
+        Vec2& operator-=(const Vec2&);
         Vec2 operator*(const float);
 
         float Magnitude(Vec2);

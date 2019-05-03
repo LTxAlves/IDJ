@@ -31,16 +31,37 @@ Vec2 Vec2::GetRotated(double theta){ //returns rotated version of vec2
 
 Vec2 Vec2::operator+(const Vec2& vec){ //overload of operator + to add vec2 together
 
-    x += vec.x;
-    y += vec.y;
+    Vec2 sum;
 
-    return *this;
+    sum.x = this->x + vec.x;
+    sum.y = this->y + vec.y;
+
+    return sum;
 }
 
 Vec2 Vec2::operator-(const Vec2& vec){ //overload of operator - to subtract vec2
 
-    x -= vec.x;
-    y -= vec.y;
+    Vec2 sub;
+
+    sub.x = this->x - vec.x;
+    sub.y = this->y - vec.y;
+
+    return sub;
+}
+
+
+Vec2& Vec2::operator+=(const Vec2& vec){
+
+    this->x += vec.x;
+    this->y += vec.y;
+
+    return *this;
+}
+
+Vec2& Vec2::operator-=(const Vec2& vec){
+
+    this->x -= vec.x;
+    this->y -= vec.y;
 
     return *this;
 }
