@@ -76,17 +76,17 @@ Vec2 Vec2::operator*(const float scalar){ //multiplies vec2 and scalar
     return newVec;
 }
 
-float Vec2::Magnitude(Vec2 vec){ //returns magnitude of vec2
+float Vec2::Magnitude(){ //returns magnitude of vec2
 
-    return sqrt(vec.x*vec.x + vec.y*vec.y);
+    return sqrt(this->x*this->x + this->y*this->y);
 }
 
-Vec2 Vec2::Normalized(Vec2 vec){ //returns normalized vec2
+Vec2 Vec2::Normalized(){ //returns normalized vec2
 
     Vec2 normal;
 
-    normal.x = vec.x/Magnitude(vec);
-    normal.y = vec.y/Magnitude(vec);
+    normal.x = this->x/this->Magnitude();
+    normal.y = this->y/this->Magnitude();
 
     return normal;
 }

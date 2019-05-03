@@ -25,9 +25,9 @@ class Vec2{
         Vec2& operator-=(const Vec2&);
         Vec2 operator*(const float);
 
-        float Magnitude(Vec2);
+        float Magnitude();
 
-        Vec2 Normalized(Vec2);
+        Vec2 Normalized();
 
         float Distance(Vec2);
         float Inclination();
