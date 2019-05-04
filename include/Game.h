@@ -1,5 +1,4 @@
-#ifndef GAME_H
-#define GAME_H
+#pragma once
 
 #include <iostream>
 #include <cstdlib>
@@ -46,5 +45,3 @@ class Game{
 #include "Resources.h"
 #include "State.h"
 #include "InputManager.h"
-
-#endif // GAME_H

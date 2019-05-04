@@ -1,5 +1,4 @@
-#ifndef CAMERA_FOLLOWER_H
-#define CAMERA_FOLLOWER_H
+#pragma once
 
 #include "Component.h"
 #include "Camera.h"
@@ -16,5 +15,3 @@ class CameraFollower : public Component {
         bool Is(string);
 
 };
-
-#endif //CAMERA_FOLLOWER_H

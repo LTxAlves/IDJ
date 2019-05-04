@@ -1,5 +1,4 @@
-#ifndef CAMERA_H
-#define CAMERA_H
+#pragma once
 
 #include "GameObject.h"
 #include "Vec2.h"
@@ -22,5 +21,3 @@ class Camera{
 };
 
 #include "Game.h"
-
-#endif //CAMERA_H

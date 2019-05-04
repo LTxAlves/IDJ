@@ -1,5 +1,4 @@
-#ifndef FACE_H
-#define FACE_H
+#pragma once
 
 #include "Component.h"
 #include "GameObject.h"
@@ -23,5 +22,3 @@ class Face : public Component{
     private:
         int hitpoints;
 };
-
-#endif

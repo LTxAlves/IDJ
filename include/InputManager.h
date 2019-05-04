@@ -1,5 +1,4 @@
-#ifndef INPUT_MANAGER_H
-#define INPUT_MANAGER_H
+#pragma once
 
 #include <unordered_map>
 
@@ -14,6 +13,7 @@
 #define SPACE_KEY           SDLK_SPACE
 #define ESCAPE_KEY          SDLK_ESCAPE
 #define LEFT_MOUSE_BUTTON   SDL_BUTTON_LEFT
+#define RIGHT_MOUSE_BUTTON  SDL_BUTTON_RIGHT
 
 using std::unordered_map;
 
@@ -54,5 +54,3 @@ class InputManager{
         int mouseX;
         int mouseY;
 };
-
-#endif //INPUT_MANAGER_H

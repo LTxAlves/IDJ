@@ -1,5 +1,4 @@
-#ifndef STATE_H
-#define STATE_H
+#pragma once
 
 #include "Game.h"
 #include "Sprite.h"
@@ -46,9 +45,9 @@ class State{
         weak_ptr<GameObject> AddObject(GameObject*);
         weak_ptr<GameObject> GetObjectPtr(GameObject*);
 
-    private:
         void AddObject(int, int);
 
+    private:
         Music music;
         bool quitRequested;
 
@@ -56,5 +55,3 @@ class State{
 
         bool started;
 };
-
-#endif //STATE_H

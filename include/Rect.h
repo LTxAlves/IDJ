@@ -1,5 +1,4 @@
-#ifndef RECT_H
-#define RECT_H
+#pragma once
 
 #include <math.h>
 #include "Vec2.h"
@@ -20,5 +19,3 @@ class Rect{
 
         Vec2 CenterPoint();
 };
-
-#endif //RECT_H

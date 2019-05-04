@@ -1,5 +1,4 @@
-#ifndef ALIEN_H
-#define ALIEN_H
+#pragma once
 
 #include <queue>
 #include <memory>
@@ -8,6 +7,7 @@
 
 #define ALIENFILE "assets/img/alien.png"
 #define MINIONFILE "assets/img/minion.png"
+#define ALIENSPEED 150
 
 using std::queue;
 using std::weak_ptr;
@@ -24,25 +24,22 @@ class Alien : public Component{
         bool Is(string);
 
     private:
-        class Action;
+        class Action{
+
+            public:
+                enum ActionType {MOVE, SHOOT};
+
+                ActionType type;
+                Vec2 pos;
+
+                Action(ActionType, float, float);
+        };
 
         Vec2 speed;
         int hp;
+        int nMinions;
 
         queue<Action> taskQueue;
         vector<weak_ptr<GameObject>> minionArray;
 
 };
-
-class Action{
-
-    public:
-        enum ActionType {MOVE, SHOOT};
-
-        Action(ActionType, float, float);
-
-        ActionType type;
-        Vec2 pos;
-};
-
-#endif //ALIEN_H

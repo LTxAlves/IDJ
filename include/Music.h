@@ -1,5 +1,4 @@
-#ifndef MUSIC_H
-#define MUSIC_H
+#pragma once
 
 #include <iostream>
 
@@ -28,5 +27,3 @@ class Music{
 };
 
 #include "Resources.h"
-
-#endif // MUSIC_H

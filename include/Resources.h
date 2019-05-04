@@ -1,5 +1,4 @@
-#ifndef RESOURCES_H
-#define RESOURCES_H
+#pragma once
 
 #include <iostream>
 #include <unordered_map>
@@ -35,5 +34,3 @@ class Resources{
         static unordered_map<string, Mix_Chunk*> soundTable;
 
 };
-
-#endif //RESOURCES_H

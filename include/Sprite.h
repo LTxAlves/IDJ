@@ -1,5 +1,4 @@
-#ifndef SPRITE_H
-#define SPRITE_H
+#pragma once
 
 #include <iostream>
 
@@ -39,5 +38,3 @@ class Sprite : public Component{
 };
 
 #include "Resources.h"
-
-#endif // SPRITE_H

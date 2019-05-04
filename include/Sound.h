@@ -1,5 +1,4 @@
-#ifndef SOUND_H
-#define SOUND_H
+#pragma once
 
 #define INCLUDE_SDL_IMAGE
 #define INCLUDE_SDL_MIXER
@@ -35,5 +34,3 @@ class Sound : public Component{
         Mix_Chunk* chunk;
         int channel;
 };
-
-#endif //SOUND_H

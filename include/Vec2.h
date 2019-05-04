@@ -1,5 +1,4 @@
-#ifndef VEC2_H
-#define VEC2_H
+#pragma once
 
 #include <math.h>
 #include "Rect.h"
@@ -32,5 +31,3 @@ class Vec2{
         float Distance(Vec2);
         float Inclination();
 };
-
-#endif //VEC2_H

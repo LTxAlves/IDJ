@@ -1,5 +1,4 @@
-#ifndef GAMEOBJECT_H
-#define GAMEOBJECT_H
+#pragma once
 
 #include <iostream>
 #include <vector>
@@ -46,5 +45,3 @@ class GameObject{
 
         bool started;
 };
-
-#endif //GAMEOBJECT_H

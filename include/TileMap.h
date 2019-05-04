@@ -1,5 +1,4 @@
-#ifndef TILE_MAP_H
-#define TILE_MAP_H
+#pragma once
 
 #include <iostream>
 #include <vector>
@@ -47,5 +46,3 @@ class TileMap : public Component{
         TileSet* tileSet;
         int mapWidth, mapHeight, mapDepth;
 };
-
-#endif //TILE_MAP_H

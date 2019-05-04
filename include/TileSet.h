@@ -1,5 +1,4 @@
-#ifndef TILE_SET_H
-#define TILE_SET_H
+#pragma once
 
 #include <iostream>
 #include "GameObject.h"
@@ -26,5 +25,3 @@ class TileSet{
 
         int tileWidth, tileHeight;
 };
-
-#endif //TILE_SET_H

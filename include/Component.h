@@ -1,5 +1,4 @@
-#ifndef COMPONENT_H
-#define COMPONENT_H
+#pragma once
 
 #include <iostream>
 #include "GameObject.h"
@@ -23,5 +22,3 @@ class Component{
     protected:
         GameObject& associated;
 };
-
-#endif //COMPONENT_H
