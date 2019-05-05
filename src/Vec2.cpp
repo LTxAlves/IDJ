@@ -50,20 +50,16 @@ Vec2 Vec2::operator-(const Vec2& vec){ //overload of operator - to subtract vec2
 }
 
 
-Vec2& Vec2::operator+=(const Vec2& vec){
+void Vec2::operator+=(const Vec2& vec){
 
     this->x += vec.x;
     this->y += vec.y;
-
-    return *this;
 }
 
-Vec2& Vec2::operator-=(const Vec2& vec){
+void Vec2::operator-=(const Vec2& vec){
 
     this->x -= vec.x;
     this->y -= vec.y;
-
-    return *this;
 }
 
 Vec2 Vec2::operator*(const float scalar){ //multiplies vec2 and scalar
@@ -74,6 +70,30 @@ Vec2 Vec2::operator*(const float scalar){ //multiplies vec2 and scalar
     newVec.y = y*scalar;
 
     return newVec;
+}
+
+Rect Vec2::operator+(const Rect& rect){
+
+    Rect newRect;
+
+    newRect.x = this->x + rect.x;
+    newRect.y = this->y + rect.y;
+    newRect.w = rect.w;
+    newRect.h = rect.h;
+
+    return newRect;
+}
+
+Rect Vec2::operator-(const Rect& rect){
+
+    Rect newRect;
+
+    newRect.x = this->x - rect.x;
+    newRect.y = this->y - rect.y;
+    newRect.w = rect.w;
+    newRect.h = rect.h;
+
+    return newRect;
 }
 
 float Vec2::Magnitude(){ //returns magnitude of vec2

@@ -3,7 +3,7 @@
 #include <math.h>
 #include "Rect.h"
 
-#define PI 3.14159265359 //value of constant pi
+const float PI = 3.14159265359; //value of constant pi
 
 class Rect;
 
@@ -20,9 +20,14 @@ class Vec2{
 
         Vec2 operator+(const Vec2&);
         Vec2 operator-(const Vec2&);
-        Vec2& operator+=(const Vec2&);
-        Vec2& operator-=(const Vec2&);
+
+        void operator-=(const Vec2&);
+        void operator+=(const Vec2&);
+        
         Vec2 operator*(const float);
+
+        Rect operator+(const Rect&);
+        Rect operator-(const Rect&);
 
         float Magnitude();
 

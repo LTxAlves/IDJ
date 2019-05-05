@@ -18,5 +18,5 @@ void CameraFollower::Render(){
 
 bool CameraFollower::Is(string type){
 
-    return type.compare("CameraFollower") == 0 ? true : false;
+    return !type.compare("CameraFollower");
 }

@@ -35,3 +35,47 @@ Vec2 Rect::CenterPoint(){ //calculates coordinates of center point of rectangle
 
     return vec;
 }
+
+Rect Rect::operator+(const Vec2& vec){
+
+    Rect newRect;
+
+    newRect.x = this->x + vec.x;
+    newRect.y = this->y + vec.y;
+    newRect.w = this->w;
+    newRect.h = this->h;
+
+    return newRect;
+}
+
+Rect Rect::operator-(const Vec2& vec){
+
+    Rect newRect;
+
+    newRect.x = this->x - vec.x;
+    newRect.y = this->y - vec.y;
+    newRect.w = this->w;
+    newRect.h = this->h;
+
+    return newRect;
+}
+
+void Rect::operator+=(const Vec2& vec){
+
+    this->x += vec.x;
+    this->y += vec.y;
+}
+
+void Rect::operator-=(const Vec2& vec){
+
+    this->x -= vec.x;
+    this->y -= vec.y;
+}
+
+void Rect::operator=(const Rect& rec){
+
+    this->x = rec.x;
+    this->y = rec.y;
+    this->w = rec.w;
+    this->h = rec.h;
+}

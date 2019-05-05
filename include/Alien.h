@@ -3,14 +3,18 @@
 #include <queue>
 #include <memory>
 #include "Component.h"
-#include "Sprite.h"
+#include "Vec2.h"
 
-#define ALIENFILE "assets/img/alien.png"
-#define MINIONFILE "assets/img/minion.png"
-#define ALIENSPEED 150
-
+using std::string;
 using std::queue;
 using std::weak_ptr;
+using std::vector;
+
+const string ALIENFILE = "assets/img/alien.png"; //alien image file
+const int ALIENSPEED = 150; //default speed for alien
+
+class Sprite;
+class Minion;
 
 class Alien : public Component{
 
@@ -43,3 +47,6 @@ class Alien : public Component{
         vector<weak_ptr<GameObject>> minionArray;
 
 };
+
+#include "Sprite.h"
+#include "Minion.h"

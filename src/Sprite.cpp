@@ -41,12 +41,11 @@ void Sprite::Render(int x, int y){ //renders with given values
     dst_rect.w = clipRect.w;
     dst_rect.h = clipRect.h;
 
-    auto rend = Game::GetInstance().GetRenderer(); //getting rederer for only instance of game
 
-    if(SDL_RenderCopy(rend, texture, &clipRect, &dst_rect) != 0){
+    auto rend = Game::GetInstance().GetRenderer(); //getting rederer for only instance of game
+    
+    if(SDL_RenderCopy(rend, texture, &clipRect, &dst_rect) != 0)
         SDL_Log("Unable to render texture: %s", SDL_GetError());
-        exit(1);
-    }
 }
 
 void Sprite::Render(){ //general render function, no parameters
@@ -76,5 +75,5 @@ void Sprite::Update(float dt){
 
 bool Sprite::Is(string type){
 
-    return (type.compare("Sprite") == 0 ? true : false);
+    return !type.compare("Sprite");
 }

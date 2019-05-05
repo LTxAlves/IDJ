@@ -46,13 +46,14 @@ void GameObject::AddComponent(Component* cpt){
 
     if(cpt != nullptr)
         components.emplace_back(cpt); //adds component to vector end
+
+    if(started)
+        components.back()->Start(); //starts if component added after start of others
 }
 
 void GameObject::RemoveComponent(Component* cpt){
 
-    int size = components.size(), i;
-
-    for(i = 0; i < size; i++){
+    for(unsigned int i = 0; i < components.size(); i++){
         if(components[i].get() == cpt){ //checks if component exists within vector
             components.erase(components.begin()+i);
             break;
@@ -75,11 +76,9 @@ Component* GameObject::GetComponent(string type){
 
 void GameObject::Start(){
 
-    if(!started){
-        for(auto it = components.begin(); it != components.end(); it++){
-            (*it)->Start();
-        }
-
-        started = false;
+    for(auto it = components.begin(); it != components.end(); it++){ //calls start() function of each component
+        (*it)->Start();
     }
+
+    started = true; //sets started flag
 }

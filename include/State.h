@@ -3,7 +3,7 @@
 #include "Game.h"
 #include "Sprite.h"
 #include "Music.h"
-#include "Face.h"
+#include "Alien.h"
 #include "Sound.h"
 #include "GameObject.h"
 #include "Vec2.h"
@@ -12,19 +12,20 @@
 #include "Camera.h"
 #include "CameraFollower.h"
 
-#define BGIMAGEFILE "assets/img/ocean.jpg" //background image file
-#define MUSICFILE "assets/audio/stageState.ogg" //background music file
-#define TILESETFILE "assets/img/tileset.png" //tileset file
-#define TILEMAPFILE "assets/map/tileMap.txt" //tilemap file
-#define PENGUINFACEFILE "assets/img/penguinface.png" //penguin face file
-#define BOOMAUDIOFILE "assets/audio/boom.wav" //explosion audiio file
-#define TILEWIDTH 64 //tile width in pixels
-#define TILEHEIGHT 64 //tile height in pixels
-
 using std::move;
 using std::vector;
 using std::shared_ptr;
 using std::weak_ptr;
+
+const string BGIMAGEFILE = "assets/img/ocean.jpg"; //background image file
+const string MUSICFILE = "assets/audio/stageState.ogg"; //background music file
+const string TILESETFILE = "assets/img/tileset.png"; //tileset file
+const string TILEMAPFILE = "assets/map/tileMap.txt"; //tilemap file
+const string PENGUINFACEFILE = "assets/img/penguinface.png"; //penguin face file
+const string BOOMAUDIOFILE = "assets/audio/boom.wav"; //explosion audio file
+const int TILEWIDTH = 64; //tile width in pixels
+const int TILEHEIGHT = 64; //tile height in pixels
+const int NMINIONSSTD = 4; //standard number of minons
 
 class Game;
 

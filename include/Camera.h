@@ -3,7 +3,7 @@
 #include "GameObject.h"
 #include "Vec2.h"
 
-#define CAMERA_SPEED 300
+const int CAMERA_SPEED = 300;
 
 class Camera{
 

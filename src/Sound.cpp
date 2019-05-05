@@ -64,5 +64,5 @@ void Sound::Render(){
 
 bool Sound::Is(string type){
 
-    return (type.compare("Sound") == 0 ? true : false);
+    return !type.compare("Sound");
 }

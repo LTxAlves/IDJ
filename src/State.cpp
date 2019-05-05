@@ -1,33 +1,45 @@
 #include "State.h"
 
+GameObject* go_background = (new GameObject()); //Game Object required for background Sprite
+GameObject* go_tiles = (new GameObject()); //Game Object required for TileMap & TileSets
+GameObject* go_alien = (new GameObject()); //Game Object required for Alien
+
 State::State() : music(MUSICFILE){
 
-    shared_ptr<GameObject> go = shared_ptr<GameObject> (new GameObject()); //GameObject required for Sprite
+	weak_ptr<GameObject> weak_go = AddObject(go_background);
+	shared_ptr<GameObject> shared_go = weak_go.lock();
 
-	Sprite* bg = new Sprite(*go, BGIMAGEFILE); //assigns image to background
+	shared_go->box.x = 0; //sets x coordinate to 0
+	shared_go->box.y = 0; //sets y coordinate to 0
 
-	go->box.x = 0; //sets x coordinate to 0
-	go->box.y = 0; //sets y coordinate to 0
+	Sprite* bg = new Sprite(*shared_go, BGIMAGEFILE); //assigns image to background
 
-	go->AddComponent(bg); //adds background
+	shared_go->AddComponent(bg); //adds background
 
-	CameraFollower* camFollow = new CameraFollower(*go);
+	CameraFollower* camFollow = new CameraFollower(*shared_go);
 
-	go->AddComponent(camFollow); //make background follow camera (not move)
+	shared_go->AddComponent(camFollow); //makes background follow camera (not move)
 
-	objectArray.emplace_back(move(go));
+    weak_go = AddObject(go_tiles); 
+	shared_go = weak_go.lock();
+	
+	TileSet* ts = new TileSet(TILEWIDTH, TILEHEIGHT, TILESETFILE); //assigns tileset
+    TileMap* tm = new TileMap(*shared_go, TILEMAPFILE, ts); //assigns tilemap
 
-	shared_ptr<GameObject> go2 = shared_ptr<GameObject> (new GameObject());
+	shared_go->box.w = 0; //sets width to 0
+	shared_go->box.h = 0; //sets height to 0
 
-    TileSet* ts = new TileSet(TILEWIDTH, TILEHEIGHT, TILESETFILE);
-    TileMap* tm = new TileMap(*go2, TILEMAPFILE, ts);
+	shared_go->AddComponent(tm);
 
-	go2->box.w = 0;
-	go2->box.h = 0;
+	weak_go = AddObject(go_alien);
+	shared_go = weak_go.lock();
 
-	go2->AddComponent(tm);
+	Alien* alien = new Alien(*shared_go, NMINIONSSTD); //assigns alien
 
-	objectArray.emplace_back(move(go2));
+	shared_go->box.x = 512 - go_alien->box.w/2; //places Alien center in x = 512
+	shared_go->box.y = 300 - go_alien->box.h/2; //places Alien center in y = 300
+
+	shared_go->AddComponent(alien);
 
     quitRequested = false; //initializes quit request variable
 	started = false; //initializes started variable
@@ -37,6 +49,10 @@ State::State() : music(MUSICFILE){
 State::~State(){
 
     objectArray.clear();
+	
+	delete go_alien;
+	delete go_tiles;
+	delete go_background;
 }
 
 void State::LoadAssets(){
@@ -53,16 +69,11 @@ void State::Update(float dt){
 	if(inputManager.QuitRequested() || inputManager.KeyPress(ESCAPE_KEY)) //checks if player quit game
 		quitRequested = true;
 
-	if(inputManager.KeyPress(SPACE_KEY)){ //checks if space key was pressed (add penguin)
-		Vec2 objPos = Vec2(200, 0).GetRotated(-PI + PI*(rand() % 1001)/500.0) + Vec2(inputManager.GetMouseX(), inputManager.GetMouseY());
-		AddObject((int)objPos.x, (int)objPos.y);
-	}
-
     for(unsigned int i = 0; i < objectArray.size(); i++){ //updates each object
         objectArray[i]->Update(dt);
 	}
 
-	for(unsigned int i = 0; i < objectArray.size(); i++){ //deletes dead object and plays their sound
+	for(unsigned int i = 0; i < objectArray.size(); i++){ //deletes dead object and plays their death sound
         if(objectArray[i]->IsDead()){
 			Sound* soundPtr = static_cast<Sound*> (objectArray[i]->GetComponent("Sound"));
 			if(soundPtr != nullptr)
@@ -84,60 +95,39 @@ bool State::QuitRequested(){
     return quitRequested;
 }
 
-void State::AddObject(int mouseX, int mouseY){ //adds object to given coordinates
-
-	shared_ptr<GameObject> go = shared_ptr<GameObject> (new GameObject());
-	Sprite* enemy = (new Sprite(*go, PENGUINFACEFILE));
-	Sound* deathSound = (new Sound(*go, BOOMAUDIOFILE));
-	Face* face = (new Face(*go));
-
-	go->box.x = -Camera::pos.x + mouseX - enemy->GetWidth()/2;
-	go->box.y = -Camera::pos.y + mouseY - enemy->GetHeight()/2;
-
-	go->AddComponent(enemy);
-
-	go->AddComponent(deathSound);
-
-	go->AddComponent(face);
-
-	objectArray.emplace_back(move(go));
-}
-
 weak_ptr<GameObject> State::AddObject(GameObject* go){
 
-	shared_ptr<GameObject> go2 = shared_ptr<GameObject> (new GameObject(*go));
+	shared_ptr<GameObject> shared_go(go);
 
-	objectArray.push_back(go2);
+	objectArray.emplace_back(shared_go);
 
 	if(started)
-		go2->Start();
+		objectArray.back()->Start();
 
-	weak_ptr<GameObject> go3 = weak_ptr<GameObject> (go2);
+	weak_ptr<GameObject> weak_go = weak_ptr<GameObject> (objectArray.back());
 
-	return go3;
+	return weak_go;
 }
 
 weak_ptr<GameObject> State::GetObjectPtr(GameObject* go){
 
-	weak_ptr<GameObject> go2;
+	weak_ptr<GameObject> weak_go;
 
 	for(auto it = objectArray.begin(); it != objectArray.end(); it++){
 		if((*it).get() == go)
-			go2 = weak_ptr<GameObject> (*it);
+			weak_go = weak_ptr<GameObject> (*it);
 	}
 	
-	return go2;
+	return weak_go;
 }
 
 void State::Start(){
 
 	LoadAssets();
 
-	if(!started){
-		for(unsigned int i = 0; i < objectArray.size(); i++){
-			objectArray[i]->Start();
-		}
-
-		started = true;
+	for(unsigned int i = 0; i < objectArray.size(); i++){
+		objectArray[i]->Start();
 	}
+
+	started = true;
 }

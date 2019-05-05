@@ -15,7 +15,7 @@ using std::getline;
 using std::stringstream;
 using std::remove;
 
-#define PARALLAX_FACTOR 1.5
+const float PARALLAX_FACTOR = 1.5;
 
 class TileSet;
 

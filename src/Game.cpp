@@ -19,38 +19,28 @@ Game::Game(string title, int width, int height) :   dt(0),
         instance = this;
     }
 
-    if(SDL_Init(SDL_flags) != 0) {  //checks if SDL initialized
+    if(SDL_Init(SDL_flags) != 0)  //checks if SDL initialized
         SDL_Log("Unable to initialize SDL: %s", SDL_GetError());
-        exit(1);
-    }
 
-    if(IMG_Init(Img_flags) == 0){ //checks if IMG initialized
+    if(IMG_Init(Img_flags) == 0) //checks if IMG initialized
         SDL_Log("Function \"IMG_Init\" did not initialize any loader: %s", Mix_GetError());
-        exit(1);
-    }
 
     Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024); //Needed due to bug in SDL_Mixer version 2.0.2
 
-    if(Mix_Init(Mix_flags) == 0){ //checks if MIX initialized
+    if(Mix_Init(Mix_flags) == 0) //checks if MIX initialized
         SDL_Log("Function \"Mix_Init\" did not initialize any loader: %s", SDL_GetError());
-        exit(1);
-    }
 
     Mix_AllocateChannels(32);
 
     window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, 0);
 
-    if(window == nullptr){ //checks if window was created
+    if(window == nullptr) //checks if window was created
         SDL_Log("Error creating window: %s", SDL_GetError());
-        exit(1);
-    }
 
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
-    if(renderer == nullptr){ //checks if renderer was created
+    if(renderer == nullptr) //checks if renderer was created
         SDL_Log("Error creating renderer: %s", SDL_GetError());
-        exit(1);
-    }
 
     state = new State();
 }
@@ -100,9 +90,9 @@ void Game::Run(){
         SDL_Delay(33); //delays 33ms for approximately a 30fps framerate
     }
 
-    Resources::ClearImages();
-    Resources::ClearMusics();
-    Resources::ClearSounds();
+    Resources::ClearImages(); //clear all images for clean exit
+    Resources::ClearMusics(); //clear all music for clean exit
+    Resources::ClearSounds(); //clear all sound for clean exit
 }
 
 float Game::GetDeltaTime(){

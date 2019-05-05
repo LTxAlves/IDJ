@@ -4,8 +4,6 @@
 #include "GameObject.h"
 #include "Sprite.h"
 
-#define TILESETFILE "assets/img/tileset.png"
-
 using std::shared_ptr;
 using std::string;
 
