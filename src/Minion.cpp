@@ -1,7 +1,7 @@
 #include "Minion.h"
 
 Minion::Minion(GameObject& associated, weak_ptr<GameObject> alienCenter, float arcOffsetDeg) :  Component(associated),
-                                                                                                    alienCenter(alienCenter){
+                                                                                                alienCenter(alienCenter){
 
     Sprite* minion = (new Sprite(associated, MINIONFILE)); //crestes new sprite for minion
     associated.AddComponent(minion); //adds component
@@ -15,11 +15,12 @@ Minion::Minion(GameObject& associated, weak_ptr<GameObject> alienCenter, float a
     
     if(alien != nullptr){ //checks if alien exists (isn't dead)
         dist.Rotate(arc); //rotates minion around
-        
-        dist.x += alien->box.x + (alien->box.w - associated.box.w)/2; //sets distance to move in x direction
-        dist.y += alien->box.y + (alien->box.h - associated.box.h)/2; //sets distance to move in y direction
 
-        associated.box += dist;
+        dist += alien->box.CenterPoint(); //sets distance to move
+        dist.x -= associated.box.w/2; //corrects to move center
+        dist.y -= associated.box.h/2; //corrects to move center
+
+        associated.box += dist; //moves said distance
     }
     else
         associated.RequestDelete();
@@ -30,15 +31,16 @@ void Minion::Update(float dt){
     shared_ptr<GameObject> alien = alienCenter.lock();
     Vec2 dist(200, 0);
     
-    if(alien != nullptr){
-        dist.Rotate(arc);
-        
-        dist.x += alien->box.x + (alien->box.w - associated.box.w)/2;
-        dist.y += alien->box.y + (alien->box.h - associated.box.h)/2;
+    if(alien != nullptr){ //checks if alien exists (isn't dead)
+        dist.Rotate(arc); //rotates minion around
 
-        associated.box += dist;
-       
-        arc += MINIONANGVEL*dt;
+        dist += alien->box.CenterPoint(); //sets distance to move
+        dist.x -= associated.box.w/2; //corrects to move center
+        dist.y -= associated.box.h/2; //corrects to move center
+
+        associated.box += dist; //moves said distance
+
+        arc += MINIONANGVEL * dt; //updatesarc tomove in next frame
     }
     else
         associated.RequestDelete();
@@ -57,21 +59,20 @@ bool Minion::Is(string type){
 
 void Minion::Shoot(Vec2 pos){
 
-    GameObject* go_bullet = (new GameObject());
-    weak_ptr<GameObject> weak_go = Game::GetInstance().GetState().AddObject(go_bullet);
-    shared_ptr<GameObject> shared_go = weak_go.lock();
+    GameObject* go_bullet = (new GameObject()); //creates go for bullet
+    weak_ptr<GameObject> weak_go = Game::GetInstance().GetState().AddObject(go_bullet); //adds it to state
+    shared_ptr<GameObject> shared_go = weak_go.lock(); //gets shared_ptr from weak_ptr
 
-    Vec2 dir;
+    Vec2 dir = pos - associated.box.CenterPoint(); //sets direction to move
 
-    dir.x = pos.x - (associated.box.x + associated.box.w/2);
-    dir.y = pos.y - (associated.box.y + associated.box.h/2);
+    int damage = (rand()%6) + 5;  //sets random damage between 5 and 10
 
-    int damage = (rand()%6) + 5;
+    Bullet* shot = (new Bullet(*shared_go, dir.Inclination(), BULLETSPEED, damage, BULLETMAXDIST, MINIONBULLET1FILE)); //creates bullet component
 
-    Bullet* shot = (new Bullet(*shared_go, dir.Inclination(), BULLETSPEED, damage, BULLETMAXDIST, MINIONBULLET1FILE));
+    shared_go->box += associated.box.CenterPoint(); //sets box starting point
 
-    shared_go->box.x = associated.box.x + (associated.box.w - shared_go->box.w)/2;
-    shared_go->box.y = associated.box.y + (associated.box.h - shared_go->box.h)/2;
+    shared_go->box.x -= shared_go->box.w/2; //corrects to reference center
+    shared_go->box.y -= shared_go->box.h/2; //corrects to reference center
 
-    shared_go->AddComponent(shot);
+    shared_go->AddComponent(shot); //adds bullet compoonent
 }

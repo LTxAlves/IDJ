@@ -55,8 +55,7 @@ void Alien::Update(float dt){
     if(!taskQueue.empty()){ //checks if there's any action in queue
         if((taskQueue.front()).type == Action::MOVE){ //if action is to move
 
-            Rect aux = taskQueue.front().pos - associated.box; //auxiliary rectangle becue of how operator- worksin this case
-            Vec2 dir(aux.x, aux.y); //direction of movement vector 
+            Vec2 dir = taskQueue.front().pos - associated.box.Position(); //direction of movement vector 
             //float dist = dir.Magnitude();
             speed = dir.Normalized() * ALIENSPEED; //speed vector (keeps magnitude constant)
 
@@ -67,20 +66,17 @@ void Alien::Update(float dt){
                     speed.y = 0; //stop moving in y
                     taskQueue.pop(); //remove action from queue
             }
-            else{
-
-                associated.box.x += dt * speed.x; //new possition
-                associated.box.y += dt * speed.y; //new position
-            }
+            else
+                associated.box += speed * dt; //new position
         }
         else if((taskQueue.front()).type == Action::SHOOT){ //if action is to shoot
 
             float smallestDist = FLT_MAX; //smallest distance found
             int closestMinion; //which minion is closest to target
 
-            for(unsigned int i = 0; i < minionArray.size(); i++){ //goesthorugh minion array
+            for(unsigned int i = 0; i < minionArray.size(); i++){ //goes thorugh minion array
 
-                Vec2 minionPos(associated.box.x - associated.box.w/2, associated.box.y - associated.box.h/2); //gets minion center position
+                Vec2 minionPos = associated.box.CenterPoint(); //gets minion center position
 
                 if(minionPos.Distance(taskQueue.front().pos) < smallestDist){ //if smallerthan smallest distance found so far
 

@@ -21,6 +21,10 @@ class Vec2{
         Vec2 operator+(const Vec2&);
         Vec2 operator-(const Vec2&);
 
+        void operator=(const Vec2&);
+
+        Vec2 operator-();
+
         void operator-=(const Vec2&);
         void operator+=(const Vec2&);
         

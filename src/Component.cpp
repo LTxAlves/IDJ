@@ -1,7 +1,5 @@
 #include "Component.h"
 
-using std::string;
-
 Component::Component(GameObject& associated) : associated(associated){ //initializes Component::Associated
 
     //implemented in derived classes

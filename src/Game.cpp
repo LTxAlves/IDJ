@@ -5,7 +5,7 @@ Game* Game::instance;
 Game::Game(string title, int width, int height) :   dt(0),
                                                     frameStart(0){
 
-    auto SDL_flags = (SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER); //flags for _Init()
+    auto SDL_flags = (SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER); //flags for SDL_Init()
     auto Img_flags = (IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF); //flags for IMG_Init()
     auto Mix_flags = (MIX_INIT_OGG | MIX_INIT_MP3 | MIX_INIT_FLAC); //flags for Mix_Init()
 

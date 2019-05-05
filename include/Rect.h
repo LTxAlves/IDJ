@@ -13,7 +13,7 @@ class Rect{
         
         float x, y, w, h;
 
-        float distance(Rect);
+        float Distance(Rect);
 
         bool Contains(float, float);
 
@@ -25,5 +25,6 @@ class Rect{
         
         void operator=(const Rect&);
 
+        Vec2 Position();
         Vec2 CenterPoint();
 };

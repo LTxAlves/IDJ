@@ -19,8 +19,9 @@ void Camera::Update(float dt){
     InputManager& inputManager = InputManager::GetInstance(); //gets only instance of input manager
 
     if(focus != nullptr){ //checks existence of focus
-        pos.x = focus->box.x + focus->box.w/2 - SCREEN_WIDTH/2;
-        pos.y = focus->box.y + focus->box.h/2 - SCREEN_HEIGHT/2;
+        pos = focus->box.CenterPoint(); //positions on center of focus
+        pos.x -= SCREEN_WIDTH/2; //corrects for screen size
+        pos.y -= SCREEN_HEIGHT/2; //corrects forscreen size
     }
     else{ //moves according to key press, no focus
         if(inputManager.IsKeyDown(LEFT_ARROW_KEY) && inputManager.IsKeyDown(RIGHT_ARROW_KEY))

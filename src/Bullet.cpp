@@ -7,10 +7,9 @@ Bullet::Bullet(GameObject& associated, float angle, float speed, int damage, flo
     Sprite* bullet1 = (new Sprite(associated, sprite)); //sprite for bullet
     associated.AddComponent(bullet1); //adds bullet
 
-    angle = angle * (PI/180); //from degres to radians
+    angle = angle * (PI/180); //from degrees to radians
 
-    this->speed.x = speed * cos(angle); //x coordinate from polar form 
-    this->speed.y = speed * sin(angle); //y coordinate from polar form
+    this->speed = Vec2(speed * cos(angle), speed * sin(angle)); //speed vector from polar form
     this->damage = damage; //saves damage
     this->distanceLeft = maxDistance; //saves distance left to move
 }

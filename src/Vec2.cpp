@@ -31,22 +31,23 @@ Vec2 Vec2::GetRotated(double theta){ //returns rotated version of vec2
 
 Vec2 Vec2::operator+(const Vec2& vec){ //overload of operator + to add vec2 together
 
-    Vec2 sum;
-
-    sum.x = this->x + vec.x;
-    sum.y = this->y + vec.y;
-
-    return sum;
+    return Vec2(this->x + vec.x, this->y + vec.y);
 }
 
 Vec2 Vec2::operator-(const Vec2& vec){ //overload of operator - to subtract vec2
 
-    Vec2 sub;
+    return Vec2(this->x - vec.x, this->y - vec.y);
+}
 
-    sub.x = this->x - vec.x;
-    sub.y = this->y - vec.y;
+void Vec2::operator=(const Vec2& vec){
 
-    return sub;
+    this->x = vec.x;
+    this->y = vec.y;
+}
+
+Vec2 Vec2::operator-(){
+
+    return( Vec2(-this->x, -this->y));
 }
 
 
@@ -64,36 +65,17 @@ void Vec2::operator-=(const Vec2& vec){
 
 Vec2 Vec2::operator*(const float scalar){ //multiplies vec2 and scalar
 
-    Vec2 newVec;
-
-    newVec.x = x*scalar;
-    newVec.y = y*scalar;
-
-    return newVec;
+    return Vec2(this->x * scalar, this->y * scalar);
 }
 
-Rect Vec2::operator+(const Rect& rect){
+Rect Vec2::operator+(const Rect& rect){ //sums rect with vec2 (moves rect along ve2)
 
-    Rect newRect;
-
-    newRect.x = this->x + rect.x;
-    newRect.y = this->y + rect.y;
-    newRect.w = rect.w;
-    newRect.h = rect.h;
-
-    return newRect;
+    return Rect(this->x + rect.x, this->y + rect.y, rect.w, rect.h);
 }
 
-Rect Vec2::operator-(const Rect& rect){
-
-    Rect newRect;
-
-    newRect.x = this->x - rect.x;
-    newRect.y = this->y - rect.y;
-    newRect.w = rect.w;
-    newRect.h = rect.h;
-
-    return newRect;
+Rect Vec2::operator-(const Rect& rect){ //subtracts vec2 from rect (moves rect along -vec2)
+ 
+    return Rect(this->x - rect.x, this->y - rect.y, rect.w, rect.h);
 }
 
 float Vec2::Magnitude(){ //returns magnitude of vec2
@@ -103,12 +85,7 @@ float Vec2::Magnitude(){ //returns magnitude of vec2
 
 Vec2 Vec2::Normalized(){ //returns normalized vec2
 
-    Vec2 normal;
-
-    normal.x = this->x/this->Magnitude();
-    normal.y = this->y/this->Magnitude();
-
-    return normal;
+    return Vec2(this->x/this->Magnitude(), this->y/this->Magnitude());
 }
 
 float Vec2::Distance(Vec2 vec){

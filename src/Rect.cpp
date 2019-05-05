@@ -16,7 +16,7 @@ Rect::Rect(float x_in, float y_in, float w_in, float h_in) :    x(x_in),
 
 }
 
-float Rect::distance(Rect rect){ //calculates distance between 2 rects centerpoints
+float Rect::Distance(Rect rect){ //calculates distance between 2 rects centerpoints
 
     return CenterPoint().Distance(rect.CenterPoint());
 }
@@ -29,6 +29,11 @@ bool Rect::Contains(float x_coord, float y_coord){ //checks if rect contains coo
     return false;
 }
 
+Vec2 Rect::Position(){ //returns position of rect
+
+    return Vec2(this->x, this->y);
+}
+
 Vec2 Rect::CenterPoint(){ //calculates coordinates of center point of rectangle
 
     Vec2 vec(x + w/2.0, y + h/2.0);
@@ -36,43 +41,29 @@ Vec2 Rect::CenterPoint(){ //calculates coordinates of center point of rectangle
     return vec;
 }
 
-Rect Rect::operator+(const Vec2& vec){
+Rect Rect::operator+(const Vec2& vec){ //sums rect with vec2 (moves rect along vec) and returns a new rect
 
-    Rect newRect;
-
-    newRect.x = this->x + vec.x;
-    newRect.y = this->y + vec.y;
-    newRect.w = this->w;
-    newRect.h = this->h;
-
-    return newRect;
+    return Rect(this->x + vec.x, this->y + vec.y, this->w, this->h);
 }
 
-Rect Rect::operator-(const Vec2& vec){
+Rect Rect::operator-(const Vec2& vec){ //subtracts rect with vec2 (moves rect along - vec) and returns a new rect
 
-    Rect newRect;
-
-    newRect.x = this->x - vec.x;
-    newRect.y = this->y - vec.y;
-    newRect.w = this->w;
-    newRect.h = this->h;
-
-    return newRect;
+    return Rect(this->x - vec.x, this->y - vec.y, this->w, this->h);
 }
 
-void Rect::operator+=(const Vec2& vec){
+void Rect::operator+=(const Vec2& vec){ //sums rect with vec2 (moves rect along vec), moving it
 
     this->x += vec.x;
     this->y += vec.y;
 }
 
-void Rect::operator-=(const Vec2& vec){
+void Rect::operator-=(const Vec2& vec){ //subtracts rect with vec2 (moves rect along - vec), movint it
 
     this->x -= vec.x;
     this->y -= vec.y;
 }
 
-void Rect::operator=(const Rect& rec){
+void Rect::operator=(const Rect& rec){ //assigns this rect to a given rect
 
     this->x = rec.x;
     this->y = rec.y;
