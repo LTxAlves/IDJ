@@ -6,7 +6,7 @@
 Minion::Minion(GameObject& associated, weak_ptr<GameObject> alienCenter, float arcOffsetDeg) :  Component(associated),
                                                                                                 alienCenter(alienCenter){
 
-    Sprite* minion = (new Sprite(associated, MINIONFILE)); //crestes new sprite for minion
+    Sprite* minion = (new Sprite(associated, MINIONFILE)); //creates new sprite for minion
     
     float scale = (float(rand())/(float(RAND_MAX)/0.5)) + 1.0; //generates scale factor within [1, 1.5)
     minion->SetScaleX(scale, scale); //sets scale factor accordingly
