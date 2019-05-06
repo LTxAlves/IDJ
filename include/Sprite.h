@@ -7,6 +7,7 @@
 #include "SDL_include.h"
 
 #include "Component.h"
+#include "Vec2.h"
 
 using std::string;
 
@@ -32,9 +33,15 @@ class Sprite : public Component{
 
         bool Is(string);
 
+        void SetScaleX(float, float);
+        Vec2 GetScale();
+
     private:
         SDL_Texture* texture;
-        int width;
-        int height;
+
+        int width, height;
+
         SDL_Rect clipRect;
+
+        Vec2 scale;
 };

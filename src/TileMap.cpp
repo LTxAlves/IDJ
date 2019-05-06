@@ -2,7 +2,7 @@
 #include "TileSet.h"
 #include "Camera.h"
 
-int error = -2;
+int error = -2; //default error for reference only
 
 TileMap::TileMap(GameObject& associated, string file, TileSet* tileSet) : Component(associated){
 
@@ -137,5 +137,5 @@ bool TileMap::Is(string type){
 
 void TileMap::Update(float dt){
 
-
+    //does nothing
 }

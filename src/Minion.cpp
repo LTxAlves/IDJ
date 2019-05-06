@@ -7,6 +7,10 @@ Minion::Minion(GameObject& associated, weak_ptr<GameObject> alienCenter, float a
                                                                                                 alienCenter(alienCenter){
 
     Sprite* minion = (new Sprite(associated, MINIONFILE)); //crestes new sprite for minion
+    
+    float scale = (float(rand())/(float(RAND_MAX)/0.5)) + 1.0; //generates scale factor within [1, 1.5)
+    minion->SetScaleX(scale, scale); //sets scale factor accordingly
+    
     associated.AddComponent(minion); //adds component
 
     arc = arcOffsetDeg * (PI / 180); //degrees to radians
@@ -37,13 +41,16 @@ void Minion::Update(float dt){
     if(alien != nullptr){ //checks if alien exists (isn't dead)
         dist.Rotate(arc); //rotates minion around
 
+        associated.angleDeg = -arc * (180/PI); //rotates to keep bottom pointing at alien
+
         dist += alien->box.CenterPoint(); //sets distance to move
         dist.x -= associated.box.w/2; //corrects to move center
         dist.y -= associated.box.h/2; //corrects to move center
 
-        associated.box += dist; //moves said distance
+        associated.box.x = dist.x; //moves said distance in x axis
+        associated.box.y = dist.y; //moves said distance in y axis
 
-        arc += MINIONANGVEL * dt; //updatesarc tomove in next frame
+        arc += MINIONANGVEL * dt; //updates arc to move in next frame
     }
     else
         associated.RequestDelete();

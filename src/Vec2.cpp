@@ -39,25 +39,25 @@ Vec2 Vec2::operator-(const Vec2& vec){ //overload of operator - to subtract vec2
     return Vec2(this->x - vec.x, this->y - vec.y);
 }
 
-void Vec2::operator=(const Vec2& vec){
+void Vec2::operator=(const Vec2& vec){ //assigning operator
 
     this->x = vec.x;
     this->y = vec.y;
 }
 
-Vec2 Vec2::operator-(){
+Vec2 Vec2::operator-(){ //bitwise unary operator of negation
 
-    return( Vec2(-this->x, -this->y));
+    return(Vec2(-this->x, -this->y));
 }
 
 
-void Vec2::operator+=(const Vec2& vec){
+void Vec2::operator+=(const Vec2& vec){ //sums to vector and changes its value
 
     this->x += vec.x;
     this->y += vec.y;
 }
 
-void Vec2::operator-=(const Vec2& vec){
+void Vec2::operator-=(const Vec2& vec){ //subtracts from vector and changes its value
 
     this->x -= vec.x;
     this->y -= vec.y;
@@ -88,7 +88,7 @@ Vec2 Vec2::Normalized(){ //returns normalized vec2
     return Vec2(this->x/this->Magnitude(), this->y/this->Magnitude());
 }
 
-float Vec2::Distance(Vec2 vec){
+float Vec2::Distance(Vec2 vec){ //distance between 2 points
 
     float del_x = x - vec.x;
     float del_y = y - vec.y;
@@ -96,7 +96,7 @@ float Vec2::Distance(Vec2 vec){
     return sqrt(del_x*del_x + del_y*del_y);
 }
 
-float Vec2::Inclination(){
+float Vec2::Inclination(){ //angle between vector and +x axis
 
     return atan2(y, x) * 180 / PI;
 }

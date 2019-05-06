@@ -24,25 +24,25 @@ void Camera::Update(float dt){
     if(focus != nullptr){ //checks existence of focus
         pos = focus->box.CenterPoint(); //positions on center of focus
         pos.x -= SCREEN_WIDTH/2; //corrects for screen size
-        pos.y -= SCREEN_HEIGHT/2; //corrects forscreen size
+        pos.y -= SCREEN_HEIGHT/2; //corrects for screen size
     }
     else{ //moves according to key press, no focus
-        if(inputManager.IsKeyDown(LEFT_ARROW_KEY) && inputManager.IsKeyDown(RIGHT_ARROW_KEY))
+        if(inputManager.IsKeyDown(LEFT_ARROW_KEY) && inputManager.IsKeyDown(RIGHT_ARROW_KEY)) //heys cancel each other
             speed.x = 0;
-        else if(inputManager.IsKeyDown(LEFT_ARROW_KEY))
+        else if(inputManager.IsKeyDown(LEFT_ARROW_KEY)) //move left
             speed.x = CAMERA_SPEED;
-        else if(inputManager.IsKeyDown(RIGHT_ARROW_KEY))
+        else if(inputManager.IsKeyDown(RIGHT_ARROW_KEY)) //move right
             speed.x = -CAMERA_SPEED;
-        else
+        else //don't move in x axis
             speed.x = 0;
 
-        if(inputManager.IsKeyDown(UP_ARROW_KEY) && inputManager.IsKeyDown(DOWN_ARROW_KEY))
+        if(inputManager.IsKeyDown(UP_ARROW_KEY) && inputManager.IsKeyDown(DOWN_ARROW_KEY)) //keys cancel each other
             speed.y = 0;
-        else if(inputManager.IsKeyDown(UP_ARROW_KEY))
+        else if(inputManager.IsKeyDown(UP_ARROW_KEY)) //move up
             speed.y = CAMERA_SPEED;
-        else if(inputManager.IsKeyDown(DOWN_ARROW_KEY))
+        else if(inputManager.IsKeyDown(DOWN_ARROW_KEY)) //move down
             speed.y = -CAMERA_SPEED;
-        else
+        else //don't move in y axis
             speed.y = 0;
 
         pos += speed * dt;

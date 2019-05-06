@@ -32,12 +32,13 @@ const string PENGUINFACEFILE    = "assets/img/penguinface.png"; //penguin face f
 
 
 /*Speed and Movement*/
-const int ALIENSPEED    = 150; //default speed for alien
-const int CAMERA_SPEED  = 300; //default speedfor camera
+const int ALIENSPEED        = 150; //default speed for alien
+const int CAMERA_SPEED      = 300; //default speedfor camera
 
-const float MINIONANGVEL    = 15.0 * PI/180; //default angular velocity for minion
+const float MINIONANGVEL    = 30.0 * PI/180; //default angular velocity for minion translation
+const float ALIENANGVEL     = 20.0 * PI/180; //default alien angular velocity
 const float BULLETSPEED     = 500; //default speed for bullet
-const float BULLETMAXDIST   = 500; //default distance bullet can move
+const float BULLETMAXDIST   = 1500; //default distance bullet can move
 const float PARALLAX_FACTOR = 1.5; //relative movement factor between layers
 /***************************************************************************************/
 

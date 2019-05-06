@@ -38,6 +38,8 @@ class GameObject{
 
         Rect box;
 
+        double angleDeg;
+
     private:
         vector<shared_ptr<Component>> components;
         bool isDead;

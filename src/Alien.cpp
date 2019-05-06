@@ -12,8 +12,7 @@ Alien::Alien(GameObject& associated, int nMinions) : Component(associated){
     associated.AddComponent(alien); //adds it to game object
 
     hp = (rand() % 11) + 30; //random number of hitpoints between 30 and 40
-    speed.x = 0; //initially no speed in x direction
-    speed.y = 0; //initially no speed in y direction
+    speed = Vec2(); //initially no speed
 
     this->nMinions = nMinions; //saves number of minions
 }
@@ -26,8 +25,7 @@ Alien::~Alien(){
 Alien::Action::Action(Action::ActionType type, float x, float y){
 
     this->type = type; //sets type of action
-    pos.x = x; //sets x coordinate
-    pos.y = y; //sets y coordinate
+    pos = Vec2(x, y); //sets coordinates
 }
 
 void Alien::Start(){
@@ -36,7 +34,7 @@ void Alien::Start(){
         GameObject* go = (new GameObject());
 
         weak_ptr<GameObject> weak_go = Game::GetInstance().GetState().AddObject(go); //adds object
-        minionArray.emplace_back(weak_go); //adds to mini
+        minionArray.emplace_back(weak_go); //adds to minion array
         shared_ptr<GameObject> shared_go = weak_go.lock(); //makes shared
 
         weak_go = Game::GetInstance().GetState().GetObjectPtr(&associated); //gets reference to associated object
@@ -52,24 +50,27 @@ void Alien::Update(float dt){
 
     InputManager& inputManager = InputManager::GetInstance(); //gets only instance of input manager
 
+    associated.angleDeg += (ALIENANGVEL * 180/PI) * dt; //rotates alien
+
+    if(associated.angleDeg >= 359.6 && associated.angleDeg <= 360.5) //keep rotation in [0°, 360°)
+        associated.angleDeg = 0;
+
     if(inputManager.MousePress(LEFT_MOUSE_BUTTON)) //left mouse click shoots
         taskQueue.emplace(Action(Action::SHOOT, inputManager.GetMouseX() - Camera::pos.x, inputManager.GetMouseY() - Camera::pos.y)); //shoot with left click
 
-    else if(inputManager.MousePress(RIGHT_MOUSE_BUTTON)) //right mouse click moves
+    if(inputManager.MousePress(RIGHT_MOUSE_BUTTON)) //right mouse click moves
         taskQueue.emplace(Action(Action::MOVE, inputManager.GetMouseX() - Camera::pos.x - (associated.box.w/2), inputManager.GetMouseY() - Camera::pos.y - (associated.box.h/2))); //move (center) with right click
 
     if(!taskQueue.empty()){ //checks if there's any action in queue
         if((taskQueue.front()).type == Action::MOVE){ //if action is to move
 
             Vec2 dir = taskQueue.front().pos - associated.box.Position(); //direction of movement vector 
-            //float dist = dir.Magnitude();
             speed = dir.Normalized() * ALIENSPEED; //speed vector (keeps magnitude constant)
 
             if( (dir.x > -(dt * abs(speed.x))) && (dir.x < (dt * abs(speed.x))) &&
                 (dir.y > -(dt * abs(speed.y))) && (dir.y < (dt * abs(speed.y)))){ //checks bounds (if close enough to detination)
 
-                    speed.x = 0; //stop moving in x
-                    speed.y = 0; //stop moving in y
+                    speed = Vec2(); //stop moving
                     taskQueue.pop(); //remove action from queue
             }
             else
@@ -82,8 +83,8 @@ void Alien::Update(float dt){
 
             for(unsigned int i = 0; i < minionArray.size(); i++){ //goes thorugh minion array
 
-                Vec2 minionPos = associated.box.CenterPoint(); //gets minion center position
-
+                Vec2 minionPos = minionArray[i].lock()->box.CenterPoint(); //gets minion center position
+                
                 if(minionPos.Distance(taskQueue.front().pos) < smallestDist){ //if smallerthan smallest distance found so far
 
                     smallestDist = minionPos.Distance(taskQueue.front().pos); //update smallest distance found

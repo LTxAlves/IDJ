@@ -2,7 +2,8 @@
 #include "Component.h"
 #include "Rect.h"
 
-GameObject::GameObject() :  isDead(false),
+GameObject::GameObject() :  angleDeg(0),
+                            isDead(false),
                             started(false){
 
 

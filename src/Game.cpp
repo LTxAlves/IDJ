@@ -25,7 +25,7 @@ Game::Game(string title, int width, int height) :   dt(0),
     if(IMG_Init(Img_flags) == 0) //checks if IMG initialized
         SDL_Log("Function \"IMG_Init\" did not initialize any loader: %s", Mix_GetError());
 
-    Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024); //Needed due to bug in SDL_Mixer version 2.0.2
+    Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024); //needed due to bug in SDL_Mixer version 2.0.2
 
     if(Mix_Init(Mix_flags) == 0) //checks if MIX initialized
         SDL_Log("Function \"Mix_Init\" did not initialize any loader: %s", SDL_GetError());
