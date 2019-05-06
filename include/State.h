@@ -21,7 +21,6 @@ const string BGIMAGEFILE = "assets/img/ocean.jpg"; //background image file
 const string MUSICFILE = "assets/audio/stageState.ogg"; //background music file
 const string TILESETFILE = "assets/img/tileset.png"; //tileset file
 const string TILEMAPFILE = "assets/map/tileMap.txt"; //tilemap file
-const string PENGUINFACEFILE = "assets/img/penguinface.png"; //penguin face file
 const string BOOMAUDIOFILE = "assets/audio/boom.wav"; //explosion audio file
 const int TILEWIDTH = 64; //tile width in pixels
 const int TILEHEIGHT = 64; //tile height in pixels
