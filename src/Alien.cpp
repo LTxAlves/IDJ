@@ -1,4 +1,10 @@
 #include "Alien.h"
+#include "GameObject.h"
+#include "Vec2.h"
+#include "Sprite.h"
+#include "Minion.h"
+#include "Game.h"
+#include "Camera.h"
 
 Alien::Alien(GameObject& associated, int nMinions) : Component(associated){
 

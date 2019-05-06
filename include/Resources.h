@@ -7,12 +7,8 @@
 #define INCLUDE_SDL_MIXER
 #include "SDL_include.h"
 
-#include "Game.h"
-
 using std::string;
 using std::unordered_map;
-
-class Game;
 
 class Resources{
 

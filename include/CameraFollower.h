@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Component.h"
-#include "Camera.h"
 
 using std::string;
 

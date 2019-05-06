@@ -10,6 +10,8 @@
 
 using std::string;
 
+class Resources;
+
 class Sprite : public Component{
     
     public:
@@ -36,5 +38,3 @@ class Sprite : public Component{
         int height;
         SDL_Rect clipRect;
 };
-
-#include "Resources.h"

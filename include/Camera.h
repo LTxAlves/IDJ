@@ -1,9 +1,9 @@
 #pragma once
 
-#include "GameObject.h"
+#include "Constants.h"
 #include "Vec2.h"
 
-const int CAMERA_SPEED = 300;
+class GameObject;
 
 class Camera{
 
@@ -19,5 +19,3 @@ class Camera{
         static GameObject* focus;
 
 };
-
-#include "Game.h"

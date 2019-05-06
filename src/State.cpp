@@ -1,4 +1,15 @@
 #include "State.h"
+#include "Game.h"
+#include "Sprite.h"
+#include "Alien.h"
+#include "Sound.h"
+#include "GameObject.h"
+#include "Vec2.h"
+#include "TileMap.h"
+#include "TileSet.h"
+#include "InputManager.h"
+#include "Camera.h"
+#include "CameraFollower.h"
 
 GameObject* go_background = (new GameObject()); //Game Object required for background Sprite
 GameObject* go_tiles = (new GameObject()); //Game Object required for TileMap & TileSets

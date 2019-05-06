@@ -1,4 +1,5 @@
 #include "TileSet.h"
+#include "GameObject.h"
 
 shared_ptr<GameObject> go = shared_ptr<GameObject> (new GameObject());
 

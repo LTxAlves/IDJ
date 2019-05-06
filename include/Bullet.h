@@ -1,7 +1,9 @@
 #pragma once
 
 #include "Component.h"
-#include "Sprite.h"
+#include "Vec2.h"
+
+class Sprite;
 
 class Bullet : public Component{
 

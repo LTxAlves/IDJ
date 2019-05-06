@@ -1,4 +1,8 @@
 #include "Sprite.h"
+#include "GameObject.h"
+#include "Game.h"
+#include "Resources.h"
+#include "Camera.h"
 
 Sprite::Sprite(GameObject& associated) : Component(associated){
 

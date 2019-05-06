@@ -1,4 +1,7 @@
 #include "Rect.h"
+#include "Vec2.h"
+
+#include <math.h>
 
 Rect::Rect():   x(0),
                 y(0),

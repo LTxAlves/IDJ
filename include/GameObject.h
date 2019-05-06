@@ -8,7 +8,6 @@
 #define INCLUDE_SDL_MIXER
 #include "SDL_include.h"
 
-#include "Component.h"
 #include "Rect.h"
 
 using std::string;

@@ -42,7 +42,7 @@ Game::Game(string title, int width, int height) :   dt(0),
     if(renderer == nullptr) //checks if renderer was created
         SDL_Log("Error creating renderer: %s", SDL_GetError());
 
-    SDL_Surface* icon = IMG_Load(PENGUINFACEFILE);
+    SDL_Surface* icon = IMG_Load(PENGUINFACEFILE.c_str());
     
     if(icon == nullptr)
         SDL_Log("Error creating icon: %s", SDL_GetError());

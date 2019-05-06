@@ -1,4 +1,6 @@
 #include "TileMap.h"
+#include "TileSet.h"
+#include "Camera.h"
 
 int error = -2;
 

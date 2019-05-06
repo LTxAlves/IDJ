@@ -1,4 +1,5 @@
 #include "Resources.h"
+#include "Game.h"
 
 unordered_map<string, SDL_Texture*> Resources::imageTable;  //initializes static variable
 unordered_map<string, Mix_Music*> Resources::musicTable;    //initializes static variable

@@ -5,8 +5,9 @@
 #include <sstream>
 #include <algorithm>
 #include <fstream>
-#include "TileSet.h"
+
 #include "Component.h"
+#include "Constants.h"
 
 using std::vector;
 using std::string;
@@ -14,8 +15,6 @@ using std::ifstream;
 using std::getline;
 using std::stringstream;
 using std::remove;
-
-const float PARALLAX_FACTOR = 1.5;
 
 class TileSet;
 

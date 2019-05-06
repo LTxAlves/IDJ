@@ -1,7 +1,8 @@
 #pragma once
 
 #include <iostream>
-#include "GameObject.h"
+#include <memory>
+#include "Constants.h"
 #include "Sprite.h"
 
 using std::shared_ptr;

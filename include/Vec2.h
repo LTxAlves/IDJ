@@ -2,8 +2,7 @@
 
 #include <math.h>
 #include "Rect.h"
-
-const float PI = 3.14159265359; //value of constant pi
+#include "Constants.h"
 
 class Rect;
 

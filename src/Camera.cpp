@@ -1,4 +1,7 @@
 #include "Camera.h"
+#include "GameObject.h"
+#include "Vec2.h"
+#include "Game.h"
 
 GameObject* Camera::focus;
 Vec2 Camera::pos;

@@ -1,4 +1,5 @@
 #include "Bullet.h"
+#include "Sprite.h"
 
 Bullet::Bullet(GameObject& associated, float angle, float speed, int damage, float maxDistance, string sprite) :    Component(associated),
                                                                                                                     distanceLeft(maxDistance),

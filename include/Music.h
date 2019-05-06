@@ -8,8 +8,6 @@
 
 using std::string;
 
-class Resources;
-
 class Music{
     
     public:
@@ -25,5 +23,3 @@ class Music{
     private:
         Mix_Music* music;
 };
-
-#include "Resources.h"

@@ -1,8 +1,5 @@
 #pragma once
 
-#include <math.h>
-#include "Vec2.h"
-
 class Vec2;
 
 class Rect{

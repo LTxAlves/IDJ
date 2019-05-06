@@ -1,4 +1,6 @@
 #include "Sound.h"
+#include "GameObject.h"
+#include "Resources.h"
 
 Sound::Sound(GameObject& associated) :  Component(associated),
                                         chunk(nullptr){

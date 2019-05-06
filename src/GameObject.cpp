@@ -1,4 +1,6 @@
 #include "GameObject.h"
+#include "Component.h"
+#include "Rect.h"
 
 GameObject::GameObject() :  isDead(false),
                             started(false){

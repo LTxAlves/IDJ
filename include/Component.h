@@ -5,8 +5,6 @@
 
 using std::string;
 
-class GameObject;
-
 class Component{
 
     public:

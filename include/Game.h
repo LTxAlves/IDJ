@@ -2,16 +2,13 @@
 
 #include <iostream>
 #include <cstdlib>
+#include "Constants.h"
 
 #define INCLUDE_SDL_IMAGE
 #define INCLUDE_SDL_MIXER
 #include "SDL_include.h"
 
 using std::string;
-
-const char* PENGUINFACEFILE = "assets/img/penguinface.png";
-const int SCREEN_HEIGHT = 600;
-const int SCREEN_WIDTH  = 1024;
 
 class State;
 class Resources;
