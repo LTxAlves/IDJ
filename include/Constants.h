@@ -20,14 +20,21 @@ const int TILEHEIGHT    = 64; //tile height in pixels
 /*File locations*/
 const string ALIENFILE          = "assets/img/alien.png"; //alien image file
 const string MINIONFILE         = "assets/img/minion.png"; //minion image file
+
 const string MINIONBULLET1FILE  = "assets/img/minionbullet1.png"; //minion bullet 1 file
 const string MINIONBULLET2FILE  = "assets/img/minionbullet2.png"; //minion bullet 2 file
+
 const string BGIMAGEFILE        = "assets/img/ocean.jpg"; //background image file
 const string MUSICFILE          = "assets/audio/stageState.ogg"; //background music file
+
 const string TILESETFILE        = "assets/img/tileset.png"; //tileset file
 const string TILEMAPFILE        = "assets/map/tileMap.txt"; //tilemap file
+
 const string BOOMAUDIOFILE      = "assets/audio/boom.wav"; //explosion audio file
+
 const string PENGUINFACEFILE    = "assets/img/penguinface.png"; //penguin face file
+const string PENGUINBODYFILE    = "assets/img/penguin.png"; //penguin body file
+const string PENGUINCANNONFILE  = "assets/img/cubngun.png"; //penguin cannon file 
 /***************************************************************************************/
 
 
@@ -43,5 +50,10 @@ const float PARALLAX_FACTOR = 1.5; //relative movement factor between layers
 /***************************************************************************************/
 
 /*Number of instances*/
-const int NMINIONSSTD = 4; //standard number of minons
+const int NMINIONSSTD   = 4; //standard number of minons
+const int BULLETFRAMES  = 3; //number of frames in bullet image 
+/***************************************************************************************/
+
+/*Frame durations*/
+const float BULLETFRAMETIME = 0.5;
 /***************************************************************************************/

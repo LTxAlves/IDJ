@@ -17,7 +17,7 @@ class Sprite : public Component{
     
     public:
         Sprite(GameObject&);
-        Sprite(GameObject&, string);
+        Sprite(GameObject&, string, int = 1, float = 1);
 
         void Open(string);
         void SetClip(int, int, int, int);
@@ -36,6 +36,10 @@ class Sprite : public Component{
         void SetScaleX(float, float);
         Vec2 GetScale();
 
+        void SetFrame(int);
+        void SetFrameCount(int);
+        void SetFrameTime(float);
+
     private:
         SDL_Texture* texture;
 
@@ -44,4 +48,9 @@ class Sprite : public Component{
         SDL_Rect clipRect;
 
         Vec2 scale;
+
+        int frameCount;
+        int currentFrame;
+        float timeElapsed;
+        float frameTime;
 };

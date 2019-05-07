@@ -77,7 +77,7 @@ void Minion::Shoot(Vec2 pos){
 
     int damage = (rand()%6) + 5;  //sets random damage between 5 and 10
 
-    Bullet* shot = (new Bullet(*shared_go, dir.Inclination(), BULLETSPEED, damage, BULLETMAXDIST, MINIONBULLET1FILE)); //creates bullet component
+    Bullet* shot = (new Bullet(*shared_go, dir.Inclination(), BULLETSPEED, damage, BULLETMAXDIST, MINIONBULLET2FILE, BULLETFRAMES, BULLETFRAMETIME)); //creates bullet component
 
     shared_go->box += associated.box.CenterPoint(); //sets box starting point
 

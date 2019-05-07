@@ -1,11 +1,11 @@
 #include "Bullet.h"
 #include "Sprite.h"
 
-Bullet::Bullet(GameObject& associated, float angle, float speed, int damage, float maxDistance, string sprite) :    Component(associated),
+Bullet::Bullet(GameObject& associated, float angle, float speed, int damage, float maxDistance, string sprite, int frameCount, float frameTime) :    Component(associated),
                                                                                                                     distanceLeft(maxDistance),
                                                                                                                     damage(damage){
 
-    Sprite* bullet1 = (new Sprite(associated, sprite)); //sprite for bullet
+    Sprite* bullet1 = (new Sprite(associated, sprite, frameCount, frameTime)); //sprite for bullet
     associated.AddComponent(bullet1); //adds bullet
 
     associated.angleDeg = angle; //saves angleto rotate sprite

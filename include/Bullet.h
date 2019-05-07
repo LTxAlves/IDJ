@@ -8,7 +8,7 @@ class Sprite;
 class Bullet : public Component{
 
     public:
-        Bullet(GameObject&, float, float, int, float, string);
+        Bullet(GameObject&, float, float, int, float, string, int, float);
 
         void Update(float);
         void Render();
