@@ -24,4 +24,7 @@ class Rect{
 
         Vec2 Position();
         Vec2 CenterPoint();
+
+        void CenterAt(Vec2);
+        void CenterAt(float, float);
 };

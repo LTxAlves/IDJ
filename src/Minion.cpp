@@ -13,7 +13,7 @@ Minion::Minion(GameObject& associated, weak_ptr<GameObject> alienCenter, float a
     
     associated.AddComponent(minion); //adds component
 
-    arc = arcOffsetDeg * (PI / 180); //degrees to radians
+    arc = arcOffsetDeg * (DEGTORAD); //degrees to radians
 
     this->alienCenter = alienCenter; //sets alien for minion to circle around
 
@@ -41,7 +41,7 @@ void Minion::Update(float dt){
     if(alien != nullptr){ //checks if alien exists (isn't dead)
         dist.Rotate(arc); //rotates minion around
 
-        associated.angleDeg = -arc * (180/PI); //rotates to keep bottom pointing at alien
+        associated.angleDeg = -arc * (RADTODEG); //rotates to keep bottom pointing at alien
 
         dist += alien->box.CenterPoint(); //sets distance to move
         dist.x -= associated.box.w/2; //corrects to move center
@@ -77,12 +77,9 @@ void Minion::Shoot(Vec2 pos){
 
     int damage = (rand()%6) + 5;  //sets random damage between 5 and 10
 
-    Bullet* shot = (new Bullet(*shared_go, dir.Inclination(), BULLETSPEED, damage, BULLETMAXDIST, MINIONBULLET2FILE, BULLETFRAMES, BULLETFRAMETIME)); //creates bullet component
+    Bullet* shot = (new Bullet(*shared_go, dir.Inclination(), BULLETSPEED, damage, BULLETMAXDIST, MINIONBULLET2FILE, MINIONBULLETFRAMES, MINIONBULLETFRAMETIME)); //creates bullet component
 
-    shared_go->box += associated.box.CenterPoint(); //sets box starting point
-
-    shared_go->box.x -= shared_go->box.w/2; //corrects to reference center
-    shared_go->box.y -= shared_go->box.h/2; //corrects to reference center
+    shared_go->box.CenterAt(associated.box.CenterPoint()); //sets box starting point
 
     shared_go->AddComponent(shot); //adds bullet compoonent
 }

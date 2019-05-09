@@ -50,16 +50,16 @@ void Alien::Update(float dt){
 
     InputManager& inputManager = InputManager::GetInstance(); //gets only instance of input manager
 
-    associated.angleDeg += (ALIENANGVEL * 180/PI) * dt; //rotates alien
+    associated.angleDeg += (ALIENANGVEL * RADTODEG) * dt; //rotates alien
 
     if(associated.angleDeg >= 359.6 && associated.angleDeg <= 360.5) //keep rotation in [0°, 360°)
         associated.angleDeg = 0;
 
     if(inputManager.MousePress(LEFT_MOUSE_BUTTON)) //left mouse click shoots
-        taskQueue.emplace(Action(Action::SHOOT, inputManager.GetMouseX() - Camera::pos.x, inputManager.GetMouseY() - Camera::pos.y)); //shoot with left click
+        taskQueue.emplace(Action(Action::SHOOT, inputManager.GetMouseX() + Camera::pos.x, inputManager.GetMouseY() + Camera::pos.y)); //shoot with left click
 
     if(inputManager.MousePress(RIGHT_MOUSE_BUTTON)) //right mouse click moves
-        taskQueue.emplace(Action(Action::MOVE, inputManager.GetMouseX() - Camera::pos.x - (associated.box.w/2), inputManager.GetMouseY() - Camera::pos.y - (associated.box.h/2))); //move (center) with right click
+        taskQueue.emplace(Action(Action::MOVE, inputManager.GetMouseX() + Camera::pos.x - (associated.box.w/2), inputManager.GetMouseY() + Camera::pos.y - (associated.box.h/2))); //move (center) with right click
 
     if(!taskQueue.empty()){ //checks if there's any action in queue
         if((taskQueue.front()).type == Action::MOVE){ //if action is to move

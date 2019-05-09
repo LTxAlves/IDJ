@@ -110,7 +110,7 @@ void TileMap::RenderLayer(int layer, int cameraX = 0, int cameraY = 0){
 		for(int i = 0; i < GetWidth(); i++){
             width = i * tileSet->GetTileWidth();
             height = j * tileSet->GetTileHeight();
-			tileSet->RenderTile(At(i, j, layer), cameraX + width, cameraY + height);
+			tileSet->RenderTile(At(i, j, layer), -cameraX + width, -cameraY + height);
 		}
 	}
 }

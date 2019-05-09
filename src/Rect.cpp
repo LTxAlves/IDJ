@@ -32,18 +32,6 @@ bool Rect::Contains(float x_coord, float y_coord){ //checks if rect contains coo
     return false;
 }
 
-Vec2 Rect::Position(){ //returns position of rect
-
-    return Vec2(this->x, this->y);
-}
-
-Vec2 Rect::CenterPoint(){ //calculates coordinates of center point of rectangle
-
-    Vec2 vec(x + w/2.0, y + h/2.0);
-
-    return vec;
-}
-
 Rect Rect::operator+(const Vec2& vec){ //sums rect with vec2 (moves rect along vec) and returns a new rect
 
     return Rect(this->x + vec.x, this->y + vec.y, this->w, this->h);
@@ -72,4 +60,28 @@ void Rect::operator=(const Rect& rec){ //assigns this rect to a given rect
     this->y = rec.y;
     this->w = rec.w;
     this->h = rec.h;
+}
+
+Vec2 Rect::Position(){ //returns position of rect
+
+    return Vec2(this->x, this->y);
+}
+
+Vec2 Rect::CenterPoint(){ //calculates coordinates of center point of rectangle
+
+    Vec2 vec(x + w/2.0, y + h/2.0);
+
+    return vec;
+}
+
+void Rect::CenterAt(Vec2 centerPos){
+
+    this->x = centerPos.x - this->w/2;
+    this->y = centerPos.y - this->h/2;
+}
+
+void Rect::CenterAt(float xCenter, float yCenter){
+
+    this->x = xCenter - this->w/2;
+    this->y = yCenter - this->h/2;
 }

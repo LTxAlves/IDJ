@@ -8,8 +8,8 @@ CameraFollower::CameraFollower(GameObject& go) : Component(go){
 
 void CameraFollower::Update(float dt){
 
-    associated.box.x = -Camera::pos.x; //same coordinates
-    associated.box.y = -Camera::pos.y; //same coordinates
+    associated.box.x = Camera::pos.x; //same coordinates
+    associated.box.y = Camera::pos.y; //same coordinates
 }
 
 void CameraFollower::Render(){

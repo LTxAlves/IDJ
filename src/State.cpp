@@ -10,18 +10,36 @@
 #include "InputManager.h"
 #include "Camera.h"
 #include "CameraFollower.h"
+#include "PenguinBody.h"
 
-GameObject* go_background = (new GameObject()); //Game Object required for background Sprite
-GameObject* go_tiles = (new GameObject()); //Game Object required for TileMap & TileSets
-GameObject* go_alien = (new GameObject()); //Game Object required for Alien
+GameObject* go_background	= (new GameObject()); //Game Object required for background Sprite
+GameObject* go_tiles		= (new GameObject()); //Game Object required for TileMap & TileSets
+GameObject* go_alien		= (new GameObject()); //Game Object required for Alien
+GameObject* go_penguin		= (new GameObject()); //Game Object required for Penguin
 
 State::State() : music(MUSICFILE){
+
+    quitRequested = false; //initializes quit request variable
+	started = false; //initializes started variable
+    music.Play(-1); //plays music
+}
+
+State::~State(){
+
+    objectArray.clear();
+	
+	delete go_penguin;
+	delete go_alien;
+	delete go_tiles;
+	delete go_background;
+}
+
+void State::LoadAssets(){
 
 	weak_ptr<GameObject> weak_go = AddObject(go_background);
 	shared_ptr<GameObject> shared_go = weak_go.lock();
 
-	shared_go->box.x = 0; //sets x coordinate to 0
-	shared_go->box.y = 0; //sets y coordinate to 0
+	shared_go->box.CenterAt(0, 0); //sets coordinates to (0, 0)
 
 	Sprite* bg = new Sprite(*shared_go, BGIMAGEFILE); //assigns image to background
 
@@ -47,28 +65,19 @@ State::State() : music(MUSICFILE){
 
 	Alien* alien = new Alien(*shared_go, NMINIONSSTD); //assigns alien
 
-	shared_go->box.x = 512 - go_alien->box.w/2; //places Alien center in x = 512
-	shared_go->box.y = 300 - go_alien->box.h/2; //places Alien center in y = 300
+	shared_go->box.CenterAt(512, 300); //places Alien center in (512, 300)
 
 	shared_go->AddComponent(alien);
 
-    quitRequested = false; //initializes quit request variable
-	started = false; //initializes started variable
-    music.Play(-1); //plays music
-}
+	weak_go = AddObject(go_penguin);
+	shared_go = weak_go.lock();
 
-State::~State(){
+	shared_go->box.CenterAt(704, 640);
+	Camera::Follow(shared_go.get());
 
-    objectArray.clear();
-	
-	delete go_alien;
-	delete go_tiles;
-	delete go_background;
-}
+	PenguinBody* penguin = (new PenguinBody(*shared_go));
 
-void State::LoadAssets(){
-
-	//does nothing
+	shared_go->AddComponent(penguin);
 }
 
 void State::Update(float dt){

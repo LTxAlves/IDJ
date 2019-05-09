@@ -8,9 +8,9 @@ Bullet::Bullet(GameObject& associated, float angle, float speed, int damage, flo
     Sprite* bullet1 = (new Sprite(associated, sprite, frameCount, frameTime)); //sprite for bullet
     associated.AddComponent(bullet1); //adds bullet
 
-    associated.angleDeg = angle; //saves angleto rotate sprite
+    associated.angleDeg = angle; //saves angle to rotate sprite
 
-    angle = angle * (PI/180); //from degrees to radians
+    angle = angle * (DEGTORAD); //from degrees to radians
 
     this->speed = Vec2(speed * cos(angle), speed * sin(angle)); //speed vector from polar form
     this->damage = damage; //saves damage

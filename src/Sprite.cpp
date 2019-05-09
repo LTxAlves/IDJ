@@ -34,7 +34,7 @@ void Sprite::Open(string file){
     SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
     SetClip(0, 0, width, height);
 
-    associated.box.w = width;
+    associated.box.w = width/frameCount;
     associated.box.h = height;
 }
 
@@ -64,7 +64,7 @@ void Sprite::Render(int x, int y){ //renders with given values
 
 void Sprite::Render(){ //general render function, no parameters
 
-    Render(associated.box.x + Camera::pos.x, associated.box.y + Camera::pos.y);
+    Render(associated.box.x - Camera::pos.x, associated.box.y - Camera::pos.y);
 }
 
 int Sprite::GetWidth(){

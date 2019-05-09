@@ -25,8 +25,9 @@ void Vec2::Rotate(double theta){ //rotates a vec2
 
 Vec2 Vec2::GetRotated(double theta){ //returns rotated version of vec2
 
-    this->Rotate(theta);
-    return *this;
+    Vec2 newVec = *this;
+    newVec.Rotate(theta);
+    return newVec;
 }
 
 Vec2 Vec2::operator+(const Vec2& vec){ //overload of operator + to add vec2 together
@@ -98,5 +99,5 @@ float Vec2::Distance(Vec2 vec){ //distance between 2 points
 
 float Vec2::Inclination(){ //angle between vector and +x axis
 
-    return atan2(y, x) * 180 / PI;
+    return atan2(y, x) * RADTODEG;
 }
