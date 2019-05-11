@@ -69,6 +69,12 @@ Vec2 Vec2::operator*(const float scalar){ //multiplies vec2 and scalar
     return Vec2(this->x * scalar, this->y * scalar);
 }
 
+
+float Vec2::operator*(const Vec2& vec){
+
+    return this->x * vec.x + this->y * vec.y;
+}
+
 Rect Vec2::operator+(const Rect& rect){ //sums rect with vec2 (moves rect along ve2)
 
     return Rect(this->x + rect.x, this->y + rect.y, rect.w, rect.h);

@@ -27,5 +27,10 @@ bool Component::Is(string type){
 
 void Component::Start(){
 
-    
+    //implementedd di derived class
+}
+
+void Component::NotifyCollision(GameObject& other){
+
+    //implemented in derived class
 }

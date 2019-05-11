@@ -55,7 +55,7 @@ void PenguinCannon::Shoot(){
 
     int damage = rand()%6 + 10;
 
-    Bullet* bullet = new Bullet(*shared_go, angle, BULLETSPEED, damage, BULLETMAXDIST, PENGUINBULLETFILE, PENGUINBULLETFRAMES, PENGUINBULLETFRAMETIME);
+    Bullet* bullet = new Bullet(*shared_go, angle, BULLETSPEED, damage, BULLETMAXDIST, PENGUINBULLETFILE, PENGUINBULLETFRAMES, PENGUINBULLETFRAMETIME, false);
 
     Vec2 startOffset(associated.box.w/2.0, 0);
     startOffset.Rotate(-angle * DEGTORAD);

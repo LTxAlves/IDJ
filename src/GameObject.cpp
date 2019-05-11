@@ -85,3 +85,9 @@ void GameObject::Start(){
 
     started = true; //sets started flag
 }
+
+void GameObject::NotifyCollision(GameObject& other){
+
+    for(auto it = components.begin(); it != components.end(); it++)
+        (*it)->NotifyCollision(other);
+}

@@ -5,7 +5,7 @@ Game* Game::instance;
 Game::Game(string title, int width, int height) :   dt(0),
                                                     frameStart(0){
 
-    auto SDL_flags = (SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER); //flags for SDL_Init()
+    auto SDL_flags = (SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER); //flags for SDL_Init()
     auto Img_flags = (IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF); //flags for IMG_Init()
     auto Mix_flags = (MIX_INIT_OGG | MIX_INIT_MP3 | MIX_INIT_FLAC); //flags for Mix_Init()
 
@@ -23,7 +23,7 @@ Game::Game(string title, int width, int height) :   dt(0),
         SDL_Log("Unable to initialize SDL: %s", SDL_GetError());
 
     if(IMG_Init(Img_flags) == 0) //checks if IMG initialized
-        SDL_Log("Function \"IMG_Init\" did not initialize any loader: %s", Mix_GetError());
+        SDL_Log("Function \"IMG_Init\" did not initialize any loader: %s", SDL_GetError());
 
     Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024); //needed due to bug in SDL_Mixer version 2.0.2
 

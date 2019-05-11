@@ -26,6 +26,8 @@ class Alien : public Component{
         void Render();
         bool Is(string);
 
+        void NotifyCollision(GameObject&);
+
     private:
         class Action{
 

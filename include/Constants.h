@@ -38,7 +38,7 @@ const string BOOMAUDIOFILE      = "assets/audio/boom.wav"; //explosion audio fil
 const string PENGUINFACEFILE    = "assets/img/penguinface.png"; //penguin face file
 const string PENGUINBODYFILE    = "assets/img/penguin.png"; //penguin body file
 const string PENGUINCANNONFILE  = "assets/img/cubngun.png"; //penguin cannon file
-const string PENGUINBULLETFILE   = "assets/img/penguinbullet.png"; //penguin bullets file
+const string PENGUINBULLETFILE  = "assets/img/penguinbullet.png"; //penguin bullets file
 const string PENGUINDEATHFILE   = "assets/img/penguindeath.png"; //penguin death sprite sheet file
 /***************************************************************************************/
 

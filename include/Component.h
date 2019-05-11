@@ -17,6 +17,8 @@ class Component{
 
         virtual void Start();
 
+        virtual void NotifyCollision(GameObject&);
+
     protected:
         GameObject& associated;
 };

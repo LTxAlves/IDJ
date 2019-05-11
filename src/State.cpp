@@ -1,5 +1,4 @@
 #include "State.h"
-#include "Game.h"
 #include "Sprite.h"
 #include "Alien.h"
 #include "Sound.h"
@@ -11,6 +10,8 @@
 #include "Camera.h"
 #include "CameraFollower.h"
 #include "PenguinBody.h"
+#include "Collider.h"
+#include "Collision.h"
 
 GameObject* go_background	= (new GameObject()); //Game Object required for background Sprite
 GameObject* go_tiles		= (new GameObject()); //Game Object required for TileMap & TileSets
@@ -101,6 +102,19 @@ void State::Update(float dt){
             objectArray.erase(objectArray.begin() + i);
         }
     }
+
+	for(unsigned int i = 0; i <objectArray.size(); i++){
+		Collider* iColliderPtr = static_cast<Collider*> (objectArray[i]->GetComponent("Collider"));
+		if(iColliderPtr != nullptr){
+			for(unsigned int j = (i + 1); j < objectArray.size(); j++){
+				Collider* jColliderPtr = static_cast<Collider*> (objectArray[j]->GetComponent("Collider"));
+				if(jColliderPtr != nullptr && Collision::IsColliding(iColliderPtr->box, jColliderPtr->box, objectArray[i]->angleDeg * DEGTORAD, objectArray[i]->angleDeg * DEGTORAD)){
+					objectArray[i]->NotifyCollision(*(objectArray[j]));
+					objectArray[j]->NotifyCollision(*(objectArray[i]));
+				}
+			}
+		}
+	}
 }
 
 void State::Render(){

@@ -42,6 +42,15 @@ Rect Rect::operator-(const Vec2& vec){ //subtracts rect with vec2 (moves rect al
     return Rect(this->x - vec.x, this->y - vec.y, this->w, this->h);
 }
 
+Rect Rect::operator*(const Vec2& scale){
+
+    Rect result = *this;
+    result.w *= scale.x;
+    result.h *= scale.y;
+
+    return result;
+}
+
 void Rect::operator+=(const Vec2& vec){ //sums rect with vec2 (moves rect along vec), moving it
 
     this->x += vec.x;
@@ -52,6 +61,12 @@ void Rect::operator-=(const Vec2& vec){ //subtracts rect with vec2 (moves rect a
 
     this->x -= vec.x;
     this->y -= vec.y;
+}
+
+void Rect::operator*=(const Vec2& scale){
+
+    this->w *= scale.x;
+    this->h *= scale.y;
 }
 
 void Rect::operator=(const Rect& rec){ //assigns this rect to a given rect

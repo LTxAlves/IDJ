@@ -17,8 +17,12 @@ class Rect{
         Rect operator+(const Vec2&);
         Rect operator-(const Vec2&);
 
+        Rect operator*(const Vec2&);
+
         void operator+=(const Vec2&);
         void operator-=(const Vec2&);
+
+        void operator*=(const Vec2&);
         
         void operator=(const Rect&);
 

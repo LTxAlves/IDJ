@@ -1,4 +1,5 @@
 #include "InputManager.h"
+#include <iostream>
 
 InputManager::InputManager() :  mouseState{false, false, false, false, false, false},
                                 mouseUpdate{0, 0, 0, 0, 0, 0},
@@ -7,10 +8,23 @@ InputManager::InputManager() :  mouseState{false, false, false, false, false, fa
                                 mouseX(0),
                                 mouseY(0){ //initializes variables
 
+
+
+    for(int i = 0; i < SDL_NumJoysticks(); i++){ //checks for game controllers activated
+        if(SDL_IsGameController(i)) //cecks if iterator refers to controller
+            controller = SDL_GameControllerOpen(0); //open game controller
+        std::cout << controller << std::endl;
+    }
 }
 
 InputManager::~InputManager(){
 
+    // Close if opened
+    if (controller != nullptr){
+        SDL_GameControllerClose(controller);
+        controller = nullptr;
+    }
+    
     keyState.clear();
     keyUpdate.clear();
 }
@@ -53,6 +67,37 @@ void InputManager::Update(){
                     keyState[event.key.keysym.sym] = false;
                     keyUpdate[event.key.keysym.sym] = updateCounter;
                     break;
+
+                case SDL_CONTROLLERDEVICEADDED:
+                    if(!controller){ //ifcontroller not alredy assigned
+                        for(int i = 0; i < SDL_NumJoysticks(); i++){ //checks for game controllers activated
+                            if(SDL_IsGameController(i)){ //cecks if iterator refers to controller
+                                controller = SDL_GameControllerOpen(0); //open game controller
+                                std::cout << "Device added: " << controller << std::endl;
+                            }
+                        }
+                    }
+                    break;
+
+                case SDL_CONTROLLERDEVICEREMOVED:
+                    if(controller != nullptr){
+                        SDL_GameControllerClose(controller);
+                        controller = nullptr;
+                        std::cout << "Device removed: " << controller << std::endl;    
+                    }
+                    break;
+
+                case SDL_CONTROLLERBUTTONUP:
+                    std::cout << "button release: " << (int) event.cbutton.button << std::endl;
+                    controllerState[event.cbutton.button] = false;
+                    controllerUpdate[event.cbutton.button] = updateCounter;
+                    break;
+
+                case SDL_CONTROLLERBUTTONDOWN:
+                    std::cout << "button press: " << (int) event.cbutton.button << std::endl;
+                    controllerState[event.cbutton.button] = true;
+                    controllerUpdate[event.cbutton.button] = updateCounter;
+                    break;
             }
         }
     }
@@ -86,6 +131,21 @@ bool InputManager::MouseRelease(int button){
 bool InputManager::IsMouseDown(int button){
 
     return mouseState[button]; //checks if button is being held down
+}
+
+bool InputManager::ControllerPress(int button){
+
+    return (controllerState[button] && (controllerUpdate[button] == updateCounter)) ? true : false; //checks if controller button was pressed in last frame
+}
+
+bool InputManager::ControllerRelease(int button){
+
+    return (!controllerState[button] && (controllerUpdate[button] == updateCounter)) ? true : false; //checks if controller button was released in last frame
+}
+
+bool InputManager::IsControllerDown(int button){
+
+    return  controllerState[button]; //checks if controller button is being held down
 }
 
 int InputManager::GetMouseX(){

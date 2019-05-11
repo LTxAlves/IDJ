@@ -1,12 +1,16 @@
 #include "Bullet.h"
 #include "Sprite.h"
+#include "Collider.h"
 
-Bullet::Bullet(GameObject& associated, float angle, float speed, int damage, float maxDistance, string sprite, int frameCount, float frameTime) :    Component(associated),
-                                                                                                                    distanceLeft(maxDistance),
-                                                                                                                    damage(damage){
+Bullet::Bullet(GameObject& associated, float angle, float speed, int damage, float maxDistance, string sprite, int frameCount, float frameTime, bool targetsPlayer) :   Component(associated),
+                                                                                                                                                                        targetsPlayer(targetsPlayer),
+                                                                                                                                                                        distanceLeft(maxDistance),
+                                                                                                                                                                        damage(damage){
 
-    Sprite* bullet1 = (new Sprite(associated, sprite, frameCount, frameTime)); //sprite for bullet
-    associated.AddComponent(bullet1); //adds bullet
+    Sprite* bullet2 = (new Sprite(associated, sprite, frameCount, frameTime)); //sprite for bullet
+    Collider* bulletCollider = (new Collider(associated)); //collider for bullet
+    associated.AddComponent(bullet2); //adds bullet sprite
+    associated.AddComponent(bulletCollider); //adds bullet collider
 
     associated.angleDeg = angle; //saves angle to rotate sprite
 
@@ -40,4 +44,10 @@ bool Bullet::Is(string type){
 int Bullet::GetDamage(){
 
     return damage;
+}
+
+void Bullet::NotifyCollision(GameObject& other){
+
+    if((other.GetComponent("Alien") != nullptr && !targetsPlayer)|| (other.GetComponent("PengiunBody") != nullptr && targetsPlayer))
+        associated.RequestDelete();
 }

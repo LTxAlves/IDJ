@@ -28,6 +28,7 @@ class Vec2{
         void operator+=(const Vec2&);
         
         Vec2 operator*(const float);
+        float operator*(const Vec2&);
 
         Rect operator+(const Rect&);
         Rect operator-(const Rect&);

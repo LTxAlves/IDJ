@@ -2,6 +2,7 @@
 #include "Sprite.h"
 #include "Bullet.h"
 #include "Game.h"
+#include "Collider.h"
 
 Minion::Minion(GameObject& associated, weak_ptr<GameObject> alienCenter, float arcOffsetDeg) :  Component(associated),
                                                                                                 alienCenter(alienCenter){
@@ -11,7 +12,10 @@ Minion::Minion(GameObject& associated, weak_ptr<GameObject> alienCenter, float a
     float scale = (float(rand())/(float(RAND_MAX)/0.5)) + 1.0; //generates scale factor within [1, 1.5)
     minion->SetScaleX(scale, scale); //sets scale factor accordingly
     
-    associated.AddComponent(minion); //adds component
+    associated.AddComponent(minion); //adds minion sprite
+
+    Collider* minionCollider = (new Collider(associated)); //creates minion collider
+    associated.AddComponent(minionCollider); //adds minion collider
 
     arc = arcOffsetDeg * (DEGTORAD); //degrees to radians
 
@@ -77,7 +81,7 @@ void Minion::Shoot(Vec2 pos){
 
     int damage = (rand()%6) + 5;  //sets random damage between 5 and 10
 
-    Bullet* shot = (new Bullet(*shared_go, dir.Inclination(), BULLETSPEED, damage, BULLETMAXDIST, MINIONBULLET2FILE, MINIONBULLETFRAMES, MINIONBULLETFRAMETIME)); //creates bullet component
+    Bullet* shot = (new Bullet(*shared_go, dir.Inclination(), BULLETSPEED, damage, BULLETMAXDIST, MINIONBULLET2FILE, MINIONBULLETFRAMES, MINIONBULLETFRAMETIME, true)); //creates bullet component
 
     shared_go->box.CenterAt(associated.box.CenterPoint()); //sets box starting point
 

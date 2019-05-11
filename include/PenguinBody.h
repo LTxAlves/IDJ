@@ -19,6 +19,8 @@ class PenguinBody : public Component{
         bool Is(string);
 
         static PenguinBody* player;
+
+        void NotifyCollision(GameObject&);
     
     private:
         weak_ptr<GameObject> pcannon;

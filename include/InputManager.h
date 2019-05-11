@@ -22,6 +22,11 @@
 #define LEFT_MOUSE_BUTTON   SDL_BUTTON_LEFT
 #define RIGHT_MOUSE_BUTTON  SDL_BUTTON_RIGHT
 
+#define DPAD_UP             SDL_CONTROLLER_BUTTON_DPAD_UP
+#define DPAD_DOWN           SDL_CONTROLLER_BUTTON_DPAD_DOWN
+#define DPAD_LEFT           SDL_CONTROLLER_BUTTON_DPAD_LEFT
+#define DPAD_RIGHT          SDL_CONTROLLER_BUTTON_DPAD_RIGHT
+
 using std::unordered_map;
 
 class InputManager{
@@ -37,12 +42,18 @@ class InputManager{
         bool MouseRelease(int);
         bool IsMouseDown(int);
 
+        bool ControllerPress(int);
+        bool ControllerRelease(int);
+        bool IsControllerDown(int);
+
         int GetMouseX();
         int GetMouseY();
 
         bool QuitRequested();
 
         static InputManager& GetInstance();
+
+        SDL_GameController* controller;
 
     private:
         InputManager();
@@ -53,6 +64,9 @@ class InputManager{
 
         unordered_map<int, bool> keyState;
         unordered_map<int, int> keyUpdate;
+
+        unordered_map<int, bool> controllerState;
+        unordered_map<int, int> controllerUpdate;
 
         bool quitRequested;
 

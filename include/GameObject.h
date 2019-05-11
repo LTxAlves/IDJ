@@ -40,6 +40,8 @@ class GameObject{
 
         double angleDeg;
 
+        void NotifyCollision(GameObject&);
+
     private:
         vector<shared_ptr<Component>> components;
         bool isDead;

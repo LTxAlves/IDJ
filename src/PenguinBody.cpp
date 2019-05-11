@@ -6,6 +6,8 @@
 #include "InputManager.h"
 #include "Camera.h"
 #include "Sound.h"
+#include "Collider.h"
+#include "Bullet.h"
 
 PenguinBody* PenguinBody::player = nullptr;
 
@@ -18,8 +20,11 @@ PenguinBody::PenguinBody(GameObject& associated) :  Component(associated),
     
     player = this;
 
-    Sprite* peng = new Sprite(associated, PENGUINBODYFILE);
-    associated.AddComponent(peng);
+    Sprite* peng = new Sprite(associated, PENGUINBODYFILE); //creates sprite for penguin body
+    associated.AddComponent(peng); //adds sprtie to Game Object
+
+    Collider* penguinCollider = (new Collider(associated)); //creates collider for penguin
+    associated.AddComponent(penguinCollider); //adds collder to Game Object
 }
 
 PenguinBody::~PenguinBody(){
@@ -45,20 +50,20 @@ void PenguinBody::Update(float dt){
 
     InputManager& inputManager = InputManager::GetInstance();
 
-    if(inputManager.IsKeyDown(W_KEY) && !inputManager.IsKeyDown(S_KEY))
+    if((inputManager.IsKeyDown(W_KEY) && !inputManager.IsKeyDown(S_KEY)) || (inputManager.IsControllerDown(DPAD_UP) && !inputManager.IsControllerDown(DPAD_DOWN)))
         linearSpeed = (linearSpeed + PLAYERACCEL*dt <= PLAYERSPEEDCAP) ? linearSpeed + PLAYERACCEL*dt : PLAYERSPEEDCAP;
-    if(inputManager.IsKeyDown(S_KEY) && !inputManager.IsKeyDown(W_KEY))
+    if((inputManager.IsKeyDown(S_KEY) && !inputManager.IsKeyDown(W_KEY)) || (inputManager.IsControllerDown(DPAD_DOWN) && !inputManager.IsControllerDown(DPAD_UP)))
         linearSpeed = (linearSpeed - PLAYERACCEL*dt >= -PLAYERSPEEDCAP) ? linearSpeed - PLAYERACCEL*dt : - PLAYERSPEEDCAP;
-    if(!inputManager.IsKeyDown(W_KEY) && !inputManager.IsKeyDown(S_KEY)){
+    if((!inputManager.IsKeyDown(W_KEY) && !inputManager.IsKeyDown(S_KEY)) && (!inputManager.IsControllerDown(DPAD_DOWN) && !inputManager.IsControllerDown(DPAD_UP))){
         if(linearSpeed > 0)
             linearSpeed = (linearSpeed - PLAYERACCEL*dt >= 0) ? linearSpeed - PLAYERACCEL*dt : 0;
         else
             linearSpeed = (linearSpeed + PLAYERACCEL*dt <= 0) ? linearSpeed + PLAYERACCEL*dt : 0;
-    } 
+    }
 
-    if(inputManager.IsKeyDown(A_KEY) && !inputManager.IsKeyDown(S_KEY))
+    if((inputManager.IsKeyDown(A_KEY) && !inputManager.IsKeyDown(S_KEY)) || (inputManager.IsControllerDown(DPAD_LEFT) && !inputManager.IsControllerDown(DPAD_RIGHT)))
         angle -= PLAYERANGVEL*dt;
-    if(inputManager.IsKeyDown(D_KEY) && !inputManager.IsKeyDown(A_KEY))
+    if((inputManager.IsKeyDown(D_KEY) && !inputManager.IsKeyDown(A_KEY)) || (inputManager.IsControllerDown(DPAD_RIGHT) && !inputManager.IsControllerDown(DPAD_LEFT)))
         angle += PLAYERANGVEL*dt;
 
     if((angle >= 359*DEGTORAD) || (-angle >= 359*DEGTORAD))
@@ -89,8 +94,10 @@ void PenguinBody::Update(float dt){
         Sound* boom = new Sound(*shared_go, BOOMAUDIOFILE);
 
         shared_go->box = associated.box;
-        associated.AddComponent(pdeath);
-        associated.AddComponent(boom);
+        shared_go->AddComponent(pdeath);
+        shared_go->AddComponent(boom);
+
+        boom->Play(1);
     }
 }
 
@@ -102,4 +109,13 @@ void PenguinBody::Render(){
 bool PenguinBody::Is(string type){
 
     return !type.compare("PenguinBody");
+}
+
+void PenguinBody::NotifyCollision(GameObject& other){
+
+    Bullet* bullet = static_cast<Bullet*>(other.GetComponent("Bullet"));
+
+    if(bullet != nullptr && bullet->targetsPlayer)
+        hp -= bullet->GetDamage();
+
 }
