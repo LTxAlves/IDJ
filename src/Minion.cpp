@@ -14,7 +14,7 @@ Minion::Minion(GameObject& associated, weak_ptr<GameObject> alienCenter, float a
     
     associated.AddComponent(minion); //adds minion sprite
 
-    Collider* minionCollider = (new Collider(associated)); //creates minion collider
+    Collider* minionCollider = (new Collider(associated, {scale, scale})); //creates minion collider
     associated.AddComponent(minionCollider); //adds minion collider
 
     arc = arcOffsetDeg * (DEGTORAD); //degrees to radians

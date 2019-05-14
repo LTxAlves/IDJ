@@ -94,6 +94,12 @@ void State::Update(float dt){
         objectArray[i]->Update(dt);
 	}
 
+	for(unsigned int i = 0; i < objectArray.size(); i++){ //updates each collider
+		Collider* colliderPtr = static_cast<Collider*> (objectArray[i]->GetComponent("Collider"));
+		if(colliderPtr != nullptr)
+        	colliderPtr->Update(dt);
+	}
+
 	for(unsigned int i = 0; i < objectArray.size(); i++){ //deletes dead object and plays their death sound
         if(objectArray[i]->IsDead()){
 			Sound* soundPtr = static_cast<Sound*> (objectArray[i]->GetComponent("Sound"));

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+
 class Vec2;
 
 class Rect{
@@ -31,4 +33,12 @@ class Rect{
 
         void CenterAt(Vec2);
         void CenterAt(float, float);
+
+        friend std::ostream& operator<<(std::ostream& out, const Rect& rect){
+            out << "(" << rect.x << ", " << rect.y << ")";
+            out << ", (" << rect.x + rect.w << ", " << rect.y << ")";
+            out << ", (" << rect.x << ", " << rect.y + rect.h << ")";
+            out << ", (" << rect.x + rect.w << ", " << rect.y + rect.h << ")";
+            return out;
+        }
 };

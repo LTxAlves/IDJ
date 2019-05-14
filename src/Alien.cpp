@@ -16,7 +16,7 @@ Alien::Alien(GameObject& associated, int nMinions) : Component(associated){
     associated.AddComponent(alien); //adds sprite to game object
     associated.AddComponent(alienCollider); //adds collider to game object
 
-    hp = (rand() % 11) + 30; //random number of hitpoints between 30 and 40
+    hp = (rand() % 11) + 50; //random number of hitpoints between 30 and 40
     speed = Vec2(); //initially no speed
 
     this->nMinions = nMinions; //saves number of minions

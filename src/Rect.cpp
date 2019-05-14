@@ -34,12 +34,12 @@ bool Rect::Contains(float x_coord, float y_coord){ //checks if rect contains coo
 
 Rect Rect::operator+(const Vec2& vec){ //sums rect with vec2 (moves rect along vec) and returns a new rect
 
-    return Rect(this->x + vec.x, this->y + vec.y, this->w, this->h);
+    return Rect(x + vec.x, y + vec.y, w, h);
 }
 
 Rect Rect::operator-(const Vec2& vec){ //subtracts rect with vec2 (moves rect along - vec) and returns a new rect
 
-    return Rect(this->x - vec.x, this->y - vec.y, this->w, this->h);
+    return Rect(x - vec.x, y - vec.y, w, h);
 }
 
 Rect Rect::operator*(const Vec2& scale){
@@ -53,33 +53,33 @@ Rect Rect::operator*(const Vec2& scale){
 
 void Rect::operator+=(const Vec2& vec){ //sums rect with vec2 (moves rect along vec), moving it
 
-    this->x += vec.x;
-    this->y += vec.y;
+    x += vec.x;
+    y += vec.y;
 }
 
 void Rect::operator-=(const Vec2& vec){ //subtracts rect with vec2 (moves rect along - vec), movint it
 
-    this->x -= vec.x;
-    this->y -= vec.y;
+    x -= vec.x;
+    y -= vec.y;
 }
 
 void Rect::operator*=(const Vec2& scale){
 
-    this->w *= scale.x;
-    this->h *= scale.y;
+    w *= scale.x;
+    h *= scale.y;
 }
 
 void Rect::operator=(const Rect& rec){ //assigns this rect to a given rect
 
-    this->x = rec.x;
-    this->y = rec.y;
-    this->w = rec.w;
-    this->h = rec.h;
+    x = rec.x;
+    y = rec.y;
+    w = rec.w;
+    h = rec.h;
 }
 
 Vec2 Rect::Position(){ //returns position of rect
 
-    return Vec2(this->x, this->y);
+    return Vec2(x, y);
 }
 
 Vec2 Rect::CenterPoint(){ //calculates coordinates of center point of rectangle
@@ -91,12 +91,12 @@ Vec2 Rect::CenterPoint(){ //calculates coordinates of center point of rectangle
 
 void Rect::CenterAt(Vec2 centerPos){
 
-    this->x = centerPos.x - this->w/2;
-    this->y = centerPos.y - this->h/2;
+    x = centerPos.x - (w)/2;
+    y = centerPos.y - (h)/2;
 }
 
 void Rect::CenterAt(float xCenter, float yCenter){
 
-    this->x = xCenter - this->w/2;
-    this->y = yCenter - this->h/2;
+    x = xCenter - w/2;
+    y = yCenter - h/2;
 }

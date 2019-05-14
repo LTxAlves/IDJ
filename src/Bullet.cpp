@@ -48,6 +48,6 @@ int Bullet::GetDamage(){
 
 void Bullet::NotifyCollision(GameObject& other){
 
-    if((other.GetComponent("Alien") != nullptr && !targetsPlayer)|| (other.GetComponent("PengiunBody") != nullptr && targetsPlayer))
+    if((other.GetComponent("Alien") != nullptr && !targetsPlayer)|| (other.GetComponent("PenguinBody") != nullptr && targetsPlayer))
         associated.RequestDelete();
 }
