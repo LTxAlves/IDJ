@@ -25,7 +25,7 @@ Minion::Minion(GameObject& associated, weak_ptr<GameObject> alienCenter, float a
     Vec2 dist(200, 0); //radius around alien
     
     if(alien != nullptr){ //checks if alien exists (isn't dead)
-        dist.Rotate(arc); //rotates minion around
+        dist.Rotate(-arc); //rotates minion around
 
         dist += alien->box.CenterPoint(); //sets distance to move
         dist.x -= associated.box.w/2; //corrects to move center
@@ -43,7 +43,7 @@ void Minion::Update(float dt){
     Vec2 dist(200, 0);
     
     if(alien != nullptr){ //checks if alien exists (isn't dead)
-        dist.Rotate(arc); //rotates minion around
+        dist.Rotate(-arc); //rotates minion around
 
         associated.angleDeg = -arc * (RADTODEG); //rotates to keep bottom pointing at alien
 

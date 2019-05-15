@@ -1,9 +1,8 @@
 #include "Vec2.h"
 
-Vec2::Vec2(){ //initializes with 0 value
+Vec2::Vec2() :  x(0),
+                y(0){ //initializes with 0 value
 
-    x = 0;
-    y = 0;
 }
 
 Vec2::Vec2(float x_in, float y_in){ //initializes with given values
@@ -17,15 +16,14 @@ void Vec2::Rotate(double theta){ //rotates a vec2
     float x_new, y_new;
 
     x_new = x*cos(theta) - y*sin(theta);
-    y_new = y*cos(theta) - x*sin(theta);
+    y_new = y*cos(theta) + x*sin(theta);
 
-    x = x_new;
-    y = y_new;
+    *this = {x_new, y_new};
 }
 
 Vec2 Vec2::GetRotated(double theta){ //returns rotated version of vec2
 
-    Vec2 newVec = *this;
+    Vec2 newVec = {x, y};
     newVec.Rotate(theta);
     return newVec;
 }

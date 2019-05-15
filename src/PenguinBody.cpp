@@ -70,7 +70,7 @@ void PenguinBody::Update(float dt){
         angle = 0;
 
     speed = Vec2(linearSpeed, 0);
-    speed.Rotate(-angle);
+    speed.Rotate(angle);
 
     associated.box += speed*dt;
     associated.angleDeg = angle * RADTODEG;
