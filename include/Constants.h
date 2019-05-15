@@ -77,3 +77,9 @@ const float PENGUINBULLETFRAMETIME  = 0.5; //frame duration for penguin's bullet
 
 const float DEATHFRAMETIME          = 0.15; //frame duration for deaths
 /***************************************************************************************/
+
+/*Timer values*/
+const float PENGUINSHOTCOOLDOWN = 0.6;
+
+const float ALIENRESTCOOLDOWN   = 0.9;
+/***************************************************************************************/

@@ -30,67 +30,106 @@ Vec2 Vec2::GetRotated(double theta){ //returns rotated version of vec2
 
 Vec2 Vec2::operator+(const Vec2& vec){ //overload of operator + to add vec2 together
 
-    return Vec2(this->x + vec.x, this->y + vec.y);
+    return Vec2(x + vec.x, y + vec.y);
 }
 
 Vec2 Vec2::operator-(const Vec2& vec){ //overload of operator - to subtract vec2
 
-    return Vec2(this->x - vec.x, this->y - vec.y);
+    return Vec2(x - vec.x, y - vec.y);
 }
 
 void Vec2::operator=(const Vec2& vec){ //assigning operator
 
-    this->x = vec.x;
-    this->y = vec.y;
+    x = vec.x;
+    y = vec.y;
 }
 
 Vec2 Vec2::operator-(){ //bitwise unary operator of negation
 
-    return(Vec2(-this->x, -this->y));
+    return(Vec2(-x, -y));
 }
 
 
 void Vec2::operator+=(const Vec2& vec){ //sums to vector and changes its value
 
-    this->x += vec.x;
-    this->y += vec.y;
+    x += vec.x;
+    y += vec.y;
 }
 
 void Vec2::operator-=(const Vec2& vec){ //subtracts from vector and changes its value
 
-    this->x -= vec.x;
-    this->y -= vec.y;
+    x -= vec.x;
+    y -= vec.y;
 }
 
 Vec2 Vec2::operator*(const float scalar){ //multiplies vec2 and scalar
 
-    return Vec2(this->x * scalar, this->y * scalar);
+    return Vec2(x * scalar, y * scalar);
 }
 
 
 float Vec2::operator*(const Vec2& vec){
 
-    return this->x * vec.x + this->y * vec.y;
+    return x * vec.x + y * vec.y;
 }
 
 Rect Vec2::operator+(const Rect& rect){ //sums rect with vec2 (moves rect along ve2)
 
-    return Rect(this->x + rect.x, this->y + rect.y, rect.w, rect.h);
+    return Rect(x + rect.x, y + rect.y, rect.w, rect.h);
 }
 
 Rect Vec2::operator-(const Rect& rect){ //subtracts vec2 from rect (moves rect along -vec2)
  
-    return Rect(this->x - rect.x, this->y - rect.y, rect.w, rect.h);
+    return Rect(x - rect.x, y - rect.y, rect.w, rect.h);
 }
+
+bool Vec2::operator==(const Vec2& vec){
+
+    return (x == vec.x && y == vec.y);
+}
+
+bool Vec2::operator>(const Vec2& vec){
+
+    Vec2 copy = vec;
+
+    return (Magnitude() > copy.Magnitude());
+}
+
+bool Vec2::operator<(const Vec2& vec){
+
+    Vec2 copy = vec;
+
+    return (Magnitude() < copy.Magnitude());
+}
+
+bool Vec2::operator!=(const Vec2& vec){
+
+    return !(*this == vec);
+}
+
+bool Vec2::operator>=(const Vec2& vec){
+
+    Vec2 copy = vec;
+
+    return (Magnitude() >= copy.Magnitude());
+}
+
+bool Vec2::operator<=(const Vec2& vec){
+
+    Vec2 copy = vec;
+
+    return (Magnitude() <= copy.Magnitude());
+}
+
 
 float Vec2::Magnitude(){ //returns magnitude of vec2
 
-    return sqrt(this->x*this->x + this->y*this->y);
+    return sqrt(x*x + y*y);
 }
 
 Vec2 Vec2::Normalized(){ //returns normalized vec2
 
-    return Vec2(this->x/this->Magnitude(), this->y/this->Magnitude());
+    return Vec2(x/Magnitude(), y/Magnitude());
 }
 
 float Vec2::Distance(Vec2 vec){ //distance between 2 points

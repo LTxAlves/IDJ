@@ -21,6 +21,8 @@ class PenguinBody : public Component{
         static PenguinBody* player;
 
         void NotifyCollision(GameObject&);
+
+        Vec2 Position();
     
     private:
         weak_ptr<GameObject> pcannon;

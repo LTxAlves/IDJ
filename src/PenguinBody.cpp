@@ -61,7 +61,7 @@ void PenguinBody::Update(float dt){
             linearSpeed = (linearSpeed + PLAYERACCEL*dt <= 0) ? linearSpeed + PLAYERACCEL*dt : 0;
     }
 
-    if((inputManager.IsKeyDown(A_KEY) && !inputManager.IsKeyDown(S_KEY)) || (inputManager.IsControllerDown(DPAD_LEFT) && !inputManager.IsControllerDown(DPAD_RIGHT)))
+    if((inputManager.IsKeyDown(A_KEY) && !inputManager.IsKeyDown(D_KEY)) || (inputManager.IsControllerDown(DPAD_LEFT) && !inputManager.IsControllerDown(DPAD_RIGHT)))
         angle -= PLAYERANGVEL*dt;
     if((inputManager.IsKeyDown(D_KEY) && !inputManager.IsKeyDown(A_KEY)) || (inputManager.IsControllerDown(DPAD_RIGHT) && !inputManager.IsControllerDown(DPAD_LEFT)))
         angle += PLAYERANGVEL*dt;
@@ -90,7 +90,7 @@ void PenguinBody::Update(float dt){
         weak_ptr<GameObject> weak_go = Game::GetInstance().GetState().AddObject(go);
         shared_ptr<GameObject> shared_go = weak_go.lock();
 
-        Sprite* pdeath = new Sprite(*shared_go, PENGUINDEATHFILE, PENGUINDEATHFRAMES, DEATHFRAMETIME);
+        Sprite* pdeath = new Sprite(*shared_go, PENGUINDEATHFILE, PENGUINDEATHFRAMES, DEATHFRAMETIME, PENGUINDEATHFRAMES * DEATHFRAMETIME);
         Sound* boom = new Sound(*shared_go, BOOMAUDIOFILE);
 
         shared_go->box = associated.box;
@@ -118,4 +118,9 @@ void PenguinBody::NotifyCollision(GameObject& other){
     if(bullet != nullptr && bullet->targetsPlayer){
         hp -= bullet->GetDamage();
     }
+}
+
+Vec2 PenguinBody::Position(){
+
+    return associated.box.CenterPoint();
 }

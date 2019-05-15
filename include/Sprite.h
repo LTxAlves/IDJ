@@ -8,6 +8,7 @@
 
 #include "Component.h"
 #include "Vec2.h"
+#include "Timer.h"
 
 using std::string;
 
@@ -17,7 +18,7 @@ class Sprite : public Component{
     
     public:
         Sprite(GameObject&);
-        Sprite(GameObject&, string, int = 1, float = 1);
+        Sprite(GameObject&, string, int = 1, float = 1, float = 0);
 
         void Open(string);
         void SetClip(int, int, int, int);
@@ -53,4 +54,7 @@ class Sprite : public Component{
         int currentFrame;
         float timeElapsed;
         float frameTime;
+
+        Timer selfDestructCount;
+        float secondsToSelfDestruct;
 };

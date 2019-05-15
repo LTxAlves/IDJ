@@ -5,6 +5,7 @@
 #include "Camera.h"
 #include "Game.h"
 #include "Bullet.h"
+#include "Timer.h"
 
 PenguinCannon::PenguinCannon(GameObject& associated, weak_ptr<GameObject> penguinBody) :    Component(associated),
                                                                                             pbody(penguinBody),
@@ -33,8 +34,13 @@ void PenguinCannon::Update(float  dt){
     angle = dir.Inclination();
     associated.angleDeg = angle;
 
-    if(inputManager.MousePress(LEFT_MOUSE_BUTTON))
+    static Timer cannonTimer;
+    cannonTimer.Update(dt);
+
+    if(inputManager.MousePress(LEFT_MOUSE_BUTTON) && cannonTimer.Get() >= PENGUINSHOTCOOLDOWN){
         Shoot();
+        cannonTimer.Restart();
+    }
 }
 
 void PenguinCannon::Render(){
@@ -58,7 +64,7 @@ void PenguinCannon::Shoot(){
     Bullet* bullet = new Bullet(*shared_go, angle, BULLETSPEED, damage, BULLETMAXDIST, PENGUINBULLETFILE, PENGUINBULLETFRAMES, PENGUINBULLETFRAMETIME, false);
 
     Vec2 startOffset(associated.box.w/2.0, 0);
-    startOffset.Rotate(-angle * DEGTORAD);
+    startOffset.Rotate(angle * DEGTORAD);
     shared_go->box.CenterAt(associated.box.CenterPoint() + startOffset);
 
     shared_go->AddComponent(bullet);

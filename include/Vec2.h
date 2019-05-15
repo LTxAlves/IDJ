@@ -33,6 +33,13 @@ class Vec2{
         Rect operator+(const Rect&);
         Rect operator-(const Rect&);
 
+        bool operator==(const Vec2&);
+        bool operator>(const Vec2&);
+        bool operator<(const Vec2&);
+        bool operator!=(const Vec2&);
+        bool operator>=(const Vec2&);
+        bool operator<=(const Vec2&);
+
         float Magnitude();
 
         Vec2 Normalized();

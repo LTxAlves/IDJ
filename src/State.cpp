@@ -125,9 +125,17 @@ void State::Update(float dt){
 
 void State::Render(){
 
+	TileMap* tileMap;
+
     for(unsigned int i = 0; i < objectArray.size(); i++){ //renders each object
         objectArray[i]->Render();
+		if(objectArray[i]->GetComponent("TileMap") != nullptr)
+			tileMap = static_cast<TileMap*> (objectArray[i]->GetComponent("TileMap"));
     }
+
+	if(tileMap != nullptr)
+		for(int i = 1; i < tileMap->GetDepth(); i++)
+        	tileMap->RenderLayer(i, Camera::pos.x * (1 + i * PARALLAX_FACTOR), Camera::pos.y * (1 + i * PARALLAX_FACTOR));
 }
 
 bool State::QuitRequested(){

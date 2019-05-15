@@ -1,13 +1,12 @@
 #pragma once
 
-#include <queue>
 #include <memory>
 #include "Constants.h"
 #include "Component.h"
 #include "Vec2.h"
+#include "Timer.h"
 
 using std::string;
-using std::queue;
 using std::weak_ptr;
 using std::vector;
 
@@ -28,23 +27,19 @@ class Alien : public Component{
 
         void NotifyCollision(GameObject&);
 
+        static int alienCount;
+
     private:
-        class Action{
-
-            public:
-                enum ActionType {MOVE, SHOOT};
-
-                ActionType type;
-                Vec2 pos;
-
-                Action(ActionType, float, float);
-        };
-
         Vec2 speed;
         int hp;
         int nMinions;
 
-        queue<Action> taskQueue;
         vector<weak_ptr<GameObject>> minionArray;
 
+        enum AlienState {MOVING, RESTING};
+
+        AlienState state;
+        Timer restTimer;
+        
+        Vec2 destination;
 };

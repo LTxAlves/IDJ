@@ -8,6 +8,9 @@
 #include "Collider.h"
 #include "Bullet.h"
 #include "Sound.h"
+#include "PenguinBody.h"
+
+int Alien::alienCount;
 
 Alien::Alien(GameObject& associated, int nMinions) : Component(associated){
 
@@ -20,17 +23,15 @@ Alien::Alien(GameObject& associated, int nMinions) : Component(associated){
     speed = Vec2(); //initially no speed
 
     this->nMinions = nMinions; //saves number of minions
+
+    alienCount++;
+
+    state = RESTING;
 }
 
 Alien::~Alien(){
 
     minionArray.clear(); //clears minion array
-}
-
-Alien::Action::Action(Action::ActionType type, float x, float y){
-
-    this->type = type; //sets type of action
-    pos = Vec2(x, y); //sets coordinates
 }
 
 void Alien::Start(){
@@ -53,58 +54,65 @@ void Alien::Start(){
 
 void Alien::Update(float dt){
 
-    InputManager& inputManager = InputManager::GetInstance(); //gets only instance of input manager
-
     associated.angleDeg += (ALIENANGVEL * RADTODEG) * dt; //rotates alien
 
     if(associated.angleDeg >= 359.6 && associated.angleDeg <= 360.5) //keep rotation in [0°, 360°)
         associated.angleDeg = 0;
 
-    if(inputManager.MousePress(LEFT_MOUSE_BUTTON)) //left mouse click shoots
-        taskQueue.emplace(Action(Action::SHOOT, inputManager.GetMouseX() + Camera::pos.x, inputManager.GetMouseY() + Camera::pos.y)); //shoot with left click
+    switch (state)
+    {
+    case RESTING:
+        /* code */
+        break;
+    
+    case MOVING:
+        break;
+    }
+    if(state == RESTING){
 
-    if(inputManager.MousePress(RIGHT_MOUSE_BUTTON)) //right mouse click moves
-        taskQueue.emplace(Action(Action::MOVE, inputManager.GetMouseX() + Camera::pos.x - (associated.box.w/2), inputManager.GetMouseY() + Camera::pos.y - (associated.box.h/2))); //move (center) with right click
+        restTimer.Update(dt);
+        if(restTimer.Get() > ALIENRESTCOOLDOWN)
+            state = MOVING;
+    }
+    else if(state == MOVING){
 
-    if(!taskQueue.empty()){ //checks if there's any action in queue
-        if((taskQueue.front()).type == Action::MOVE){ //if action is to move
-
-            Vec2 dir = taskQueue.front().pos - associated.box.Position(); //direction of movement vector 
-            speed = dir.Normalized() * ALIENSPEED; //speed vector (keeps magnitude constant)
-
-            if( (dir.x > -(dt * abs(speed.x))) && (dir.x < (dt * abs(speed.x))) &&
-                (dir.y > -(dt * abs(speed.y))) && (dir.y < (dt * abs(speed.y)))){ //checks bounds (if close enough to detination)
-
-                    speed = Vec2(); //stop moving
-                    taskQueue.pop(); //remove action from queue
-            }
-            else
-                associated.box += speed * dt; //new position
-        }
-        else if((taskQueue.front()).type == Action::SHOOT){ //if action is to shoot
-
-            float smallestDist = FLT_MAX; //smallest distance found
-            int closestMinion; //which minion is closest to target
-
-            for(unsigned int i = 0; i < minionArray.size(); i++){ //goes thorugh minion array
-
-                Vec2 minionPos = minionArray[i].lock()->box.CenterPoint(); //gets minion center position
-                
-                if(minionPos.Distance(taskQueue.front().pos) < smallestDist){ //if smallerthan smallest distance found so far
-
-                    smallestDist = minionPos.Distance(taskQueue.front().pos); //update smallest distance found
-                    closestMinion = i; //saves minion position in array
-                }
-            }
-
-            if(minionArray[closestMinion].lock() != nullptr){ //checks for reference error (dead minion)
-
-                Minion* minon = static_cast<Minion*> (minionArray[closestMinion].lock()->GetComponent("Minion")); //get minion reference
-                minon->Shoot(taskQueue.front().pos); //minion shoots
-            }
+        if(destination == Vec2(0,0) && PenguinBody::player != nullptr)
+            destination = PenguinBody::player->Position();
             
-            taskQueue.pop(); //remove action from queue
+        Vec2 dir = destination - associated.box.CenterPoint();
+        speed = dir.Normalized() * ALIENSPEED; //speed vector (keeps magnitude constant)
+
+        if( (dir.x > -(dt * abs(speed.x))) && (dir.x < (dt * abs(speed.x))) &&
+            (dir.y > -(dt * abs(speed.y))) && (dir.y < (dt * abs(speed.y)))){ //checks bounds (if close enough to detination)
+
+                speed = {0, 0}; //stop moving
+                float smallestDist = FLT_MAX; //smallest distance found
+
+                int closestMinion; //which minion is closest to target
+
+                for(unsigned int i = 0; i < minionArray.size(); i++){ //goes thorugh minion array
+
+                    Vec2 minionPos = minionArray[i].lock()->box.CenterPoint(); //gets minion center position
+                    
+                    if(minionPos.Distance(destination) < smallestDist){ //if smallerthan smallest distance found so far
+
+                        smallestDist = minionPos.Distance(destination); //update smallest distance found
+                        closestMinion = i; //saves minion position in array
+                    }
+                }
+
+                if(minionArray[closestMinion].lock() != nullptr && PenguinBody::player != nullptr){ //checks for reference error (dead minion)
+
+                    Minion* minon = static_cast<Minion*> (minionArray[closestMinion].lock()->GetComponent("Minion")); //get minion reference
+                    minon->Shoot(PenguinBody::player->Position()); //minion shoots
+                }
+
+                restTimer.Restart();
+                destination = {0, 0};
+                state = RESTING;
         }
+        else
+            associated.box += speed * dt; //new position
     }
 
     if(hp <= 0){ //checks death
@@ -116,7 +124,7 @@ void Alien::Update(float dt){
         weak_ptr<GameObject> weak_go = Game::GetInstance().GetState().AddObject(go);
         shared_ptr<GameObject> shared_go = weak_go.lock();
 
-        Sprite* pdeath = new Sprite(*shared_go, PENGUINDEATHFILE, PENGUINDEATHFRAMES, DEATHFRAMETIME);
+        Sprite* pdeath = new Sprite(*shared_go, ALIENDEATHFILE, ENEMYDEATHFRAMES, DEATHFRAMETIME, ENEMYDEATHFRAMES * DEATHFRAMETIME);
         Sound* boom = new Sound(*shared_go, BOOMAUDIOFILE);
 
         shared_go->box = associated.box;

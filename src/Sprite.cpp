@@ -14,12 +14,13 @@ Sprite::Sprite(GameObject& associated) :    Component(associated),
     texture = nullptr;
 }
 
-Sprite::Sprite(GameObject& associated, string file, int frameCount, float frameTime) :  Component(associated),
-                                                                                        scale(1, 1),
-                                                                                        frameCount(frameCount),
-                                                                                        currentFrame(0),
-                                                                                        timeElapsed(0),
-                                                                                        frameTime(frameTime){
+Sprite::Sprite(GameObject& associated, string file, int frameCount, float frameTime, float secondsToSelfDestruct) : Component(associated),
+                                                                                                                    scale(1, 1),
+                                                                                                                    frameCount(frameCount),
+                                                                                                                    currentFrame(0),
+                                                                                                                    timeElapsed(0),
+                                                                                                                    frameTime(frameTime),
+                                                                                                                    secondsToSelfDestruct(secondsToSelfDestruct){
 
     texture = nullptr;
     Open(file);
@@ -96,6 +97,12 @@ void Sprite::Update(float dt){
     }
 
     SetClip((width/frameCount) * currentFrame, clipRect.y, width/frameCount, height); //sets new clip
+
+    if(secondsToSelfDestruct > 0){
+        selfDestructCount.Update(dt);
+        if(selfDestructCount.Get() > secondsToSelfDestruct)
+            associated.RequestDelete();
+    }
 }
 
 bool Sprite::Is(string type){
