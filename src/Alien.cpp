@@ -31,6 +31,7 @@ Alien::Alien(GameObject& associated, int nMinions) : Component(associated){
 
 Alien::~Alien(){
 
+    alienCount--;
     minionArray.clear(); //clears minion array
 }
 
@@ -94,8 +95,8 @@ void Alien::Update(float dt){
                                 closestMinion = i; //saves minion position in array
                             }
                         }
-                        else
-                            minionArray.erase(minionArray.begin() + i);
+                        // else
+                        //     minionArray.erase(minionArray.begin() + i);
                     }
 
                     auto minion_go = minionArray[closestMinion].lock();

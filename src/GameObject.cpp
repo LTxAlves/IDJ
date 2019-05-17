@@ -67,10 +67,8 @@ void GameObject::RemoveComponent(Component* cpt){
 
 Component* GameObject::GetComponent(string type){
 
-    int size = components.size(), i;
-
-        for(i = 0; i < size; i++){
-            if(components[i]->Is(type)) //finds component
+        for(unsigned int i = 0; i < components.size(); i++){
+            if(components[i] != nullptr && components[i]->Is(type)) //finds component
                 return components[i].get(); //returns it
         }
         
