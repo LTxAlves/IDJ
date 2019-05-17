@@ -3,6 +3,7 @@
 #include "Bullet.h"
 #include "Game.h"
 #include "Collider.h"
+#include "Sound.h"
 
 Minion::Minion(GameObject& associated, weak_ptr<GameObject> alienCenter, float arcOffsetDeg) :  Component(associated),
                                                                                                 alienCenter(alienCenter){
@@ -11,6 +12,8 @@ Minion::Minion(GameObject& associated, weak_ptr<GameObject> alienCenter, float a
     
     float scale = (float(rand())/(float(RAND_MAX)/0.5)) + 1.0; //generates scale factor within [1, 1.5)
     minion->SetScaleX(scale, scale); //sets scale factor accordingly
+
+    hp = 20 * scale + 10; //bigger minions have more life
     
     associated.AddComponent(minion); //adds minion sprite
 
@@ -18,8 +21,6 @@ Minion::Minion(GameObject& associated, weak_ptr<GameObject> alienCenter, float a
     associated.AddComponent(minionCollider); //adds minion collider
 
     arc = arcOffsetDeg * (DEGTORAD); //degrees to radians
-
-    this->alienCenter = alienCenter; //sets alien for minion to circle around
 
     shared_ptr<GameObject> alien = alienCenter.lock(); //makes shared_ptr from weak_ptr
     Vec2 dist(200, 0); //radius around alien
@@ -58,6 +59,24 @@ void Minion::Update(float dt){
     }
     else
         associated.RequestDelete();
+
+    if(hp <= 0){
+        hp = 0;
+        associated.RequestDelete();
+
+        GameObject* go = (new GameObject());
+        weak_ptr<GameObject> weak_go = Game::GetInstance().GetState().AddObject(go);
+        shared_ptr<GameObject> shared_go = weak_go.lock();
+
+        Sprite* pdeath = new Sprite(*shared_go, MINIONDEATHFILE, ENEMYDEATHFRAMES, DEATHFRAMETIME, ENEMYDEATHFRAMES * DEATHFRAMETIME);
+        Sound* boom = new Sound(*shared_go, BOOMAUDIOFILE);
+
+        shared_go->box = associated.box;
+        shared_go->AddComponent(pdeath);
+        shared_go->AddComponent(boom);
+
+        boom->Play(1);
+    }
 }
 
 
@@ -86,4 +105,12 @@ void Minion::Shoot(Vec2 pos){
     shared_go->box.CenterAt(associated.box.CenterPoint()); //sets box starting point
 
     shared_go->AddComponent(shot); //adds bullet compoonent
+}
+
+void Minion::NotifyCollision(GameObject& other){
+
+    Bullet* bullet = static_cast<Bullet*> (other.GetComponent("Bullet"));
+
+    if(bullet != nullptr && !bullet->targetsPlayer)
+        hp -= bullet->GetDamage();
 }

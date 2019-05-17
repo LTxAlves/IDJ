@@ -19,7 +19,7 @@ Alien::Alien(GameObject& associated, int nMinions) : Component(associated){
     associated.AddComponent(alien); //adds sprite to game object
     associated.AddComponent(alienCollider); //adds collider to game object
 
-    hp = (rand() % 11) + 50; //random number of hitpoints between 30 and 40
+    hp = (rand() % 11) + 50; //random number of hitpoints between 50 and 60
     speed = Vec2(); //initially no speed
 
     this->nMinions = nMinions; //saves number of minions
@@ -59,60 +59,61 @@ void Alien::Update(float dt){
     if(associated.angleDeg >= 359.6 && associated.angleDeg <= 360.5) //keep rotation in [0°, 360°)
         associated.angleDeg = 0;
 
-    switch (state)
-    {
-    case RESTING:
-        /* code */
-        break;
-    
-    case MOVING:
-        break;
-    }
-    if(state == RESTING){
+    switch (state){
+        case RESTING:
 
-        restTimer.Update(dt);
-        if(restTimer.Get() > ALIENRESTCOOLDOWN)
-            state = MOVING;
-    }
-    else if(state == MOVING){
+            restTimer.Update(dt);
+            if(restTimer.Get() > ALIENRESTCOOLDOWN)
+                state = MOVING;
+            break;
 
-        if(destination == Vec2(0,0) && PenguinBody::player != nullptr)
-            destination = PenguinBody::player->Position();
-            
-        Vec2 dir = destination - associated.box.CenterPoint();
-        speed = dir.Normalized() * ALIENSPEED; //speed vector (keeps magnitude constant)
+        case MOVING:
 
-        if( (dir.x > -(dt * abs(speed.x))) && (dir.x < (dt * abs(speed.x))) &&
-            (dir.y > -(dt * abs(speed.y))) && (dir.y < (dt * abs(speed.y)))){ //checks bounds (if close enough to detination)
+            if(destination == Vec2() && PenguinBody::player != nullptr)
+                destination = PenguinBody::player->Position();
+                
+            Vec2 dir = destination - associated.box.CenterPoint();
+            speed = dir.Normalized() * ALIENSPEED; //speed vector (keeps magnitude constant)
 
-                speed = {0, 0}; //stop moving
-                float smallestDist = FLT_MAX; //smallest distance found
+            if(dir.Magnitude() < 3){ //checks bounds (if close enough to destination)
 
-                int closestMinion; //which minion is closest to target
+                    speed = {0, 0}; //stop moving
+                    float smallestDist = FLT_MAX; //smallest distance found
 
-                for(unsigned int i = 0; i < minionArray.size(); i++){ //goes thorugh minion array
+                    int closestMinion = 0; //which minion is closest to target
 
-                    Vec2 minionPos = minionArray[i].lock()->box.CenterPoint(); //gets minion center position
-                    
-                    if(minionPos.Distance(destination) < smallestDist){ //if smallerthan smallest distance found so far
+                    for(unsigned int i = 0; i < minionArray.size(); i++){ //goes thorugh minion array
+                        auto minion = minionArray[i].lock();
 
-                        smallestDist = minionPos.Distance(destination); //update smallest distance found
-                        closestMinion = i; //saves minion position in array
+                        if(minion != nullptr){
+                            Vec2 minionPos = minion->box.CenterPoint(); //gets minion center position
+                        
+                            if(minionPos.Distance(PenguinBody::player->Position()) < smallestDist){ //if smaller than smallest distance found so far
+
+                                smallestDist = minionPos.Distance(PenguinBody::player->Position()); //update smallest distance found
+                                closestMinion = i; //saves minion position in array
+                            }
+                        }
+                        else
+                            minionArray.erase(minionArray.begin() + i);
                     }
-                }
 
-                if(minionArray[closestMinion].lock() != nullptr && PenguinBody::player != nullptr){ //checks for reference error (dead minion)
+                    auto minion_go = minionArray[closestMinion].lock();
 
-                    Minion* minon = static_cast<Minion*> (minionArray[closestMinion].lock()->GetComponent("Minion")); //get minion reference
-                    minon->Shoot(PenguinBody::player->Position()); //minion shoots
-                }
+                    if(minion_go != nullptr && PenguinBody::player != nullptr){ //checks for reference error (dead minion or dead player)
 
-                restTimer.Restart();
-                destination = {0, 0};
-                state = RESTING;
-        }
-        else
-            associated.box += speed * dt; //new position
+                        Minion* minion = static_cast<Minion*> (minion_go->GetComponent("Minion")); //get minion reference
+                        if(minion != nullptr)
+                            minion->Shoot(PenguinBody::player->Position()); //minion shoots
+                    }
+
+                    restTimer.Restart();
+                    destination = {0, 0};
+                    state = RESTING;
+            }
+            else
+                associated.box += speed * dt; //new position
+            break;
     }
 
     if(hp <= 0){ //checks death

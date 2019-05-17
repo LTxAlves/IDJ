@@ -90,6 +90,15 @@ void State::Update(float dt){
 	if(inputManager.QuitRequested() || inputManager.KeyPress(ESCAPE_KEY)) //checks if player quit game
 		quitRequested = true;
 
+	for(unsigned int i = 0; i < objectArray.size(); i++){ //deletes dead object and plays their death sound
+        if(objectArray[i]->IsDead()){
+			Sound* soundPtr = static_cast<Sound*> (objectArray[i]->GetComponent("Sound"));
+			if(soundPtr != nullptr)
+				soundPtr->Play(1);
+            objectArray.erase(objectArray.begin() + i);
+        }
+    }
+
     for(unsigned int i = 0; i < objectArray.size(); i++){ //updates each object
         objectArray[i]->Update(dt);
 	}
@@ -99,15 +108,6 @@ void State::Update(float dt){
 		if(colliderPtr != nullptr)
         	colliderPtr->Update(dt);
 	}
-
-	for(unsigned int i = 0; i < objectArray.size(); i++){ //deletes dead object and plays their death sound
-        if(objectArray[i]->IsDead()){
-			Sound* soundPtr = static_cast<Sound*> (objectArray[i]->GetComponent("Sound"));
-			if(soundPtr != nullptr)
-				soundPtr->Play(1);
-            objectArray.erase(objectArray.begin() + i);
-        }
-    }
 
 	for(unsigned int i = 0; i <objectArray.size(); i++){
 		Collider* iColliderPtr = static_cast<Collider*> (objectArray[i]->GetComponent("Collider"));

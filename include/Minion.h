@@ -20,7 +20,11 @@ class Minion : public Component{
         bool Is(string);
         void Shoot(Vec2);
 
+        void NotifyCollision(GameObject&);
+
     private:
         weak_ptr<GameObject> alienCenter;
         float arc;
+
+        int hp;
 };
