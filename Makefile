@@ -18,7 +18,7 @@ DEP_FLAGS = -M -MT $@  -MT $(BIN_PATH)/$(*F).o -MP -MF $@
 LIBS = -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf -lm
 
 #Caminho dos includes
-INC_PATHS = -I$(INC_PATH) $(addprefix -I,$(SDL_INC_PATHS))
+INC_PATHS = -I$(INC_PATH) $(addprefix -I,$(SDL_INC_PATH))
 
 #Diretivas de compilação
 FLAGS = -std=c++11 -Wall -pedantic -Wextra -Wno-unused-parameter -Werror=init-self
@@ -57,7 +57,7 @@ RM = del /q
 
 #Possíveis paths da SDL. Caso seja possível ter mais de um local, adicione espaço entre eles
 #Por exempolo.: SDL_PATHs = C:/SDL2 D:/Tools/SDL2 C:/dev-tools/SDL2s
-SDL_PATH = C:/SDL2/x86_64-w64-mingw32 C:/Tools/msys64/mingw64
+SDL_PATHS = C:/SDL2/x86_64-w64-mingw32 C:/Tools/msys64/mingw64
 
 SDL_INC_PATH += $(addsuffix /include,$(SDL_PATHS))
 LINK_PATH = $(addprefix -L,$(addsufix /lib,$(SDL_PATHS)))
