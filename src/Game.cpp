@@ -1,4 +1,7 @@
 #include "Game.h"
+#include "Resources.h"
+#include "State.h"
+#include "InputManager.h"
 
 Game* Game::instance;
 
@@ -49,12 +52,20 @@ Game::Game(string title, int width, int height) :   dt(0),
 
     SDL_SetWindowIcon(window, icon);
 
-    state = new State();
+    SDL_ClearError();
+
+    storedState = nullptr;
 }
 
 Game::~Game(){  //destroys everything in reverse order of creation
 
-    delete state;
+    if(storedState != nullptr)
+        delete storedState;
+
+    while (!stateStack.empty()){
+        stateStack.pop();
+    }
+    
 
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
@@ -67,6 +78,11 @@ Game::~Game(){  //destroys everything in reverse order of creation
     SDL_Quit();
 }
 
+void Game::Push(State* state){
+
+    storedState = state;
+}
+
 Game& Game::GetInstance(){
 
     if(instance == nullptr) //checks existence of instance
@@ -74,9 +90,9 @@ Game& Game::GetInstance(){
     return *(instance);
 }
 
-State& Game::GetState(){
+State& Game::GetCurrentState(){
 
-    return *state;
+    return *(stateStack.top());
 }
 
 SDL_Renderer* Game::GetRenderer(){
@@ -86,20 +102,49 @@ SDL_Renderer* Game::GetRenderer(){
 
 void Game::Run(){
 
-    state->Start();
+    if(storedState != nullptr){
+        stateStack.emplace(storedState);
+        stateStack.top()->Start();
+        storedState = nullptr;
+    }
+    else
+        return;
 
-    while(!state->QuitRequested()){
+    while(!stateStack.empty() && !stateStack.top()->QuitRequested()){
+        
+        if(stateStack.top()->PopRequested()){
+            stateStack.pop();
+
+            Resources::ClearAll(); //clears resources for state change
+
+            if(!stateStack.empty())
+                stateStack.top()->Resume(); 
+            else
+                break;   
+        }
+
+        if(storedState != nullptr){
+
+            if(!stateStack.empty())
+                stateStack.top()->Pause();
+
+            stateStack.emplace(storedState);
+            stateStack.top()->Start();
+            storedState =  nullptr;
+        }
+        else if(stateStack.empty())
+            break;
+        
+
         InputManager::GetInstance().Update(); //gets inputs
         CalculateDeltaTime(); //changes dt
-        state->Update(dt); //updates state
-        state->Render(); //renders images
+        stateStack.top()->Update(dt); //updates state
+        stateStack.top()->Render(); //renders images
         SDL_RenderPresent(renderer); //changes renderization to present
         SDL_Delay(33); //delays 33ms for approximately a 30fps framerate
     }
 
-    Resources::ClearImages(); //clear all images for clean exit
-    Resources::ClearMusics(); //clear all music for clean exit
-    Resources::ClearSounds(); //clear all sound for clean exit
+    Resources::ClearAll(); //clear all resources for clean exit
 }
 
 float Game::GetDeltaTime(){

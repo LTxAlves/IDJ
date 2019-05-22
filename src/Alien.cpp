@@ -40,11 +40,11 @@ void Alien::Start(){
     for(int i = 0; i < nMinions; i++){ //adds nMinions minions to array
         GameObject* go = (new GameObject());
 
-        weak_ptr<GameObject> weak_go = Game::GetInstance().GetState().AddObject(go); //adds object
+        weak_ptr<GameObject> weak_go = Game::GetInstance().GetCurrentState().AddObject(go); //adds object
         minionArray.emplace_back(weak_go); //adds to minion array
         shared_ptr<GameObject> shared_go = weak_go.lock(); //makes shared
 
-        weak_go = Game::GetInstance().GetState().GetObjectPtr(&associated); //gets reference to associated object
+        weak_go = Game::GetInstance().GetCurrentState().GetObjectPtr(&associated); //gets reference to associated object
         Minion* minion = (new Minion(*shared_go, weak_go, (360.0/nMinions)*i)); //creates minion
         
         shared_go->box.x = 0; //sets initial x coordinate
@@ -123,7 +123,7 @@ void Alien::Update(float dt){
         associated.RequestDelete();
 
         GameObject* go = (new GameObject());
-        weak_ptr<GameObject> weak_go = Game::GetInstance().GetState().AddObject(go);
+        weak_ptr<GameObject> weak_go = Game::GetInstance().GetCurrentState().AddObject(go);
         shared_ptr<GameObject> shared_go = weak_go.lock();
 
         Sprite* pdeath = new Sprite(*shared_go, ALIENDEATHFILE, ENEMYDEATHFRAMES, DEATHFRAMETIME, ENEMYDEATHFRAMES * DEATHFRAMETIME);

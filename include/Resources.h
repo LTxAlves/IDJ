@@ -22,6 +22,8 @@ class Resources{
         static Mix_Chunk* GetSound(string);
         static void ClearSounds();
 
+        static void ClearAll();
+
     private:
         static unordered_map<string, SDL_Texture*> imageTable;
 

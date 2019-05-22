@@ -42,6 +42,8 @@ Mix_Music* Resources::GetMusic(string file){
 
     auto it = musicTable.find(file);
 
+    std::cout << file.c_str() << std::endl;
+
     if(it == musicTable.end()){ //checks if file is in music table
         music = Mix_LoadMUS(file.c_str()); //loads music if it doesn't exist
 
@@ -96,4 +98,11 @@ void Resources::ClearSounds(){
     }
 
     soundTable.clear();
+}
+
+void Resources::ClearAll(){
+
+    ClearImages();
+    ClearMusics();
+    ClearSounds();
 }

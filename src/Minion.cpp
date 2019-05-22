@@ -65,7 +65,7 @@ void Minion::Update(float dt){
         associated.RequestDelete();
 
         GameObject* go = (new GameObject());
-        weak_ptr<GameObject> weak_go = Game::GetInstance().GetState().AddObject(go);
+        weak_ptr<GameObject> weak_go = Game::GetInstance().GetCurrentState().AddObject(go);
         shared_ptr<GameObject> shared_go = weak_go.lock();
 
         Sprite* pdeath = new Sprite(*shared_go, MINIONDEATHFILE, ENEMYDEATHFRAMES, DEATHFRAMETIME, ENEMYDEATHFRAMES * DEATHFRAMETIME);
@@ -93,7 +93,7 @@ bool Minion::Is(string type){
 void Minion::Shoot(Vec2 pos){
 
     GameObject* go_bullet = (new GameObject()); //creates go for bullet
-    weak_ptr<GameObject> weak_go = Game::GetInstance().GetState().AddObject(go_bullet); //adds it to state
+    weak_ptr<GameObject> weak_go = Game::GetInstance().GetCurrentState().AddObject(go_bullet); //adds it to state
     shared_ptr<GameObject> shared_go = weak_go.lock(); //gets shared_ptr from weak_ptr
 
     Vec2 dir = pos - associated.box.CenterPoint(); //sets direction to move

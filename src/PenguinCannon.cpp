@@ -56,7 +56,7 @@ bool PenguinCannon::Is(string type){
 void PenguinCannon::Shoot(){
 
     GameObject* go = (new GameObject());
-    weak_ptr<GameObject> weak_go = Game::GetInstance().GetState().AddObject(go);
+    weak_ptr<GameObject> weak_go = Game::GetInstance().GetCurrentState().AddObject(go);
     shared_ptr<GameObject> shared_go = weak_go.lock();
 
     int damage = rand()%6 + 10;

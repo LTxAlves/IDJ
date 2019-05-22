@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "Vec2.h"
 #include "Game.h"
+#include "InputManager.h"
 
 GameObject* Camera::focus;
 Vec2 Camera::pos;
