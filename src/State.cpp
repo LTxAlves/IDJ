@@ -1,5 +1,6 @@
 #include "State.h"
 #include "GameObject.h"
+#include "Sound.h"
 
 State::State() :    popRequested(false),
                     quitRequested(false),
@@ -81,8 +82,6 @@ bool State::QuitRequested(){
 
 void State::StartArray(){
 
-	LoadAssets();
-
 	for(unsigned int i = 0; i < objectArray.size(); i++){
 		objectArray[i]->Start();
 	}
@@ -90,16 +89,24 @@ void State::StartArray(){
 	started = true;
 }
 
-void State::UpdateArray(float){
+void State::UpdateArray(float dt){
 
 	for(unsigned int i = 0; i < objectArray.size(); i++){ //renders each object
-        objectArray[i]->Render();
+        objectArray[i]->Update(dt);
 	}
+	for(unsigned int i = 0; i < objectArray.size(); i++){ //deletes dead object and plays their death sound
+        if(objectArray[i]->IsDead()){
+			Sound* soundPtr = static_cast<Sound*> (objectArray[i]->GetComponent("Sound"));
+			if(soundPtr != nullptr)
+				soundPtr->Play(1);
+            objectArray.erase(objectArray.begin() + i);
+        }
+    }
 }
 
 void State::RenderArray(){
 
 	for(unsigned int i = 0; i < objectArray.size(); i++){
-		objectArray[i]->Start();
+		objectArray[i]->Render();
 	}
 }

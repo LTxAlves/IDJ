@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <memory>
 
 #define INCLUDE_SDL_IMAGE
 #define INCLUDE_SDL_MIXER
@@ -11,6 +12,7 @@
 #include "Timer.h"
 
 using std::string;
+using std::shared_ptr;
 
 class Resources;
 

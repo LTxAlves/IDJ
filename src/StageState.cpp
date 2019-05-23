@@ -88,20 +88,9 @@ void StageState::Update(float dt){
 	Camera::Update(dt); //updates camera to new frame
 
 	if(inputManager.QuitRequested() || inputManager.KeyPress(ESCAPE_KEY)) //checks if player quit game
-		quitRequested = true;
+		popRequested = true;
 
-	for(unsigned int i = 0; i < objectArray.size(); i++){ //deletes dead object and plays their death sound
-        if(objectArray[i]->IsDead()){
-			Sound* soundPtr = static_cast<Sound*> (objectArray[i]->GetComponent("Sound"));
-			if(soundPtr != nullptr)
-				soundPtr->Play(1);
-            objectArray.erase(objectArray.begin() + i);
-        }
-    }
-
-    for(unsigned int i = 0; i < objectArray.size(); i++){ //updates each object
-        objectArray[i]->Update(dt);
-	}
+    UpdateArray(dt);
 
 	for(unsigned int i = 0; i < objectArray.size(); i++){ //updates each collider
 		Collider* colliderPtr = static_cast<Collider*> (objectArray[i]->GetComponent("Collider"));
@@ -127,8 +116,9 @@ void StageState::Render(){
 
 	TileMap* tileMap;
 
-    for(unsigned int i = 0; i < objectArray.size(); i++){ //renders each object
-        objectArray[i]->Render();
+	RenderArray();
+
+    for(unsigned int i = 0; i < objectArray.size(); i++){
 		if(objectArray[i]->GetComponent("TileMap") != nullptr)
 			tileMap = static_cast<TileMap*> (objectArray[i]->GetComponent("TileMap"));
     }
@@ -142,9 +132,7 @@ void StageState::Start(){ //Starts stage
 
 	LoadAssets();
 
-	for(unsigned int i = 0; i < objectArray.size(); i++){ //starts each object
-        objectArray[i]->Start();
-    }
+	StartArray();
 
 	started = true;
 }

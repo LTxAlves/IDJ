@@ -28,12 +28,14 @@ SDL_Texture* Resources::GetImage(string file){
 
 void Resources::ClearImages(){
 
-    for(auto it = imageTable.begin(); it != imageTable.end(); it++){
-        if(it->second != nullptr)
-            SDL_DestroyTexture(it->second);
-    }
+    if(!imageTable.empty()){
+        for(auto it = imageTable.begin(); it != imageTable.end(); it++){
+            if(it->second != nullptr)
+                it = imageTable.erase(it);
+        }
 
-    imageTable.clear();
+        imageTable.clear();
+    }
 }
 
 Mix_Music* Resources::GetMusic(string file){
@@ -41,8 +43,6 @@ Mix_Music* Resources::GetMusic(string file){
     Mix_Music* music;
 
     auto it = musicTable.find(file);
-
-    std::cout << file.c_str() << std::endl;
 
     if(it == musicTable.end()){ //checks if file is in music table
         music = Mix_LoadMUS(file.c_str()); //loads music if it doesn't exist
@@ -61,12 +61,14 @@ Mix_Music* Resources::GetMusic(string file){
 
 void Resources::ClearMusics(){
 
-    for(auto it = musicTable.begin(); it != musicTable.end(); it++){
-        if(it->second != nullptr)
-            Mix_FreeMusic(it->second);
-    }
+    if(!musicTable.empty()){
+        for(auto it = musicTable.begin(); it != musicTable.end(); it++){
+            if(it->second != nullptr)
+                Mix_FreeMusic(it->second);
+        }
 
-    musicTable.clear();
+        musicTable.clear();
+    }
 }
 
 Mix_Chunk* Resources::GetSound(string file){
@@ -92,17 +94,26 @@ Mix_Chunk* Resources::GetSound(string file){
 
 void Resources::ClearSounds(){
 
-    for(auto it = soundTable.begin(); it != soundTable.end(); it++){
-        if(it->second != nullptr)
-            Mix_FreeChunk(it->second);
-    }
+    if(!soundTable.empty()){
+        for(auto it = soundTable.begin(); it != soundTable.end(); it++){
+            if(it->second != nullptr)
+                Mix_FreeChunk(it->second);
+        }
 
-    soundTable.clear();
+        soundTable.clear();
+    }
 }
 
 void Resources::ClearAll(){
 
-    ClearImages();
-    ClearMusics();
-    ClearSounds();
+    // std::cout << "images: " << imageTable.size() << "\nmusic: " << musicTable.size() << "\n sound: " << soundTable.size() << std::endl;
+
+    if(!imageTable.empty())
+        ClearImages();
+    
+    if(!musicTable.empty())
+        ClearMusics();
+
+    if(!soundTable.empty())
+        ClearSounds();
 }

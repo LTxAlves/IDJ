@@ -35,6 +35,9 @@ Game::Game(string title, int width, int height) :   dt(0),
 
     Mix_AllocateChannels(32);
 
+    if(TTF_Init() != 0) //checks if ttf initialized
+        SDL_Log("Function \"TTF_Init\" did not initialize: %s", SDL_GetError());
+
     window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, 0);
 
     if(window == nullptr) //checks if window was created
@@ -102,6 +105,8 @@ SDL_Renderer* Game::GetRenderer(){
 
 void Game::Run(){
 
+    InputManager& inputManager = InputManager::GetInstance();
+
     if(storedState != nullptr){
         stateStack.emplace(storedState);
         stateStack.top()->Start();
@@ -136,13 +141,18 @@ void Game::Run(){
             break;
         
 
-        InputManager::GetInstance().Update(); //gets inputs
+        inputManager.Update(); //gets inputs
         CalculateDeltaTime(); //changes dt
         stateStack.top()->Update(dt); //updates state
         stateStack.top()->Render(); //renders images
         SDL_RenderPresent(renderer); //changes renderization to present
         SDL_Delay(33); //delays 33ms for approximately a 30fps framerate
     }
+
+    while (!stateStack.empty()){
+        stateStack.pop();
+    }
+    
 
     Resources::ClearAll(); //clear all resources for clean exit
 }

@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <unordered_map>
+#include <memory>
 
 #define INCLUDE_SDL_IMAGE
 #define INCLUDE_SDL_MIXER
@@ -9,6 +10,8 @@
 
 using std::string;
 using std::unordered_map;
+using std::shared_ptr;
+
 
 class Resources{
 

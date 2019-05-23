@@ -13,7 +13,6 @@ InputManager::InputManager() :  mouseState{false, false, false, false, false, fa
     for(int i = 0; i < SDL_NumJoysticks(); i++){ //checks for game controllers activated
         if(SDL_IsGameController(i)) //cecks if iterator refers to controller
             controller = SDL_GameControllerOpen(0); //open game controller
-        std::cout << controller << std::endl;
     }
 }
 
@@ -73,7 +72,6 @@ void InputManager::Update(){
                         for(int i = 0; i < SDL_NumJoysticks(); i++){ //checks for game controllers activated
                             if(SDL_IsGameController(i)){ //cecks if iterator refers to controller
                                 controller = SDL_GameControllerOpen(0); //open game controller
-                                std::cout << "Device added: " << controller << std::endl;
                             }
                         }
                     }
@@ -82,19 +80,16 @@ void InputManager::Update(){
                 case SDL_CONTROLLERDEVICEREMOVED:
                     if(controller != nullptr){
                         SDL_GameControllerClose(controller);
-                        controller = nullptr;
-                        std::cout << "Device removed: " << controller << std::endl;    
+                        controller = nullptr;   
                     }
                     break;
 
                 case SDL_CONTROLLERBUTTONUP:
-                    std::cout << "button release: " << (int) event.cbutton.button << std::endl;
                     controllerState[event.cbutton.button] = false;
                     controllerUpdate[event.cbutton.button] = updateCounter;
                     break;
 
                 case SDL_CONTROLLERBUTTONDOWN:
-                    std::cout << "button press: " << (int) event.cbutton.button << std::endl;
                     controllerState[event.cbutton.button] = true;
                     controllerUpdate[event.cbutton.button] = updateCounter;
                     break;
