@@ -32,7 +32,6 @@ void StageState::LoadAssets(){
 
 	GameObject* go_background	= (new GameObject()); //Game Object required for background Sprite
 	GameObject* go_tiles		= (new GameObject()); //Game Object required for TileMap & TileSets
-	GameObject* go_alien		= (new GameObject()); //Game Object required for Alien
 	GameObject* go_penguin		= (new GameObject()); //Game Object required for Penguin
 
 	weak_ptr<GameObject> weak_go = AddObject(go_background);
@@ -59,14 +58,18 @@ void StageState::LoadAssets(){
 
 	shared_go->AddComponent(tm);
 
-	weak_go = AddObject(go_alien);
-	shared_go = weak_go.lock();
+	for(int i = 0; i < 4; i++){
+		GameObject* go_alien		= (new GameObject()); //Game Object required for Alien
 
-	Alien* alien = new Alien(*shared_go, NMINIONSSTD); //assigns alien
+		weak_go = AddObject(go_alien);
+		shared_go = weak_go.lock();
 
-	shared_go->box.CenterAt(512, 300); //places Alien center in (512, 300)
+		Alien* alien = new Alien(*shared_go, NMINIONSSTD, float(rand())/(float(RAND_MAX)/0.8)); //assigns alien
 
-	shared_go->AddComponent(alien);
+		shared_go->box.CenterAt(rand()%1300 + 54, rand()%1180+50); //places Alien center in (512, 300)
+
+		shared_go->AddComponent(alien);
+	}
 
 	weak_go = AddObject(go_penguin);
 	shared_go = weak_go.lock();

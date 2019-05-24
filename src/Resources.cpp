@@ -3,12 +3,12 @@
 
 using std::to_string;
 
-unordered_map<string, SDL_Texture*> Resources::imageTable;  //initializes static variable
+unordered_map<string, shared_ptr<SDL_Texture>> Resources::imageTable;  //initializes static variable
 unordered_map<string, Mix_Music*> Resources::musicTable;    //initializes static variable
 unordered_map<string, Mix_Chunk*> Resources::soundTable;    //initializes static variable
 unordered_map<string, TTF_Font*> Resources::fontTable;    //initializes static variable
 
-SDL_Texture* Resources::GetImage(string file){
+shared_ptr<SDL_Texture> Resources::GetImage(string file){
 
     auto it = imageTable.find(file);
 
@@ -22,8 +22,10 @@ SDL_Texture* Resources::GetImage(string file){
             exit(1);
         }
 
-        imageTable[file] = texture; //asigns it
-        return texture; //returns it
+        shared_ptr<SDL_Texture> sharedTexture(texture, [](SDL_Texture* texture){ SDL_DestroyTexture(texture); });
+
+        imageTable[file] = sharedTexture; //asigns it
+        return sharedTexture; //returns it
     }
     
     return it->second; //returns image
@@ -33,7 +35,7 @@ void Resources::ClearImages(){
 
     if(!imageTable.empty()){
         for(auto it = imageTable.begin(); it != imageTable.end(); it++){
-            if(it->second != nullptr){
+            if(it->second != nullptr && it->second.unique()){
                 // SDL_DestroyTexture(it->second);
                 it = imageTable.erase(it);
                 if(it == imageTable.end())

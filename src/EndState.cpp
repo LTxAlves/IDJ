@@ -38,7 +38,7 @@ EndState::EndState(){
     
     shared_go->AddComponent(text);
 
-    position = {SCREEN_WIDTH/2, 2*FONTSIZE};
+    position = {SCREEN_WIDTH/2, 10};
 
     shared_go->box.CenterAt(position);
 
@@ -50,14 +50,14 @@ EndState::EndState(){
     
     shared_go->AddComponent(text);
 
-    position = {SCREEN_WIDTH/2, 3*FONTSIZE};
+    position = {SCREEN_WIDTH/2, 10+FONTSIZE};
 
     shared_go->box.CenterAt(position);
 }
 
 EndState::~EndState(){
 
-
+    objectArray.clear();
 }
 
 void EndState::LoadAssets(){

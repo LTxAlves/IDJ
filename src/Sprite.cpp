@@ -28,11 +28,11 @@ Sprite::Sprite(GameObject& associated, string file, int frameCount, float frameT
 
 void Sprite::Open(string file){
 
-    SDL_DestroyTexture(texture);
+    SDL_DestroyTexture(texture.get());
 
     texture = Resources::GetImage(file);
 
-    SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
+    SDL_QueryTexture(texture.get(), nullptr, nullptr, &width, &height);
     SetClip(0, 0, width, height);
 
     associated.box.w = width/frameCount;
@@ -59,7 +59,7 @@ void Sprite::Render(int x, int y){ //renders with given values
 
     auto rend = Game::GetInstance().GetRenderer(); //getting rederer for only instance of game
     
-    if(SDL_RenderCopyEx(rend, texture, &clipRect, &dst_rect, associated.angleDeg, nullptr, SDL_FLIP_NONE) != 0)
+    if(SDL_RenderCopyEx(rend, texture.get(), &clipRect, &dst_rect, associated.angleDeg, nullptr, SDL_FLIP_NONE) != 0)
         SDL_Log("Unable to render texture: %s", SDL_GetError());
 }
 

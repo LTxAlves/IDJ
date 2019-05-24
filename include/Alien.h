@@ -17,7 +17,7 @@ class Minion;
 class Alien : public Component{
 
     public:
-        Alien(GameObject&, int);
+        Alien(GameObject&, int, float = 0);
         ~Alien();
 
         void Start();
@@ -40,6 +40,7 @@ class Alien : public Component{
 
         AlienState state;
         Timer restTimer;
+        float timeOffset;
         
         Vec2 destination;
 };

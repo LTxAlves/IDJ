@@ -29,7 +29,7 @@ TitleState::TitleState(){
 
 TitleState::~TitleState(){
 
-
+    objectArray.clear();
 }
 
 

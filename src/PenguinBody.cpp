@@ -75,6 +75,18 @@ void PenguinBody::Update(float dt){
     associated.box += speed*dt;
     associated.angleDeg = angle * RADTODEG;
 
+    if (associated.box.x > 1350) {
+		associated.box.x = 1350;
+	} else if (associated.box.x < 0) {
+		associated.box.x = 0;
+	}
+	
+	if (associated.box.y > 1280) {
+		associated.box.y = 1280;
+	} else if (associated.box.y < 0) {
+		associated.box.y = 0;
+	}
+
     if(hp <= 0){
         hp = 0;
         associated.RequestDelete();

@@ -10,9 +10,11 @@
 #include "Sound.h"
 #include "PenguinBody.h"
 
-int Alien::alienCount;
+int Alien::alienCount = 0;
 
-Alien::Alien(GameObject& associated, int nMinions) : Component(associated){
+Alien::Alien(GameObject& associated, int nMinions, float timeOffset) :  Component(associated),
+                                                                        nMinions(nMinions),
+                                                                        timeOffset(timeOffset){
 
     Sprite* alien = (new Sprite(associated, ALIENFILE)); //loads alien sprite
     Collider* alienCollider = (new Collider(associated)); //creates colider for alien
@@ -21,8 +23,6 @@ Alien::Alien(GameObject& associated, int nMinions) : Component(associated){
 
     hp = (rand() % 11) + 50; //random number of hitpoints between 50 and 60
     speed = Vec2(); //initially no speed
-
-    this->nMinions = nMinions; //saves number of minions
 
     alienCount++;
 
@@ -63,8 +63,8 @@ void Alien::Update(float dt){
     switch (state){
         case RESTING:
 
-            restTimer.Update(dt);
-            if(restTimer.Get() > ALIENRESTCOOLDOWN)
+            restTimer.Update(float(rand())/(float(RAND_MAX)/0.07));
+            if(restTimer.Get() > ALIENRESTCOOLDOWN + timeOffset)
                 state = MOVING;
             break;
 

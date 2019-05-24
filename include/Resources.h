@@ -16,7 +16,7 @@ using std::shared_ptr;
 class Resources{
 
     public:
-        static SDL_Texture* GetImage(string);
+        static shared_ptr<SDL_Texture> GetImage(string);
         static void ClearImages();
 
         static Mix_Music* GetMusic(string);
@@ -31,7 +31,7 @@ class Resources{
         static void ClearAll();
 
     private:
-        static unordered_map<string, SDL_Texture*> imageTable;
+        static unordered_map<string, shared_ptr<SDL_Texture>> imageTable;
 
         static unordered_map<string, Mix_Music*> musicTable;
 
