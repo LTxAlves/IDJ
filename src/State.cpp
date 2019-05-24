@@ -14,9 +14,9 @@ State::~State(){
     objectArray.clear();
 }
 
-weak_ptr<GameObject> State::AddObject(GameObject* go){ //Adds object to object array
+weak_ptr<GameObject> State::AddObject(GameObject* object){ //Adds object to object array
 
-	shared_ptr<GameObject> shared_go(go); //creates shared_ptr from regular ptr
+	shared_ptr<GameObject> shared_go(object); //creates shared_ptr from regular ptr
 
 	objectArray.emplace_back(shared_go); //adds it to array
 
@@ -28,12 +28,12 @@ weak_ptr<GameObject> State::AddObject(GameObject* go){ //Adds object to object a
 	return weak_go; //adds it
 }
 
-weak_ptr<GameObject> State::GetObjectPtr(GameObject* go){ //Gets weak_ptr from a given GO
+weak_ptr<GameObject> State::GetObjectPtr(GameObject* object){ //Gets weak_ptr from a given GO
 
 	weak_ptr<GameObject> weak_go;
 
 	for(auto it = objectArray.begin(); it != objectArray.end(); it++){ //goes through array
-		if((*it).get() == go) //checksif addresses match
+		if((*it).get() == object) //checksif addresses match
 			weak_go = weak_ptr<GameObject> (*it); //saves weak_ptr
 	}
 	

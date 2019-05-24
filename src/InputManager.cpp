@@ -80,7 +80,7 @@ void InputManager::Update(){
                 case SDL_CONTROLLERDEVICEREMOVED:
                     if(controller != nullptr){
                         SDL_GameControllerClose(controller);
-                        controller = nullptr;   
+                        controller = nullptr;
                     }
                     break;
 

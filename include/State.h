@@ -14,7 +14,7 @@ class State{
         State();
         virtual ~State();
 
-        virtual void LoadAssets();
+        virtual void LoadAssets() = 0;
         virtual void Update(float) = 0;
         virtual void Render() = 0;
 

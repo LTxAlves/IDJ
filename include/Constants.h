@@ -1,6 +1,9 @@
 #pragma once
 
 #include <iostream>
+#define INCLUDE_SDL_IMAGE
+#include "SDL_include.h"
+
 using std::string;
 
 /*Math constants*/
@@ -40,6 +43,15 @@ const string PENGUINBODYFILE    = "assets/img/penguin.png"; //penguin body file
 const string PENGUINCANNONFILE  = "assets/img/cubngun.png"; //penguin cannon file
 const string PENGUINBULLETFILE  = "assets/img/penguinbullet.png"; //penguin bullets file
 const string PENGUINDEATHFILE   = "assets/img/penguindeath.png"; //penguin death sprite sheet file
+
+const string TITLESTATEFILE     = "assets/img/title.jpg";
+const string WINSTATEFILE       = "assets/img/win.jpg";
+const string LOSESTATEFILE      = "assets/img/lose.jpg";
+
+const string WINSTATEMUSIC      = "assets/audio/endStateWin.ogg";
+const string LOSESTATEMUSIC     = "assets/audio/endStateLose.ogg";
+
+const string FONTFILE           = "assets/font/Call me maybe.ttf";
 /***************************************************************************************/
 
 
@@ -82,4 +94,11 @@ const float DEATHFRAMETIME          = 0.15; //frame duration for deaths
 const float PENGUINSHOTCOOLDOWN = 0.6;
 
 const float ALIENRESTCOOLDOWN   = 0.9;
+
+const float TEXTSHOWINTERVAL    = 0.7;
+/***************************************************************************************/
+
+/*Font values*/
+const int FONTSIZE = 50;
+const SDL_Color TEXTCOLOR = {255, 102, 0, 255};
 /***************************************************************************************/

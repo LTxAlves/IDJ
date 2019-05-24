@@ -23,23 +23,23 @@ class Game{
     public:
         Game(string, int, int);
         ~Game();
+        
+        static Game& GetInstance();
+        SDL_Renderer* GetRenderer();
+        State& GetCurrentState();
 
         void Push(State*);
 
         void Run();
-        
-        SDL_Renderer* GetRenderer();
-        State& GetCurrentState();
-        static Game& GetInstance();
 
         float GetDeltaTime();
 
     private:
         static Game* instance;
 
+        State* storedState;
         SDL_Window* window;
         SDL_Renderer* renderer;
-        State* storedState;
 
         stack<unique_ptr<State>> stateStack;
 

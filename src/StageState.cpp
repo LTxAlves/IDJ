@@ -11,15 +11,13 @@
 #include "PenguinBody.h"
 #include "Collider.h"
 #include "Collision.h"
+#include "GameData.h"
+#include "EndState.h"
+#include "Game.h"
 
-GameObject* go_background	= (new GameObject()); //Game Object required for background Sprite
-GameObject* go_tiles		= (new GameObject()); //Game Object required for TileMap & TileSets
-GameObject* go_alien		= (new GameObject()); //Game Object required for Alien
-GameObject* go_penguin		= (new GameObject()); //Game Object required for Penguin
+StageState::StageState() :	backgroundMusic(MUSICFILE),
+							tileSet(nullptr){
 
-StageState::StageState() :	backgroundMusic(MUSICFILE){
-
-	tileSet = nullptr;
     quitRequested = false; //initializes quit request variable
 	started = false; //initializes started variable
     backgroundMusic.Play(-1); //plays music
@@ -28,14 +26,14 @@ StageState::StageState() :	backgroundMusic(MUSICFILE){
 StageState::~StageState(){
 
     objectArray.clear();
-	
-	delete go_penguin;
-	delete go_alien;
-	delete go_tiles;
-	delete go_background;
 }
 
 void StageState::LoadAssets(){
+
+	GameObject* go_background	= (new GameObject()); //Game Object required for background Sprite
+	GameObject* go_tiles		= (new GameObject()); //Game Object required for TileMap & TileSets
+	GameObject* go_alien		= (new GameObject()); //Game Object required for Alien
+	GameObject* go_penguin		= (new GameObject()); //Game Object required for Penguin
 
 	weak_ptr<GameObject> weak_go = AddObject(go_background);
 	shared_ptr<GameObject> shared_go = weak_go.lock();
@@ -87,10 +85,18 @@ void StageState::Update(float dt){
 
 	Camera::Update(dt); //updates camera to new frame
 
-	if(inputManager.QuitRequested() || inputManager.KeyPress(ESCAPE_KEY)) //checks if player quit game
+	if(inputManager.KeyPress(ESCAPE_KEY) || PenguinBody::player == nullptr){//checks if player quit game
 		popRequested = true;
+		Camera::Unfollow();
+		Camera::pos = {0, 0};
+		EndState* end = new EndState();
+		Game::GetInstance().Push(end);
+	}
 
-    UpdateArray(dt);
+	if(inputManager.QuitRequested())
+		quitRequested = true;
+
+	UpdateArray(dt);
 
 	for(unsigned int i = 0; i < objectArray.size(); i++){ //updates each collider
 		Collider* colliderPtr = static_cast<Collider*> (objectArray[i]->GetComponent("Collider"));
@@ -110,6 +116,15 @@ void StageState::Update(float dt){
 			}
 		}
 	}
+
+	if(Alien::alienCount == 0){
+		GameData::playerVictory = true;
+		Camera::Unfollow();
+		Camera::pos = {0, 0};
+		EndState* end = new EndState();
+		popRequested = true;
+		Game::GetInstance().Push(end);
+	}
 }
 
 void StageState::Render(){
@@ -119,8 +134,10 @@ void StageState::Render(){
 	RenderArray();
 
     for(unsigned int i = 0; i < objectArray.size(); i++){
-		if(objectArray[i]->GetComponent("TileMap") != nullptr)
+		if(objectArray[i]->GetComponent("TileMap") != nullptr){
 			tileMap = static_cast<TileMap*> (objectArray[i]->GetComponent("TileMap"));
+			break;
+		}
     }
 
 	if(tileMap != nullptr)

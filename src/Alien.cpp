@@ -31,8 +31,8 @@ Alien::Alien(GameObject& associated, int nMinions) : Component(associated){
 
 Alien::~Alien(){
 
-    alienCount--;
     minionArray.clear(); //clears minion array
+    alienCount--;
 }
 
 void Alien::Start(){

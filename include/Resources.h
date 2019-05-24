@@ -6,12 +6,12 @@
 
 #define INCLUDE_SDL_IMAGE
 #define INCLUDE_SDL_MIXER
+#define INCLUDE_SDL_TTF
 #include "SDL_include.h"
 
 using std::string;
 using std::unordered_map;
 using std::shared_ptr;
-
 
 class Resources{
 
@@ -25,6 +25,9 @@ class Resources{
         static Mix_Chunk* GetSound(string);
         static void ClearSounds();
 
+        static TTF_Font* GetFont(string, int);
+        static void ClearFonts();
+
         static void ClearAll();
 
     private:
@@ -33,5 +36,6 @@ class Resources{
         static unordered_map<string, Mix_Music*> musicTable;
 
         static unordered_map<string, Mix_Chunk*> soundTable;
-
+        
+        static unordered_map<string, TTF_Font*> fontTable;
 };

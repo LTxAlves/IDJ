@@ -57,8 +57,20 @@ void Minion::Update(float dt){
 
         arc += MINIONANGVEL * dt; //updates arc to move in next frame
     }
-    else
+    else{
         associated.RequestDelete();
+
+        GameObject* go = (new GameObject());
+        weak_ptr<GameObject> weak_go = Game::GetInstance().GetCurrentState().AddObject(go);
+        shared_ptr<GameObject> shared_go = weak_go.lock();
+
+        Sprite* pdeath = new Sprite(*shared_go, MINIONDEATHFILE, ENEMYDEATHFRAMES, DEATHFRAMETIME, ENEMYDEATHFRAMES * DEATHFRAMETIME);
+        Sound* boom = new Sound(*shared_go, BOOMAUDIOFILE);
+
+        shared_go->box = associated.box;
+        shared_go->AddComponent(pdeath);
+        shared_go->AddComponent(boom);
+    }
 
     if(hp <= 0){
         hp = 0;

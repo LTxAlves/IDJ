@@ -5,14 +5,11 @@
 #include "Camera.h"
 
 Sprite::Sprite(GameObject& associated) :    Component(associated),
-                                            width(0),
-                                            height(0),
                                             scale(1, 1),
                                             frameCount(1),
                                             currentFrame(0),
                                             timeElapsed(0),
-                                            frameTime(1),
-                                            secondsToSelfDestruct(0){
+                                            frameTime(1){
 
     texture = nullptr;
 }

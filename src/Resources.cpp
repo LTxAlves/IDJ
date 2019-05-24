@@ -1,9 +1,12 @@
 #include "Resources.h"
 #include "Game.h"
 
+using std::to_string;
+
 unordered_map<string, SDL_Texture*> Resources::imageTable;  //initializes static variable
 unordered_map<string, Mix_Music*> Resources::musicTable;    //initializes static variable
 unordered_map<string, Mix_Chunk*> Resources::soundTable;    //initializes static variable
+unordered_map<string, TTF_Font*> Resources::fontTable;    //initializes static variable
 
 SDL_Texture* Resources::GetImage(string file){
 
@@ -30,8 +33,12 @@ void Resources::ClearImages(){
 
     if(!imageTable.empty()){
         for(auto it = imageTable.begin(); it != imageTable.end(); it++){
-            if(it->second != nullptr)
+            if(it->second != nullptr){
+                // SDL_DestroyTexture(it->second);
                 it = imageTable.erase(it);
+                if(it == imageTable.end())
+                    break;
+            }
         }
 
         imageTable.clear();
@@ -104,9 +111,41 @@ void Resources::ClearSounds(){
     }
 }
 
-void Resources::ClearAll(){
+TTF_Font* Resources::GetFont(string file, int size){
 
-    // std::cout << "images: " << imageTable.size() << "\nmusic: " << musicTable.size() << "\n sound: " << soundTable.size() << std::endl;
+    TTF_Font* font;
+
+    auto key = file + to_string(size);
+    auto it = fontTable.find(key);
+
+    if(it == fontTable.end()){ //checks if file is in font table
+        font = TTF_OpenFont(file.c_str(), size); //loads font if it doesn't exist
+
+        if(font == nullptr){ //checks if file was opened correctly and exists
+            SDL_Log("Error loading font: %s", SDL_GetError());
+            exit(1);
+        }
+
+        fontTable[file] = font; //adds font to map
+        return font; //returns font
+    }
+
+    return it->second; //returns font
+}
+
+void Resources::ClearFonts(){
+
+    if(!fontTable.empty()){
+        for(auto it = fontTable.begin(); it != fontTable.end(); it++){
+            if(it->second != nullptr)
+                TTF_CloseFont(it->second);
+        }
+
+        fontTable.clear();
+    }
+}
+
+void Resources::ClearAll(){
 
     if(!imageTable.empty())
         ClearImages();
